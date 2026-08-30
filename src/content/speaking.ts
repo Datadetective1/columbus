@@ -2,7 +2,7 @@
  * Speaking content.
  *
  * Titles, subtitles and `documentedDescription` are VERBATIM from the 2018
- * speaker one-sheet. Do not rewrite them — they are Columbus's own words and
+ * speaker one-sheet. Do not rewrite them — they are Columbus’s own words and
  * his intellectual property.
  *
  * `overview`, `audience` and `formats` are ours (derived). Marked in
@@ -11,6 +11,8 @@
 
 export type Talk = {
   slug: string;
+  /** Catalogue reference, in the order the keynotes appear on the 2018 one-sheet. */
+  ref: string;
   /** Verbatim. Note the deliberate capital "IT" in "Make IT Easy Now". */
   title: string;
   /** Verbatim subtitle from the one-sheet. */
@@ -27,6 +29,7 @@ export type Talk = {
 export const talks: Talk[] = [
   {
     slug: "power-of-a-name",
+    ref: "K-01",
     title: "Power of a Name",
     subtitle: "Revisiting Purpose To Accelerate Transformation",
     documentedDescription:
@@ -39,6 +42,7 @@ export const talks: Talk[] = [
   },
   {
     slug: "make-it-easy-now",
+    ref: "K-02",
     title: "Make IT Easy Now",
     subtitle: "How Healthy Partnerships Maximize Business Value",
     documentedDescription:
@@ -51,7 +55,8 @@ export const talks: Talk[] = [
   },
   {
     slug: "i-built-it-and-they-didnt-come",
-    title: "I Built It, & They Didn't Come",
+    ref: "K-03",
+    title: "I Built It, & They Didn’t Come",
     subtitle: "Creating A Technology Adoption Success Story",
     documentedDescription:
       "Walk through the field of dreams marked by the graves of expertly built solutions that were abandoned or never fully utilized. Root causes of this common story are explored and practical methods are provided to end the negative impact of poor adoption.",
@@ -126,10 +131,10 @@ export const engagements: Engagement[] = [
   {
     organization: "SharePoint Saturday, Microsoft",
     detail: "Community event",
-    years: "—",
+    years: "n.d.",
     locations: "Dallas, TX",
   },
 ];
 
 export const engagementsNote =
-  "Selected speaking history from Columbus's published speaker profile. These are events where he presented — not client engagements or endorsements.";
+  "Selected speaking history from Columbus’s published speaker profile. These are events where he presented — not client engagements or endorsements.";

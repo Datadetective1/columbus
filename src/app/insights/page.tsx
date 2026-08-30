@@ -1,178 +1,262 @@
 import Link from "next/link";
+import { Register, RegisterRow, Stamp } from "@/components/modules";
+import { Src, SourceNotes } from "@/components/provenance";
 import { Reveal } from "@/components/reveal";
-import { CtaButton, Section, SectionLabel } from "@/components/ui";
-import {
-  categories,
-  insightsIntro,
-  plannedThemes,
-  publishedInsights,
-} from "@/content/insights";
+import { Band, BandHead, CtaButton, StatusTag, TextLink } from "@/components/ui";
+import { capabilities } from "@/content/capabilities";
+import { categories, insightsIntro, publishedInsights } from "@/content/insights";
+import { lexicon } from "@/content/lexicon";
 import { social } from "@/content/social";
+import { sourceIndex } from "@/content/sources";
+import { talks } from "@/content/speaking";
+import { themes } from "@/content/themes";
+import { workshops } from "@/content/workshops";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
-  title: "Insights",
+  title: "Working notes",
   description:
-    "Working notes on strategy, transformation, technology, leadership, business architecture and teams from Columbus Brown.",
+    "An agenda, not an archive. Six arguments WAZA is working out on strategy, transformation, technology, leadership, business architecture and teams.",
   path: "/insights",
 });
 
+const src = sourceIndex(["editorial", "speaker-profile", "waza-site"]);
+
+/** The second taxonomy: form. Counted from what actually exists. */
+const forms = [
+  { label: "Notes", n: themes.length, href: "#notes", meta: "In development" },
+  { label: "Keynotes", n: talks.length, href: "/speaking", meta: "Delivered 2015–2019" },
+  { label: "Workshops", n: workshops.length, href: "/workshops", meta: "Delivered 2015–2019" },
+  { label: "Capabilities", n: capabilities.length, href: "/advisory", meta: "Advisory" },
+];
+
 export default function InsightsPage() {
-  const hasContent = publishedInsights.length > 0;
   const linkedIn = social.find((s) => s.label === "LinkedIn" && s.enabled);
+  const hasPublished = publishedInsights.length > 0;
 
   return (
     <>
-      <Section className="pt-14 md:pt-20 lg:pt-24">
+      <Band rhythm="tight" className="border-t-2 border-accent">
         <div className="shell">
-          <Reveal>
-            <SectionLabel index="01" className="reveal">
-              Insights
-            </SectionLabel>
-            <div className="mt-10 grid gap-10 lg:grid-cols-12 lg:gap-16">
-              <div className="lg:col-span-7">
-                <h1 className="t-h1 reveal text-ink">{insightsIntro.headline}</h1>
-              </div>
-              <div className="lg:col-span-5">
-                <p className="t-lede reveal">{insightsIntro.body}</p>
-              </div>
+          <div className="egrid items-end">
+            <div className="col-span-6 md:col-span-8">
+              <Stamp parts={["Working notes", "An agenda, not an archive"]} />
+              <h1 className="t-display mt-5 text-ink">{insightsIntro.headline}</h1>
             </div>
-          </Reveal>
+            <div className="col-span-6 md:col-span-3 md:col-start-10">
+              <p className="t-small measure-xs">{insightsIntro.body}</p>
+            </div>
+          </div>
 
-          {/* Categories — the structure is real even while the shelf is empty. */}
-          <Reveal className="mt-14">
-            <h2 className="sr-only">Categories</h2>
-            <ul className="reveal flex flex-wrap gap-x-3 gap-y-2.5 border-t border-rule pt-8">
-              {categories.map((c) => (
-                <li
-                  key={c}
-                  className="rounded-[2px] border border-rule px-3 py-1.5 text-[0.8125rem] text-muted"
-                >
-                  {c}
-                </li>
-              ))}
-            </ul>
-          </Reveal>
-        </div>
-      </Section>
+          {/* The honest standing note. */}
+          <p className="t-body measure mt-8 border-t-2 border-ink pt-6">
+            WAZA has published nothing under this name, and nothing here is backdated to
+            pretend otherwise. What follows is the agenda: six arguments the practice is
+            working out, each traceable to material Columbus has already delivered in front of
+            a room.
+            <Src n={src.ref("editorial")} id="editorial" />
+          </p>
 
-      <Section className="border-t border-rule !pt-0">
-        <div className="shell">
-          {hasContent ? (
-            <Reveal>
-              <ol className="border-t border-rule">
-                {publishedInsights.map((post, i) => (
-                  <li key={post.slug} className="reveal border-b border-rule">
+          {/* Two taxonomies, so the small catalogue is reachable several ways. */}
+          <div className="egrid mt-10">
+            <div className="col-span-6 md:col-span-6">
+              <h2 className="t-label border-b border-rule pb-2 text-faint">By form</h2>
+              <ul>
+                {forms.map((f) => (
+                  <li key={f.label} className="border-b border-rule">
                     <Link
-                      href={post.href ?? `/insights/${post.slug}`}
-                      className="group grid gap-3 py-8 md:grid-cols-12 md:gap-8 md:py-10"
+                      href={f.href}
+                      className="row-link group -mx-3 flex items-baseline justify-between gap-4 px-3 py-2.5"
                     >
-                      <span className="t-label pt-2 text-faint md:col-span-1">
-                        {String(i + 1).padStart(2, "0")}
+                      <span className="flex items-baseline gap-3">
+                        <span className="t-label-sm tabular text-accent">
+                          {String(f.n).padStart(2, "0")}
+                        </span>
+                        <span className="font-display text-[1.0625rem] text-ink transition-colors group-hover:text-accent">
+                          {f.label}
+                        </span>
                       </span>
-                      <div className="md:col-span-5">
-                        <span className="t-label text-accent">{post.category}</span>
-                        <h2 className="t-h3 mt-3 text-ink transition-colors group-hover:text-accent">
-                          {post.title}
-                        </h2>
-                      </div>
-                      <div className="md:col-span-6">
-                        <p className="t-body text-[1rem]">{post.excerpt}</p>
-                        <p className="t-label mt-4 text-faint">
-                          {post.kind}
-                          {post.publishedAt
-                            ? ` · ${new Date(post.publishedAt).toLocaleDateString("en-US", {
-                                year: "numeric",
-                                month: "long",
-                              })}`
-                            : " · Draft"}
-                        </p>
-                      </div>
+                      <span className="meta">{f.meta}</span>
                     </Link>
                   </li>
                 ))}
-              </ol>
-            </Reveal>
-          ) : (
-            <EmptyState />
-          )}
-        </div>
-      </Section>
+              </ul>
+            </div>
 
-      <Section night className="border-t border-night-rule">
+            <div className="col-span-6 md:col-span-5 md:col-start-8">
+              <h2 className="t-label border-b border-rule pb-2 text-faint">By subject</h2>
+              <ul className="flex flex-wrap gap-2 pt-4">
+                {categories.map((c) => {
+                  const match = themes.find((t) => t.category === c);
+                  return (
+                    <li key={c}>
+                      {match ? (
+                        <Link
+                          href={`#${match.id}`}
+                          className="meta inline-block border border-rule-strong px-2.5 py-1.5 transition-colors hover:border-ink hover:text-ink"
+                        >
+                          {c}
+                        </Link>
+                      ) : (
+                        <span className="meta inline-block border border-rule px-2.5 py-1.5 opacity-60">
+                          {c}
+                        </span>
+                      )}
+                    </li>
+                  );
+                })}
+              </ul>
+              <p className="t-tiny mt-4">
+                Every subject currently has exactly one note in development. Nothing is listed
+                that does not exist.
+              </p>
+            </div>
+          </div>
+        </div>
+      </Band>
+
+      {/* The agenda */}
+      <Band id="notes" rhythm="tight" rule className="scroll-mt-32">
         <div className="shell">
-          <Reveal className="max-w-3xl">
-            <h2 className="t-h1 reveal text-night-ink">
-              In the meantime, the conversation is the better version anyway.
-            </h2>
-            <p className="t-body reveal mt-7">
-              Most of what would end up here starts as a question somebody asked in a meeting.
-              {linkedIn ? " Columbus writes as things come up on LinkedIn." : ""}
-            </p>
-            <div className="reveal mt-10 flex flex-col gap-3 sm:flex-row">
-              <CtaButton href="/contact" variant="night">
-                Start a Conversation
-              </CtaButton>
-              {linkedIn ? (
-                <a
-                  href={linkedIn.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex min-h-[3rem] items-center justify-center rounded-[2px] border border-night-ink/35 px-6 py-3.5 text-[0.9375rem] font-medium text-night-ink transition-colors duration-300 hover:border-night-ink hover:bg-night-ink hover:text-night"
-                >
-                  Follow on LinkedIn
-                </a>
-              ) : null}
-            </div>
+          <div className="flex flex-wrap items-baseline justify-between gap-4 border-b border-rule pb-3">
+            <h2 className="t-label text-accent">The agenda</h2>
+            <p className="meta">Six notes · N-01 to N-06 · none published</p>
+          </div>
+
+          <Reveal>
+            <ol className="register reveal mt-0 border-t-0">
+              {themes.map((t, i) => (
+                <li key={t.id} id={t.id} className="scroll-mt-32">
+                  <Link
+                    href={`/insights/${t.id}`}
+                    className="row-link group -mx-3 grid grid-cols-[3.25rem_1fr] gap-x-4 px-3 py-6 md:grid-cols-[3.25rem_minmax(0,26rem)_minmax(0,1fr)] md:gap-x-8"
+                    style={{ "--i": i } as React.CSSProperties}
+                  >
+                    <span className="t-label-sm pt-1.5 text-faint">{t.n}</span>
+                    <span>
+                      <span className="block font-display text-[1.375rem] leading-snug tracking-[-0.012em] text-ink transition-colors group-hover:text-accent md:text-[1.5rem]">
+                        {t.title}
+                      </span>
+                      <span className="meta mt-2 block">
+                        Note · {t.category} · after &ldquo;{t.evidenceFrom}&rdquo;
+                      </span>
+                    </span>
+                    <span className="col-start-2 mt-3 md:col-start-3 md:mt-0">
+                      <span className="t-small measure block">{t.claim}</span>
+                      <span className="mt-3 block">
+                        <StatusTag status="In development" />
+                      </span>
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ol>
           </Reveal>
-        </div>
-      </Section>
-    </>
-  );
-}
 
-/**
- * The empty state.
- *
- * Deliberately honest: no invented articles, no invented dates. It says what is
- * being worked on, labelled as such, and still looks like a designed page.
- */
-function EmptyState() {
-  return (
-    <Reveal>
-      <div className="reveal border-t border-rule pt-12">
-        <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
-          <div className="lg:col-span-5">
-            <h2 className="t-h2 text-ink">{insightsIntro.emptyState.heading}</h2>
-          </div>
-          <div className="lg:col-span-6 lg:col-start-7">
-            <p className="t-body">{insightsIntro.emptyState.body}</p>
-          </div>
-        </div>
-      </div>
-
-      <ol className="reveal mt-16 grid gap-px border-t border-rule sm:grid-cols-2 lg:grid-cols-3">
-        {plannedThemes.map((theme, i) => (
-          <li
-            key={theme.title}
-            className="flex flex-col border-b border-rule py-8 sm:border-r sm:pr-8 sm:last:border-r-0"
-          >
-            <div className="flex items-center gap-3">
-              <span className="t-label text-accent">{theme.category}</span>
-              <span className="t-label text-faint">
-                {String(i + 1).padStart(2, "0")}
-              </span>
-            </div>
-            <h3 className="t-h3 mt-6 text-[1.1875rem] text-ink md:text-[1.3125rem]">
-              {theme.title}
-            </h3>
-            <p className="mt-3 flex-1 text-[0.9375rem] leading-relaxed text-muted">
-              {theme.note}
+          {!hasPublished ? (
+            <p className="t-tiny mt-6">
+              Each note opens onto the documented talk or workshop it derives from. When one is
+              finished it gains a date and a byline; until then it does not have either.
             </p>
-            <p className="t-label mt-6 text-faint">In progress</p>
-          </li>
-        ))}
-      </ol>
-    </Reveal>
+          ) : null}
+        </div>
+      </Band>
+
+      {/* The lexicon */}
+      <Band id="lexicon" ground="night" rhythm="tight" className="scroll-mt-32">
+        <div className="shell">
+          <BandHead
+            label="The WAZA lexicon"
+            heading="His own words, quoted exactly."
+            headingClass="t-h2"
+            night
+            standfirst={
+              <>
+                The most distinctive material in the archive is Columbus&rsquo;s own phrasing.
+                Nobody else writes &ldquo;the field of dreams marked by the graves of expertly
+                built solutions&rdquo;.
+                <Src n={src.ref("speaker-profile")} id="speaker-profile" />
+              </>
+            }
+          />
+
+          <dl className="mt-10 grid gap-x-10 md:grid-cols-2">
+            {lexicon.map((l) => (
+              <div key={l.term} className="border-t border-night-rule py-4">
+                <dt className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
+                  <span className="font-display text-[1.125rem] text-night-ink">{l.term}</span>
+                  <span className="meta">{l.from}</span>
+                </dt>
+                <dd className="mt-2">
+                  <p className="t-small italic">&ldquo;{l.phrase}&rdquo;</p>
+                  <p className="t-tiny mt-2">{l.gloss}</p>
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </Band>
+
+      {/* Cross-links so the page is not a dead end */}
+      <Band rhythm="tight" rule>
+        <div className="shell">
+          <div className="egrid">
+            <div className="col-span-6 md:col-span-4">
+              <h2 className="t-label border-b border-rule pb-2 text-faint">
+                Where the notes come from
+              </h2>
+              <Register>
+                {talks.map((t) => (
+                  <RegisterRow
+                    key={t.slug}
+                    refCode={t.ref}
+                    title={t.title}
+                    right="Keynote"
+                    href={`/speaking#${t.slug}`}
+                  />
+                ))}
+              </Register>
+            </div>
+
+            <div className="col-span-6 md:col-span-4">
+              <h2 className="t-label border-b border-rule pb-2 text-faint">
+                Where they are applied
+              </h2>
+              <Register>
+                {capabilities.map((c) => (
+                  <RegisterRow
+                    key={c.slug}
+                    refCode={c.n}
+                    title={c.title}
+                    href={`/advisory/${c.slug}`}
+                  />
+                ))}
+              </Register>
+            </div>
+
+            <div className="col-span-6 md:col-span-3 md:col-start-10">
+              <h2 className="t-label border-b border-rule pb-2 text-faint">In the meantime</h2>
+              <p className="t-small mt-4">
+                Most of what would end up here starts as a question somebody asked in a
+                meeting. The conversation is usually the better version anyway.
+              </p>
+              <div className="mt-6 flex flex-col gap-2.5">
+                <CtaButton href="/contact">Start a Conversation</CtaButton>
+                {linkedIn ? (
+                  <CtaButton href={linkedIn.href} variant="outline" external>
+                    Follow on LinkedIn
+                  </CtaButton>
+                ) : null}
+              </div>
+              <div className="mt-5">
+                <TextLink href="/about">About Columbus</TextLink>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Band>
+
+      <SourceNotes notes={src.notes} />
+    </>
   );
 }

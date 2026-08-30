@@ -116,6 +116,33 @@ both.
 | X / `@wazasoln` | BRIEF | ⚠️ — link retained but the account could not be opened to confirm it is live |
 | Form destination email | — | ⛔ **unset.** Form is intentionally disabled; see `README.md` |
 
+## Content added in the redesign
+
+| Item | File | Source | Publish | Verify |
+| --- | --- | --- | --- | --- |
+| The six working notes (`N-01`–`N-06`) — titles, claims and arguments | `themes.ts` | **DERIVED.** Each cites the verbatim documented sentence it derives from, shown on the page as a pull quote | ⚠️ published, labelled "In development" | **Yes** — these are our arguments in his territory |
+| The WAZA lexicon — `term`, `gloss` | `lexicon.ts` | DERIVED | ⚠️ | Yes |
+| The WAZA lexicon — `phrase`, `from` | `lexicon.ts` | **PDF / WAZA site, verbatim** | ✅ | No |
+| Five advisory capabilities, challenge sentences, aims | `capabilities.ts` | **NEW.** No historical advisory material existed | ⚠️ | **Yes** |
+| Reference numbers `K-01`–`K-03` | `speaking.ts` | Order of the keynotes on the one-sheet | ✅ | No |
+| Reference numbers `W-01`–`W-06` | `workshops.ts` | Reading order of the one-sheet's 3×2 grid, coordinate-verified | ✅ | Light |
+| Reference numbers `A-01`–`A-05`, `N-01`–`N-06` | `capabilities.ts`, `themes.ts` | Ours — they order material we wrote, and encode no false series | ✅ | No |
+| "Discover · Unstick · Navigate" as a named method | `about/page.tsx` | **PDF, verbatim** — "enables your audience to discover where they are, helps them get unstuck, and navigates them towards achieving their strategic direction" | ✅ | Light — the phrasing is his; naming it a method is ours |
+| Workshop `subject` descriptors | `workshops.ts` | DERIVED from each title | ⚠️ | Light |
+| Provenance registry and note text | `sources.ts` | Ours — describes our own method | ✅ | No |
+
+> **On the numbering.** Reference codes are an authority device and they are only
+> legitimate while they are true. `W-01`–`W-06` follow the coordinate-verified reading
+> order of the printed grid; `K-01`–`K-03` follow the one-sheet's column order. No issue
+> numbers, volume numbers or dates have been invented anywhere.
+
+## A verbatim string that had been altered, and was restored
+
+An earlier pass typeset **"Business Modeling 101 - Intrapreneurship"** with an em dash.
+The one-sheet uses a hyphen. It has been restored. Small, but a field marked verbatim is
+either verbatim or it is not — and the same discipline is what makes the superscript
+markers worth anything.
+
 ## Things deliberately NOT claimed anywhere on the site
 
 - No client names, no client logos, no case studies, no client outcomes.

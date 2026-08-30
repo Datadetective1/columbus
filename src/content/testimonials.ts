@@ -28,7 +28,7 @@ export const testimonials: Testimonial[] = [
   },
   {
     quote:
-      "If you are really serious about making changes, I'd highly recommend that you sit down for a chat with Columbus.",
+      "If you are really serious about making changes, I’d highly recommend that you sit down for a chat with Columbus.",
     attribution: "Doug Goldberg",
     source: "Speaker profile, 2018",
   },

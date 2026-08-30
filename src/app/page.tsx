@@ -1,488 +1,726 @@
 import Link from "next/link";
+import {
+  CareerTrack,
+  DefinitionBlock,
+  Register,
+  RegisterRow,
+  Stamp,
+  TitleBlock,
+} from "@/components/modules";
+import { Src, SourceNotes } from "@/components/provenance";
 import { Reveal } from "@/components/reveal";
 import { SystemsFigure } from "@/components/systems-figure";
-import { CtaButton, Section, SectionLabel, TextLink } from "@/components/ui";
+import { Band, BandHead, CtaButton, TextLink } from "@/components/ui";
 import { careerArc, descriptors, heroCopy } from "@/content/bio";
+import { capabilities } from "@/content/capabilities";
 import { experienceDomains, experienceStatement } from "@/content/experience";
-import { insightsIntro, plannedThemes, publishedInsights } from "@/content/insights";
-import { pathways } from "@/content/services";
-import { speakingIntro, talks } from "@/content/speaking";
+import { lexicon } from "@/content/lexicon";
+import { engagements, speakingIntro, talks } from "@/content/speaking";
+import { positionStatement, themes } from "@/content/themes";
 import { visibleTestimonials } from "@/content/testimonials";
 import { waza } from "@/content/waza";
+import { workshops } from "@/content/workshops";
+import { sourceIndex } from "@/content/sources";
+
+/**
+ * The homepage.
+ *
+ * Band sequence is governed by two rules, both of which the previous build
+ * broke: no two adjacent bands share a grid occupancy, and no two adjacent
+ * bands share a module archetype. The archetypes used here, in order:
+ * lead plate · lead-and-rows · manifesto rail · capability plate · single-idea
+ * · triptych · drawn track · register with rail · two-column grid · dated
+ * record · definition block · agenda register · closing plate.
+ */
+
+const src = sourceIndex([
+  "speaker-profile",
+  "waza-site",
+  "public-profile",
+  "editorial",
+  "etymology",
+]);
 
 export default function HomePage() {
   return (
     <>
-      <Hero />
-      <CareerBridge />
-      <Pathways />
-      <FeaturedIdeas />
-      <Experience />
-      <SpeakingBand />
+      <Lead />
+      <Perspectives />
+      <PointOfView />
+      <HowWeHelp />
+      <FeaturedIdea />
+      <TheFounder />
+      <CareerRecord />
+      <Speaking />
+      <Workshops />
+      <EngagementRecord />
       <WazaStory />
-      <InsightsPreview />
-      <ClosingCta />
+      <WorkingNotes />
+      <Closing />
+      <SourceNotes notes={src.notes} />
     </>
   );
 }
 
-/* ------------------------------------------------------------------ 01 Hero */
+/* ------------------------------------------------------------- 01 · Lead */
 
-function Hero() {
+function Lead() {
   return (
-    <section className="relative overflow-hidden">
-      <div
-        className="systems-grid pointer-events-none absolute inset-0 opacity-[0.55]"
-        aria-hidden="true"
-      />
-
-      <div className="shell relative pt-16 pb-14 md:pt-24 md:pb-20 lg:pt-32 lg:pb-24">
-        <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-8">
-          <div className="lg:col-span-7 xl:col-span-7">
-            <Reveal className="max-w-2xl">
-              <p className="t-label reveal text-accent">{heroCopy.eyebrow}</p>
-
-              <h1 className="t-display reveal mt-6 text-ink">{heroCopy.headline}</h1>
-
-              <p className="t-lede reveal mt-7 max-w-xl text-ink/80">{heroCopy.standfirst}</p>
-
-              <p className="t-body reveal mt-5 max-w-lg">{heroCopy.body}</p>
-
-              <div className="reveal mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+    <section className="relative border-t-2 border-accent">
+      <div className="shell pt-10 pb-8 md:pt-16 md:pb-12">
+        <div className="egrid items-end">
+          <div className="col-span-6 md:col-span-8">
+            <Reveal>
+              <Stamp
+                className="reveal"
+                parts={["WAZA", "Founded by Columbus Brown II, MBA, CBA®"]}
+              />
+              <h1 className="t-display reveal mt-5 text-ink">{heroCopy.headline}</h1>
+              <p className="t-lede reveal measure mt-6 text-ink/80">
+                Strategy, transformation, leadership and execution for organizations
+                working through consequential change.
+              </p>
+              <p className="t-body reveal measure-sm mt-4">{heroCopy.body}</p>
+              <div className="reveal mt-7 flex flex-col gap-2.5 sm:flex-row sm:flex-wrap">
                 <CtaButton href="/contact">Work With Columbus</CtaButton>
-                <CtaButton href="/contact?inquiry=speaking" variant="outline">
-                  Book Columbus to Speak
+                <CtaButton href="/insights" variant="outline">
+                  Explore His Thinking
                 </CtaButton>
               </div>
             </Reveal>
           </div>
 
-          {/* The motif stands in for photography — and earns its place by
-              carrying the argument of the site rather than decorating it. */}
-          <div className="lg:col-span-5">
-            <SystemsFigure className="mx-auto w-full max-w-[22rem] lg:max-w-none" />
+          <div className="col-span-6 md:col-span-3 md:col-start-10">
+            <figure>
+              <SystemsFigure className="w-full" />
+              <TitleBlock
+                figure="01"
+                title="Three systems, one axis"
+                drawnFrom="WAZA position"
+              />
+            </figure>
           </div>
         </div>
       </div>
 
-      {/* Descriptor strip */}
-      <Reveal className="border-y border-rule bg-paper-2/60">
+      {/* Standing descriptor rail — a masthead line, not a row of pills. */}
+      <div className="border-y border-rule">
         <div className="shell">
-          <ul className="grid grid-cols-2 divide-rule sm:grid-cols-4 sm:divide-x">
+          <ul className="grid grid-cols-2 md:grid-cols-4">
             {descriptors.map((d, i) => (
               <li
                 key={d}
-                className={`reveal py-4 sm:py-5 ${i % 2 === 1 ? "border-l border-rule sm:border-l-0" : ""} ${
-                  i < 2 ? "border-b border-rule sm:border-b-0" : ""
+                className={`py-3 md:py-3.5 ${i % 2 === 1 ? "border-l border-rule pl-4" : ""} ${
+                  i < 2 ? "border-b border-rule md:border-b-0" : ""
+                } ${i === 2 ? "md:border-l md:border-rule md:pl-4" : ""} ${
+                  i === 3 ? "md:pl-4" : ""
                 }`}
               >
-                <span className="t-label block px-0 text-ink/70 sm:px-6 sm:text-center">{d}</span>
+                <span className="t-label text-ink/70">{d}</span>
               </li>
             ))}
           </ul>
         </div>
-      </Reveal>
+      </div>
     </section>
   );
 }
 
-/* --------------------------------------------------------- 02 Career bridge */
+/* ----------------------------------------------- 02 · Current perspective */
 
-function CareerBridge() {
+function Perspectives() {
+  const [lead, ...rest] = themes;
+
   return (
-    <Section>
+    <Band rhythm="tight">
       <div className="shell">
-        <Reveal>
-          <SectionLabel index="01" className="reveal">
-            The career
-          </SectionLabel>
+        <div className="mb-8 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 border-b border-rule pb-3">
+          <h2 className="t-label text-accent">What we&rsquo;re thinking about</h2>
+          <TextLink href="/insights">All working notes</TextLink>
+        </div>
 
-          <div className="mt-10 grid gap-10 lg:grid-cols-12 lg:gap-16">
-            <div className="lg:col-span-5">
-              <h2 className="t-h1 reveal text-ink">Two worlds. One perspective.</h2>
-            </div>
-            <div className="lg:col-span-6 lg:col-start-7">
-              <p className="t-lede reveal">
-                Columbus started where things are built — mechanical engineering, then aircraft
-                design. He moved to where things are decided: strategy, consulting, business
-                architecture, transformation, leadership.
-              </p>
-              <p className="t-body reveal mt-6">
-                He did not swap one for the other. He kept both, which turns out to be the useful
-                part.
-              </p>
-              <p className="reveal mt-8 border-l-2 border-accent pl-6 font-display text-[1.375rem] leading-[1.35] tracking-[-0.015em] text-ink md:text-[1.625rem]">
-                Technical change is rarely only technical. Business transformation is rarely only
-                business. The strongest decisions require understanding both.
-              </p>
+        <Reveal>
+          <div className="egrid">
+            {/* Rank 1 */}
+            <article className="reveal col-span-6 md:col-span-6">
+              <Stamp parts={["Perspective", lead.n, "In development"]} />
+              <h3 className="t-h1 mt-4 text-ink">
+                <Link href={`/insights#${lead.id}`} className="link-underline">
+                  {lead.title}
+                </Link>
+              </h3>
+              <p className="t-lede measure mt-5">{lead.claim}</p>
+              <p className="t-body measure mt-4">{lead.body}</p>
+              <blockquote className="mt-6 border-l-2 border-accent pl-5">
+                <p className="font-display text-[1.0625rem] leading-snug text-ink">
+                  &ldquo;{lead.evidence}&rdquo;
+                </p>
+                <cite className="meta mt-2 block not-italic">
+                  {lead.evidenceFrom}
+                  <Src n={src.ref("speaker-profile")} id="speaker-profile" />
+                </cite>
+              </blockquote>
+            </article>
+
+            {/* Rank 2 — ruled rows, no figures, metadata only */}
+            <div className="col-span-6 md:col-span-5 md:col-start-8">
+              <Register className="reveal">
+                {rest.map((t) => (
+                  <RegisterRow
+                    key={t.id}
+                    refCode={t.n}
+                    title={t.title}
+                    meta={`Perspective · after "${t.evidenceFrom}"`}
+                    note={t.claim}
+                    right={t.category}
+                    href={`/insights#${t.id}`}
+                  />
+                ))}
+              </Register>
             </div>
           </div>
         </Reveal>
+      </div>
+    </Band>
+  );
+}
 
-        {/* The arc. A progression, not a résumé — no dates, no employers. */}
-        <Reveal className="mt-16 md:mt-24">
-          <ol className="grid gap-px border-t border-rule sm:grid-cols-2 lg:grid-cols-4">
-            {careerArc.map((step, i) => (
+/* ------------------------------------------------------ 03 · Point of view */
+
+function PointOfView() {
+  return (
+    <Band ground="night" rhythm="normal">
+      <div className="shell">
+        <Reveal>
+          <p className="t-label reveal text-night-accent">Point of view</p>
+          <h2 className="t-display reveal measure mt-6 text-night-ink">
+            {positionStatement.headline}
+          </h2>
+
+          {/* The six parts as a rail, not six cards. */}
+          <ul className="reveal mt-10 grid grid-cols-2 border-t border-night-rule md:grid-cols-6">
+            {positionStatement.parts.map((p, i) => (
               <li
-                key={step.stage}
-                className="reveal group relative border-b border-rule pt-6 pb-8 sm:pr-8"
+                key={p}
+                className={`border-b border-night-rule py-4 md:border-b-0 md:py-5 ${
+                  i > 0 ? "md:border-l md:border-night-rule md:pl-4" : ""
+                } ${i % 2 === 1 ? "border-l border-night-rule pl-4 md:pl-4" : ""}`}
               >
-                <span
-                  className="absolute left-0 top-0 h-px w-full origin-left bg-accent transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] scale-x-0 group-hover:scale-x-100"
-                  aria-hidden="true"
-                />
-                <span className="t-label text-faint">{String(i + 1).padStart(2, "0")}</span>
-                <h3 className="mt-3 font-display text-[1.1875rem] leading-tight tracking-[-0.01em] text-ink">
-                  {step.stage}
-                </h3>
-                <p className="mt-2.5 text-[0.9375rem] leading-relaxed text-muted">{step.note}</p>
+                <span className="t-label-sm block text-night-muted">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <span className="mt-2 block font-display text-[1.125rem] text-night-ink">
+                  {p}
+                </span>
               </li>
             ))}
-          </ol>
-        </Reveal>
-      </div>
-    </Section>
-  );
-}
+          </ul>
 
-/* ------------------------------------------------------------- 03 Pathways */
-
-function Pathways() {
-  return (
-    <Section className="border-t border-rule bg-paper-2/50">
-      <div className="shell">
-        <Reveal>
-          <SectionLabel index="02" className="reveal">
-            Three ways to work together
-          </SectionLabel>
-          <h2 className="t-h2 reveal mt-8 max-w-2xl text-ink">
-            Advisory, speaking, and workshops.
-          </h2>
-        </Reveal>
-
-        <Reveal className="mt-14 grid gap-px border-t border-rule lg:grid-cols-3">
-          {pathways.map((p) => (
-            <Link
-              key={p.href}
-              href={p.href}
-              className="reveal group flex flex-col border-b border-rule bg-paper p-7 transition-colors duration-500 hover:bg-paper lg:border-r lg:p-9 lg:last:border-r-0"
-            >
-              <span className="t-label text-accent">{p.kicker}</span>
-              <h3 className="t-h3 mt-6 text-ink">{p.headline}</h3>
-              <p className="t-body mt-4 flex-1 text-[1rem]">{p.body}</p>
-              <span className="mt-8 inline-flex items-center gap-2 text-[0.9375rem] font-medium text-ink">
-                <span className="link-grow" data-active="false">
-                  {p.cta}
-                </span>
-                <svg
-                  viewBox="0 0 16 16"
-                  className="h-3 w-3 transition-transform duration-300 group-hover:translate-x-1"
-                  fill="none"
-                  aria-hidden="true"
-                >
-                  <path
-                    d="M1 8h13M9 3l5 5-5 5"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinecap="square"
-                  />
-                </svg>
-              </span>
-            </Link>
-          ))}
-        </Reveal>
-      </div>
-    </Section>
-  );
-}
-
-/* -------------------------------------------------------- 04 Featured ideas */
-
-function FeaturedIdeas() {
-  return (
-    <Section>
-      <div className="shell">
-        <Reveal>
-          <SectionLabel index="03" className="reveal">
-            The talks
-          </SectionLabel>
-          <div className="mt-8 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-            <h2 className="t-h2 reveal max-w-xl text-ink">
-              Ideas he has been working on for years.
-            </h2>
-            <p className="t-body reveal max-w-sm text-[1rem] md:text-right">
-              Three keynotes, taken from his published speaker material. The titles and
-              descriptions are his.
+          <div className="egrid mt-10">
+            <p className="t-lede reveal col-span-6 md:col-span-7">{positionStatement.body}</p>
+            <p className="t-small reveal col-span-6 md:col-span-4 md:col-start-9">
+              This is the argument the whole practice rests on. It is also why the advisory
+              work, the keynotes and the workshops are not three businesses — they are three
+              distances from the same problem.
+              <Src n={src.ref("editorial")} id="editorial" />
             </p>
           </div>
         </Reveal>
+      </div>
+    </Band>
+  );
+}
 
-        <Reveal className="mt-14">
-          <ol className="border-t border-rule">
-            {talks.map((talk, i) => (
-              <li key={talk.slug} className="reveal border-b border-rule">
+/* -------------------------------------------------------- 04 · Capability */
+
+function HowWeHelp() {
+  return (
+    <Band rhythm="tight" rule>
+      <div className="shell">
+        <BandHead
+          n="A"
+          label="How WAZA helps"
+          heading="Turning ambition into action."
+          standfirst={
+            <>
+              Five capabilities, each of which begins with a sentence a leader actually says
+              out loud.
+              <Src n={src.ref("editorial")} id="editorial" />
+            </>
+          }
+        />
+
+        <Reveal className="mt-10">
+          <Register className="reveal">
+            {capabilities.map((c) => (
+              <li key={c.slug} className="border-b border-rule">
                 <Link
-                  href={`/speaking#${talk.slug}`}
-                  className="group grid gap-4 py-8 md:grid-cols-12 md:gap-8 md:py-10"
+                  href={`/advisory/${c.slug}`}
+                  className="row-link group -mx-3 grid grid-cols-[3.25rem_1fr] gap-x-4 px-3 py-5 md:grid-cols-[3.25rem_minmax(0,20rem)_minmax(0,1fr)] md:gap-x-8"
                 >
-                  <span className="t-label pt-2 text-faint md:col-span-1">
-                    {String(i + 1).padStart(2, "0")}
+                  <span className="t-label-sm pt-1.5 text-faint">{c.n}</span>
+                  <span>
+                    <span className="block font-display text-[1.25rem] leading-snug tracking-[-0.012em] text-ink transition-colors group-hover:text-accent md:text-[1.4375rem]">
+                      {c.title}
+                    </span>
+                    <span className="t-small measure mt-1.5 block">{c.short}</span>
                   </span>
-                  <div className="md:col-span-5">
-                    <h3 className="t-h3 text-ink transition-colors duration-300 group-hover:text-accent">
-                      {talk.title}
-                    </h3>
-                    <p className="mt-2 text-[0.9375rem] italic leading-snug text-muted">
-                      {talk.subtitle}
-                    </p>
-                  </div>
-                  <p className="t-body text-[1rem] md:col-span-6">{talk.overview}</p>
+                  <span className="col-start-2 mt-3 md:col-start-3 md:mt-0">
+                    <span className="t-label-sm block text-faint">Heard as</span>
+                    <ul className="mt-2 space-y-1">
+                      {c.challenges.slice(0, 2).map((ch) => (
+                        <li key={ch} className="t-small italic text-ink/75">
+                          &ldquo;{ch}&rdquo;
+                        </li>
+                      ))}
+                    </ul>
+                  </span>
                 </Link>
               </li>
             ))}
-          </ol>
-        </Reveal>
-
-        <Reveal className="mt-10">
-          <div className="reveal">
-            <TextLink href="/speaking">See all speaking topics</TextLink>
-          </div>
+          </Register>
         </Reveal>
       </div>
-    </Section>
+    </Band>
   );
 }
 
-/* ----------------------------------------------------------- 05 Experience */
+/* ------------------------------------------------------ 05 · Featured idea */
 
-function Experience() {
+function FeaturedIdea() {
+  const talk = talks[2];
+
   return (
-    <Section className="border-t border-rule">
+    <Band ground="paper2" rhythm="normal" rule>
       <div className="shell">
         <Reveal>
-          <SectionLabel index="04" className="reveal">
-            Experience
-          </SectionLabel>
-
-          <div className="mt-10 grid gap-10 lg:grid-cols-12 lg:gap-16">
-            <div className="lg:col-span-5">
-              <h2 className="t-h2 reveal text-ink">Both ends of the organization.</h2>
+          <div className="egrid items-end">
+            <div className="col-span-6 md:col-span-8">
+              <Stamp className="reveal" parts={["Featured idea", "Keynote", talk.ref]} />
+              <h2 className="t-display reveal mt-5 text-ink">{talk.title}</h2>
+              <p className="reveal mt-4 font-display text-[1.25rem] italic leading-snug text-accent md:text-[1.5rem]">
+                {talk.subtitle}
+              </p>
             </div>
-            <div className="lg:col-span-6 lg:col-start-7">
-              <p className="t-lede reveal">{experienceStatement}</p>
-              <p className="t-body reveal mt-6">
-                A career that has run from the floor of aviation operations to enterprise
-                strategy — designing aircraft, then designing the way organizations work. Both
-                ends of that range inform how he reads a problem.
-              </p>
-              <ul className="reveal mt-8 flex flex-wrap gap-x-3 gap-y-2.5">
-                {experienceDomains.map((d) => (
-                  <li
-                    key={d}
-                    className="rounded-[2px] border border-rule px-3 py-1.5 text-[0.8125rem] text-muted"
-                  >
-                    {d}
-                  </li>
+            <div className="col-span-6 md:col-span-3 md:col-start-10">
+              <p className="t-small reveal">{talk.audience}</p>
+              <div className="reveal mt-5 flex flex-wrap gap-2">
+                {talk.formats.map((f) => (
+                  <span key={f} className="meta border border-rule-strong px-2 py-1">
+                    {f}
+                  </span>
                 ))}
-              </ul>
-              <p className="mt-6 text-[0.8125rem] leading-relaxed text-faint">
-                Career experience. WAZA does not publish client relationships, and nothing here
-                implies one.
+              </div>
+            </div>
+          </div>
+
+          <div className="egrid mt-10 border-t border-rule-strong pt-8">
+            <blockquote className="reveal col-span-6 md:col-span-6">
+              <p className="font-display text-[1.25rem] leading-[1.4] text-ink md:text-[1.625rem]">
+                &ldquo;{talk.documentedDescription}&rdquo;
               </p>
+              <cite className="meta mt-4 block not-italic">
+                Columbus Brown, speaker profile
+                <Src n={src.ref("speaker-profile")} id="speaker-profile" />
+              </cite>
+            </blockquote>
+
+            <div className="reveal col-span-6 md:col-span-5 md:col-start-8">
+              <p className="t-body measure">{talk.overview}</p>
+              <div className="mt-7 flex flex-col gap-2.5 sm:flex-row">
+                <CtaButton href={`/speaking#${talk.slug}`}>Explore the talk</CtaButton>
+                <CtaButton href="/advisory/transformation-adoption" variant="outline">
+                  The advisory work behind it
+                </CtaButton>
+              </div>
             </div>
           </div>
         </Reveal>
       </div>
-    </Section>
+    </Band>
   );
 }
 
-/* ------------------------------------------------------------- 06 Speaking */
+/* ---------------------------------------------------------- 06 · Founder */
 
-function SpeakingBand() {
+function TheFounder() {
+  const triptych = [
+    {
+      k: "An engineer’s mind",
+      v: "Mechanical engineering and aircraft design. Work where tolerances are real and a decision made early travels a long way.",
+    },
+    {
+      k: "A strategist’s perspective",
+      v: "Business strategy, consulting and business architecture. The same discipline, pointed at a different kind of machine.",
+    },
+    {
+      k: "A leader’s experience",
+      v: "Transformation and organizational leadership. Accountable for the change, not only for the recommendation.",
+    },
+  ];
+
+  return (
+    <Band rhythm="tight" rule>
+      <div className="shell">
+        <Reveal>
+          <div className="egrid">
+            <div className="col-span-6 md:col-span-7">
+              <p className="t-label reveal text-accent">The founder</p>
+              <h2 className="t-h1 reveal mt-5 text-ink">
+                Columbus has spent his career moving between technical systems and human
+                systems.
+              </h2>
+            </div>
+            <div className="col-span-6 md:col-span-4 md:col-start-9">
+              <blockquote className="reveal">
+                <p className="t-small measure">
+                  &ldquo;As a former aircraft design engineer who transitioned into a business
+                  strategy consulting career, Columbus brings captivating storytelling that
+                  resonates with both business leaders and technologists.&rdquo;
+                </p>
+                <cite className="meta mt-3 block not-italic">
+                  Speaker profile
+                  <Src n={src.ref("speaker-profile")} id="speaker-profile" />
+                </cite>
+              </blockquote>
+            </div>
+          </div>
+
+          <ul className="reveal mt-10 grid gap-8 border-t border-rule pt-8 md:grid-cols-3 md:gap-0">
+            {triptych.map((t, i) => (
+              <li key={t.k} className={i > 0 ? "md:border-l md:border-rule md:pl-8" : "md:pr-8"}>
+                <h3 className="font-display text-[1.25rem] leading-snug text-ink">{t.k}</h3>
+                <p className="t-small mt-3">{t.v}</p>
+              </li>
+            ))}
+          </ul>
+
+          <div className="reveal mt-8">
+            <TextLink href="/about">Read the full account</TextLink>
+          </div>
+        </Reveal>
+      </div>
+    </Band>
+  );
+}
+
+/* ----------------------------------------------------- 07 · Career record */
+
+function CareerRecord() {
+  return (
+    <Band ground="paper2" rhythm="tight" rule>
+      <div className="shell">
+        <Reveal>
+          <div className="mb-8 flex flex-wrap items-baseline justify-between gap-4 border-b border-rule pb-3">
+            <h2 className="t-label text-accent">Selected career experience</h2>
+            <p className="meta">Career history · not WAZA client engagements</p>
+          </div>
+
+          <figure className="reveal">
+            <CareerTrack stages={careerArc} />
+            <figcaption className="mt-8">
+              <TitleBlock
+                figure="02"
+                title="Engineering to enterprise"
+                drawnFrom="Documented career arc"
+              />
+            </figcaption>
+          </figure>
+
+          <div className="egrid mt-8">
+            <p className="t-body reveal col-span-6 measure md:col-span-6">
+              {experienceStatement}
+              <Src n={src.ref("public-profile")} id="public-profile" />
+            </p>
+            <ul className="reveal col-span-6 flex flex-wrap gap-x-2 gap-y-2 self-start md:col-span-5 md:col-start-8">
+              {experienceDomains.map((d) => (
+                <li key={d} className="meta border border-rule-strong px-2 py-1">
+                  {d}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </Reveal>
+      </div>
+    </Band>
+  );
+}
+
+/* --------------------------------------------------------- 08 · Speaking */
+
+function Speaking() {
   const quote = visibleTestimonials[0];
 
   return (
-    <Section night className="border-t border-night-rule">
+    <Band rhythm="tight" rule>
       <div className="shell">
-        <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
-          <div className="lg:col-span-6">
+        <BandHead
+          n="K"
+          label="Speaking"
+          heading="Ideas that move a room."
+          standfirst={
+            <>
+              {speakingIntro.body[1]}
+              <Src n={src.ref("speaker-profile")} id="speaker-profile" />
+            </>
+          }
+        />
+
+        <div className="egrid mt-10">
+          <div className="col-span-6 md:col-span-8">
             <Reveal>
-              <SectionLabel index="05" className="reveal">
-                Speaking &amp; facilitation
-              </SectionLabel>
-              <h2 className="t-h1 reveal mt-8 text-night-ink">
-                Ideas worth carrying back to work.
-              </h2>
-              <p className="t-lede reveal mt-7 max-w-lg">{speakingIntro.body[0]}</p>
-              <p className="t-body reveal mt-5 max-w-lg">{speakingIntro.body[1]}</p>
-              <div className="reveal mt-9">
-                <CtaButton href="/speaking" variant="night">
-                  Explore Speaking
-                </CtaButton>
-              </div>
+              <Register className="reveal">
+                {talks.map((t) => (
+                  <RegisterRow
+                    key={t.slug}
+                    refCode={t.ref}
+                    title={t.title}
+                    meta={`Keynote · ${t.subtitle}`}
+                    note={t.overview}
+                    right={`${t.formats.length} formats`}
+                    href={`/speaking#${t.slug}`}
+                  />
+                ))}
+              </Register>
             </Reveal>
           </div>
 
-          <div className="lg:col-span-5 lg:col-start-8">
+          {/* Margin rail: the documented testimonial, set as marginalia. */}
+          <aside className="col-span-6 md:col-span-3 md:col-start-10">
+            {quote ? (
+              <figure className="border-t-2 border-ink pt-5">
+                <blockquote className="font-display text-[1.0625rem] leading-snug text-ink">
+                  &ldquo;{quote.quote}&rdquo;
+                </blockquote>
+                <figcaption className="meta mt-3">
+                  {quote.attribution} · {quote.source}
+                  <Src n={src.ref("speaker-profile")} id="speaker-profile" />
+                </figcaption>
+              </figure>
+            ) : null}
+            <div className="mt-6">
+              <TextLink href="/speaking">All speaking</TextLink>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </Band>
+  );
+}
+
+/* -------------------------------------------------------- 09 · Workshops */
+
+function Workshops() {
+  return (
+    <Band rhythm="tight" rule>
+      <div className="shell">
+        <div className="mb-8 flex flex-wrap items-baseline justify-between gap-4 border-b border-rule pb-3">
+          <h2 className="t-label text-accent">Workshops · From listening to doing</h2>
+          <p className="meta">Six documented sessions · W-01 to W-06</p>
+        </div>
+
+        <Reveal>
+          <ul className="reveal grid border-t border-rule md:grid-cols-2">
+            {workshops.map((w, i) => (
+              <li
+                key={w.slug}
+                className={`border-b border-rule ${i % 2 === 0 ? "md:border-r md:border-rule" : ""}`}
+              >
+                <Link
+                  href={`/workshops#${w.slug}`}
+                  className="row-link group block h-full px-0 py-5 md:px-4"
+                >
+                  <span className="flex items-baseline justify-between gap-3">
+                    <span className="t-label-sm text-faint">{w.ref}</span>
+                    <span className="meta">{w.subject}</span>
+                  </span>
+                  <span className="mt-3 block font-display text-[1.125rem] leading-snug text-ink transition-colors group-hover:text-accent md:text-[1.25rem]">
+                    {w.title}
+                  </span>
+                  <span className="t-small mt-2 block italic text-muted">{w.subtitle}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </Reveal>
+
+        <div className="mt-7">
+          <TextLink href="/workshops">The full workshop catalogue</TextLink>
+        </div>
+      </div>
+    </Band>
+  );
+}
+
+/* ------------------------------------------------ 10 · Engagement record */
+
+function EngagementRecord() {
+  return (
+    <Band rhythm="tight" rule>
+      <div className="shell">
+        <div className="egrid">
+          <div className="col-span-6 md:col-span-3">
+            <h2 className="t-label text-accent">Selected engagements</h2>
+            <p className="t-tiny measure-xs mt-4">
+              Where Columbus has presented, from his published speaker profile.
+              <Src n={src.ref("speaker-profile")} id="speaker-profile" /> These are speaking
+              engagements — not client relationships and not endorsements.
+            </p>
+            <p className="meta mt-4">2015–2019 · 7 entries</p>
+          </div>
+
+          <div className="col-span-6 md:col-span-8 md:col-start-5">
             <Reveal>
-              <ul className="reveal border-t border-night-rule">
-                {speakingIntro.qualities.map((q) => (
-                  <li key={q.label} className="border-b border-night-rule py-4">
-                    <span className="font-display text-[1.125rem] tracking-[-0.01em] text-night-ink">
-                      {q.label}
-                    </span>
-                    <span className="mt-1 block text-[0.875rem] leading-relaxed text-night-muted">
-                      {q.note}
+              <ul className="register reveal">
+                {engagements.map((e) => (
+                  <li key={e.organization}>
+                    <span className="grid grid-cols-[1fr_auto] items-baseline gap-x-6 py-3">
+                      <span>
+                        <span className="block font-display text-[1.0625rem] leading-snug text-ink md:text-[1.125rem]">
+                          {e.organization}
+                        </span>
+                        <span className="meta mt-1 block">
+                          {[e.detail, e.locations].filter(Boolean).join(" · ")}
+                        </span>
+                      </span>
+                      <span className="meta tabular whitespace-nowrap text-right">
+                        {e.years}
+                      </span>
                     </span>
                   </li>
                 ))}
               </ul>
-
-              {quote ? (
-                <figure className="reveal mt-10">
-                  <blockquote className="font-display text-[1.25rem] leading-[1.45] tracking-[-0.012em] text-night-ink md:text-[1.375rem]">
-                    “{quote.quote}”
-                  </blockquote>
-                  <figcaption className="t-label mt-5 text-night-muted">
-                    {quote.attribution} · {quote.source}
-                  </figcaption>
-                </figure>
-              ) : null}
             </Reveal>
           </div>
         </div>
       </div>
-    </Section>
+    </Band>
   );
 }
 
-/* ----------------------------------------------------------- 07 WAZA story */
+/* ------------------------------------------------------- 11 · Why WAZA */
 
 function WazaStory() {
   return (
-    <Section id="why-waza" className="border-t border-rule">
+    <Band ground="night" rhythm="normal" id="why-waza">
       <div className="shell">
         <Reveal>
-          <SectionLabel index="06" className="reveal">
-            The name
-          </SectionLabel>
-
-          <div className="mt-10 grid gap-12 lg:grid-cols-12 lg:gap-16">
-            <div className="lg:col-span-5">
-              <h2 className="t-h1 reveal text-ink">{waza.headline}</h2>
-
-              {/* The original dictionary entry, recovered from the dormant WAZA
-                  site and set as the typographic centrepiece it deserves. */}
-              <div className="reveal mt-10 border-t-2 border-ink pt-6">
-                <p className="font-display text-[2rem] leading-none tracking-[0.02em] text-ink">
-                  {waza.word}
-                </p>
-                <p className="mt-2 text-[0.875rem] italic text-muted">
-                  {waza.partOfSpeech} · pronounced “{waza.pronunciation}”
-                </p>
-                <ol className="mt-5 space-y-2">
-                  {waza.definitions.map((d, i) => (
-                    <li key={d} className="flex gap-3 text-[1.0625rem] text-ink">
-                      <span className="t-label pt-1.5 text-accent">{i + 1}</span>
-                      <span>{d}</span>
-                    </li>
-                  ))}
-                </ol>
-                <p className="mt-6 border-t border-rule pt-4 text-[0.8125rem] leading-relaxed text-faint">
-                  {waza.etymologyNote}
-                </p>
+          <div className="egrid">
+            <div className="col-span-6 md:col-span-5">
+              <p className="t-label reveal text-night-accent">The name</p>
+              <div className="reveal mt-6">
+                <DefinitionBlock night />
               </div>
             </div>
 
-            <div className="lg:col-span-6 lg:col-start-7">
-              <p className="t-lede reveal">{waza.standfirst}</p>
+            <div className="col-span-6 md:col-span-6 md:col-start-7">
+              <h2 className="t-h1 reveal text-night-ink">{waza.standfirst}</h2>
               {waza.body.map((p) => (
-                <p key={p.slice(0, 24)} className="t-body reveal mt-5">
+                <p key={p.slice(0, 20)} className="t-body reveal measure mt-5">
                   {p}
                 </p>
               ))}
+
+              {/* A short specimen of his own language — the lexicon in miniature. */}
+              <dl className="reveal mt-8 border-t border-night-rule">
+                {lexicon.slice(0, 3).map((l) => (
+                  <div
+                    key={l.term}
+                    className="grid grid-cols-1 gap-x-6 border-b border-night-rule py-3 md:grid-cols-[9rem_1fr]"
+                  >
+                    <dt className="t-label-sm pt-1 text-night-accent">{l.term}</dt>
+                    <dd className="t-small">
+                      &ldquo;{l.phrase}&rdquo;
+                      <span className="meta ml-2">{l.from}</span>
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+              <p className="meta mt-4">
+                From the WAZA lexicon
+                <Src n={src.ref("waza-site")} id="waza-site" />
+                <Src n={src.ref("etymology")} id="etymology" />
+              </p>
             </div>
           </div>
         </Reveal>
       </div>
-    </Section>
+    </Band>
   );
 }
 
-/* -------------------------------------------------------------- 08 Insights */
+/* --------------------------------------------------- 12 · Working notes */
 
-function InsightsPreview() {
-  const hasPublished = publishedInsights.length > 0;
-
+function WorkingNotes() {
   return (
-    <Section className="border-t border-rule bg-paper-2/50">
+    <Band rhythm="tight">
+      <div className="shell">
+        <div className="mb-8 flex flex-wrap items-baseline justify-between gap-4 border-b border-rule pb-3">
+          <h2 className="t-label text-accent">Working notes</h2>
+          <p className="meta">An agenda, not an archive · nothing published yet</p>
+        </div>
+
+        <div className="egrid">
+          <div className="col-span-6 md:col-span-3">
+            <p className="t-small measure-xs">
+              WAZA has published nothing under this name. Rather than fill the space with
+              placeholder writing, this is the agenda — the six arguments the practice is
+              working out, each traceable to material Columbus has already delivered.
+            </p>
+            <div className="mt-6">
+              <TextLink href="/insights">Open the agenda</TextLink>
+            </div>
+          </div>
+
+          <div className="col-span-6 md:col-span-8 md:col-start-5">
+            <Reveal>
+              <Register className="reveal">
+                {themes.map((t) => (
+                  <RegisterRow
+                    key={t.id}
+                    refCode={t.n}
+                    title={t.title}
+                    meta={`Note · ${t.category}`}
+                    right={t.evidenceFrom}
+                    href={`/insights#${t.id}`}
+                  />
+                ))}
+              </Register>
+            </Reveal>
+          </div>
+        </div>
+      </div>
+    </Band>
+  );
+}
+
+/* --------------------------------------------------------- 13 · Closing */
+
+function Closing() {
+  return (
+    <Band ground="paper2" rhythm="tight" className="border-t-2 border-ink">
       <div className="shell">
         <Reveal>
-          <SectionLabel index="07" className="reveal">
-            Insights
-          </SectionLabel>
-          <div className="mt-8 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-            <h2 className="t-h2 reveal max-w-lg text-ink">{insightsIntro.headline}</h2>
-            <p className="t-body reveal max-w-sm text-[1rem] md:text-right">
-              {insightsIntro.body}
-            </p>
-          </div>
-        </Reveal>
-
-        <Reveal className="mt-14 grid gap-px border-t border-rule sm:grid-cols-2 lg:grid-cols-3">
-          {(hasPublished ? publishedInsights.slice(0, 3) : plannedThemes).map((item) => (
-            <article
-              key={item.title}
-              className="reveal flex flex-col border-b border-rule bg-paper p-7 sm:border-r sm:last:border-r-0"
-            >
-              <span className="t-label text-accent">{item.category}</span>
-              <h3 className="t-h3 mt-6 text-[1.25rem] text-ink md:text-[1.375rem]">
-                {item.title}
-              </h3>
-              <p className="t-body mt-3 flex-1 text-[0.9375rem]">
-                {"note" in item ? item.note : item.excerpt}
+          <div className="egrid items-end">
+            <div className="col-span-6 md:col-span-8">
+              <h2 className="t-display reveal text-ink">
+                Complex change doesn&rsquo;t need more noise.
+              </h2>
+              <p className="reveal mt-4 font-display text-[clamp(1.5rem,3vw,2.25rem)] leading-tight text-accent">
+                It needs clarity.
               </p>
-              {!hasPublished ? (
-                <p className="t-label mt-6 text-faint">In progress</p>
-              ) : null}
-            </article>
-          ))}
-        </Reveal>
-
-        <Reveal className="mt-10">
-          <div className="reveal">
-            <TextLink href="/insights">Explore Insights</TextLink>
+            </div>
+            <div className="col-span-6 md:col-span-3 md:col-start-10">
+              <div className="reveal flex flex-col gap-2.5">
+                <CtaButton href="/contact">Start a Conversation</CtaButton>
+                <CtaButton href="/contact?inquiry=speaking" variant="outline">
+                  Book Columbus to Speak
+                </CtaButton>
+              </div>
+            </div>
           </div>
         </Reveal>
       </div>
-    </Section>
-  );
-}
-
-/* ----------------------------------------------------------- 09 Closing CTA */
-
-function ClosingCta() {
-  return (
-    <Section night className="border-t border-night-rule">
-      <div className="shell">
-        <Reveal className="max-w-4xl">
-          <h2 className="t-display reveal text-night-ink">
-            Complex change doesn&rsquo;t need more noise.
-          </h2>
-          <p className="reveal mt-6 font-display text-[1.5rem] leading-[1.3] tracking-[-0.015em] text-night-accent md:text-[2rem]">
-            It needs clarity, alignment, and action.
-          </p>
-          <div className="reveal mt-10 flex flex-col gap-3 sm:flex-row">
-            <CtaButton href="/contact" variant="night">
-              Start a Conversation
-            </CtaButton>
-            <CtaButton href="/contact?inquiry=speaking" variant="outlineNight">
-              Book Columbus
-            </CtaButton>
-          </div>
-        </Reveal>
-      </div>
-    </Section>
+    </Band>
   );
 }

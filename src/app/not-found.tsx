@@ -1,14 +1,14 @@
 import { Reveal } from "@/components/reveal";
-import { CtaButton, Section, SectionLabel } from "@/components/ui";
+import { Band, CtaButton } from "@/components/ui";
 
 export default function NotFound() {
   return (
-    <Section className="pt-20 md:pt-28">
+    <Band className="pt-20 md:pt-28">
       <div className="shell-narrow">
         <Reveal>
-          <SectionLabel index="404" className="reveal">
+          <p className="t-label text-accent reveal">
             Not found
-          </SectionLabel>
+          </p>
           <h1 className="t-h1 reveal mt-8 text-ink">
             That page isn&rsquo;t here.
           </h1>
@@ -21,6 +21,6 @@ export default function NotFound() {
           </div>
         </Reveal>
       </div>
-    </Section>
+    </Band>
   );
 }

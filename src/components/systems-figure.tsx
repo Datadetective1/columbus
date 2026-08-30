@@ -21,7 +21,7 @@ function rhombus(cy: number) {
   return `M${300 - HALF_W} ${cy} L300 ${cy - HALF_D} L${300 + HALF_W} ${cy} L300 ${cy + HALF_D} Z`;
 }
 
-/** Interior hatching parallel to the plane's two edge directions. */
+/** Interior hatching parallel to the plane’s two edge directions. */
 function hatch(cy: number) {
   const lines: string[] = [];
   for (let t = 0.25; t < 1; t += 0.25) {

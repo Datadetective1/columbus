@@ -49,7 +49,7 @@ export const careerArc = [
   },
   {
     stage: "Consulting",
-    note: "Walking into other people's problems and having to understand them quickly.",
+    note: "Walking into other people’s problems and having to understand them quickly.",
   },
   {
     stage: "Business & enterprise architecture",

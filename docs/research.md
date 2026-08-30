@@ -252,3 +252,67 @@ leads with **"Two worlds. One perspective."** rather than a services grid.
 Everything on the site traces back to a documented source. Nothing about clients,
 outcomes, revenue impact, awards, or current engagements has been invented, because none
 of it was documented.
+
+
+---
+
+## 7. Second pass — the redesign (August 2026)
+
+The first build was factually sound and visually too quiet. The client's judgement was
+that it read as a personal portfolio rather than a practice with a body of work behind it,
+and the measurements agreed:
+
+| Metric (homepage, 1440px) | First build |
+| --- | --- |
+| In-content links | 13 |
+| Words per 1000px of scroll | 110 |
+| Rows containing no content | 37% |
+| Longest empty run | 600px |
+| Padding spent between bands | ~2,300px |
+
+The cause was structural, not decorative: a single `Section` component applied the same
+144px top and bottom padding to every band, and three consecutive sections used the same
+5/6 column split. Uniform rhythm plus uniform occupancy reads as a template no matter how
+good the writing is.
+
+### What changed
+
+- A declared rhythm scale replaced the single padding value, and a rule was adopted that
+  **no two adjacent bands may share a rhythm, a ground, or a module archetype**.
+- Thirteen distinct module archetypes replaced four.
+- The homepage became a front page: what the practice is thinking about sits above what it
+  sells.
+- Ten new routes — five advisory capability pages and six working notes.
+- The catalogue was made visible: reference numbers, dated registers, contents plates, a
+  footer sitemap.
+- **Provenance became a design feature.** See `docs/mckinsey-design-study.md` §3.
+
+### What did not change
+
+Every factual claim, every verbatim string, and every integrity rule from the first pass
+carried over untouched — with one correction: a hyphen in "Business Modeling 101 -
+Intrapreneurship" had been silently typeset as an em dash and was restored.
+
+### New material mined from the same sources
+
+Re-reading the archive for the redesign surfaced substance that the first pass had left on
+the table:
+
+1. **A three-move method in his own words.** The speaker profile says he "enables your
+   audience to discover where they are, helps them get unstuck, and navigates them towards
+   achieving their strategic direction." Discover → Unstick → Navigate. It was sitting in
+   plain sight inside a paragraph.
+2. **A connective argument across the catalogue.** The three keynotes and six workshops are
+   not a list — every one of them is about a *relationship* or a *shared understanding*
+   problem being misdiagnosed as a technical, strategic or process problem. That argument
+   became the six working notes.
+3. **His vocabulary is the strongest voice asset in the archive.** "Moving from parenting to
+   partnering." "Trading places for understanding." "The field of dreams marked by the
+   graves of expertly built solutions." Nobody else writes like that. It became the lexicon.
+
+### Still unknown, still not invented
+
+Everything in §4 above remains open, plus items surfaced during the redesign and recorded
+in `docs/columbus-review-checklist.md`: whether the 2018 catalogue is still current, the
+entity-name conflict, and whether any of the search-recovered career detail is accurate.
+None of it has been guessed at.

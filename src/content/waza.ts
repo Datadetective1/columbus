@@ -1,7 +1,7 @@
 /**
  * The WAZA brand story.
  *
- * The definition below was recovered from the dormant WAZA site's indexed
+ * The definition below was recovered from the dormant WAZA site’s indexed
  * content and is preserved VERBATIM. It is the strongest piece of brand IP in
  * the historical material.
  *

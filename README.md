@@ -35,6 +35,7 @@ Requires Node 20+.
 
 | File | What it is |
 | --- | --- |
+| `docs/mckinsey-design-study.md` | The design principles this site is built on, and what was deliberately not borrowed |
 | `docs/research.md` | What was investigated, what was found, what was preserved, modernised and retired |
 | `docs/source-notes.md` | Every factual claim on the site, with its source and whether it is safe to publish |
 | `docs/columbus-review-checklist.md` | Everything Columbus needs to approve — plus a short checklist for Amary before showing him |
@@ -50,19 +51,30 @@ rarely need touching.
 
 ```
 src/content/
-  site.ts          brand name, legal name, canonical URL, nav, contact config
+  site.ts          brand name, legal name, canonical URL, navigation, contact config
   bio.ts           hero copy, career arc, About narrative, leadership principles
-  services.ts      advisory areas, engagement model, the three homepage pathways
+  capabilities.ts  the five advisory capabilities, challenges, engagement model
+  themes.ts        the six working notes — claim, argument, documented evidence
+  lexicon.ts       Columbus's own phrasing, quoted exactly and glossed
   speaking.ts      keynotes (verbatim), speaker intro, previous engagements
-  workshops.ts     the six workshop sessions (titles verbatim)
+  workshops.ts     the six workshop sessions (titles verbatim, W-01…W-06)
   experience.ts    career domains, employer-name switch
   credentials.ts   education and certifications, each with a `verified` flag
   testimonials.ts  the two documented quotes, with a master on/off switch
-  insights.ts      the content engine — currently, honestly, empty
+  insights.ts      categories and the published-article structure (still empty)
+  sources.ts       the provenance registry behind every superscript marker
   images.ts        photography slots
   social.ts        external profile links
   waza.ts          the WAZA definition and brand story
 ```
+
+### Reference numbers
+
+`K-01…K-03` (keynotes), `W-01…W-06` (workshops), `A-01…A-05` (capabilities) and
+`N-01…N-06` (working notes) appear throughout. They are an authority device and they are
+only allowed to be one while they are true: the keynote order is the one-sheet's order,
+and the workshop order is the coordinate-verified reading order of its 3×2 grid. Do not
+invent a series that does not exist.
 
 ### Things that are switches, not rewrites
 
@@ -140,12 +152,34 @@ Set `NEXT_PUBLIC_SITE_URL` before launch or canonical URLs will point at the
 
 ---
 
+## Routes
+
+```
+/                          home — 13 bands
+/about                     the deep page: §1 Position … §5 The name
+/advisory                  challenges → capabilities → engagement model
+/advisory/[slug]           five capability pages
+/speaking                  keynotes, the record, testimonials
+/workshops                 six sessions
+/insights                  the agenda + the lexicon
+/insights/[slug]           six working notes
+/contact                   a plain HTML form, no JavaScript required
+/privacy                   honest placeholder
+```
+
 ## Design notes
 
 - **One committed light palette**: warm ivory ground, warm near-black ink, a single
   deep rust accent taken from the historical WAZA mark (an angular black-and-red
   "W"). Dark bands invert the same palette rather than introducing a second one.
   There is no dark mode; `color-scheme: light` is set explicitly.
+- **Two rules govern every layout.** Air belongs *between* groups, never inside them; and
+  no two adjacent bands may share a rhythm, a ground, or a module archetype. The first
+  version broke both, which is why it read as a portfolio.
+- **Provenance is visible.** Documented claims carry a superscript marker resolving to a
+  *Notes & sources* block at the foot of the page (`src/content/sources.ts`,
+  `src/components/provenance.tsx`). It is the source-notes discipline made into a design
+  feature — see `docs/mckinsey-design-study.md` §3.
 - **Type**: Fraunces for display, Inter for text, IBM Plex Mono for labels. The
   monospaced labels are the engineering-drawing voice, and they are what stop the
   site reading as a generic consulting template.

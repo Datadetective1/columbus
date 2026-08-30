@@ -1,247 +1,286 @@
-import { ImageSlot } from "@/components/image-slot";
+import { Register, RegisterRow, Stamp } from "@/components/modules";
+import { Src, SourceNotes } from "@/components/provenance";
 import { Reveal } from "@/components/reveal";
-import { CtaButton, Section, SectionLabel } from "@/components/ui";
+import { Band, BandHead, CtaButton, TextLink } from "@/components/ui";
 import { documentedSpeakerIntro } from "@/content/bio";
-import {
-  engagements,
-  engagementsNote,
-  speakingIntro,
-  talks,
-} from "@/content/speaking";
+import { capabilities } from "@/content/capabilities";
+import { engagements, engagementsNote, speakingIntro, talks } from "@/content/speaking";
+import { sourceIndex } from "@/content/sources";
 import { visibleTestimonials } from "@/content/testimonials";
+import { themes } from "@/content/themes";
+import { workshops } from "@/content/workshops";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
   title: "Speaking",
   description:
-    "Keynotes and sessions on transformation, technology adoption, business and IT partnership, strategy and purpose. Book Columbus Brown to speak.",
+    "Keynotes on transformation, technology adoption, business and IT partnership, strategy and purpose. Book Columbus Brown to speak.",
   path: "/speaking",
 });
+
+const src = sourceIndex(["speaker-profile", "editorial", "needs-review"]);
+
+/** Which advisory capability each keynote sits closest to. */
+const TALK_LINKS: Record<string, string> = {
+  "power-of-a-name": "leadership-teams",
+  "make-it-easy-now": "business-technology",
+  "i-built-it-and-they-didnt-come": "transformation-adoption",
+};
 
 export default function SpeakingPage() {
   return (
     <>
-      {/* Intro */}
-      <Section className="pt-14 md:pt-20 lg:pt-24">
+      <Band rhythm="tight" className="border-t-2 border-accent">
         <div className="shell">
-          <Reveal>
-            <SectionLabel index="01" className="reveal">
-              Speaking
-            </SectionLabel>
-            <div className="mt-10 grid gap-12 lg:grid-cols-12 lg:gap-16">
-              <div className="lg:col-span-7">
-                <h1 className="t-h1 reveal text-ink">{speakingIntro.headline}</h1>
-                <p className="t-lede reveal mt-8 max-w-xl">{speakingIntro.body[0]}</p>
-                <p className="t-body reveal mt-5 max-w-xl">{speakingIntro.body[1]}</p>
-                <div className="reveal mt-9">
-                  <CtaButton href="/contact?inquiry=speaking">Invite Columbus to Speak</CtaButton>
-                </div>
-              </div>
-              <div className="lg:col-span-4 lg:col-start-9">
-                <ImageSlot slot="speaking02" className="reveal" sizes="(min-width: 1024px) 33vw, 100vw" />
+          <div className="egrid items-end">
+            <div className="col-span-6 md:col-span-8">
+              <Stamp parts={["Speaking", "Three keynotes", "K-01 to K-03"]} />
+              <h1 className="t-display mt-5 text-ink">{speakingIntro.headline}</h1>
+            </div>
+            <div className="col-span-6 md:col-span-3 md:col-start-10">
+              <p className="t-small measure-xs">{speakingIntro.body[0]}</p>
+              <div className="mt-5">
+                <CtaButton href="/contact?inquiry=speaking">Invite Columbus to Speak</CtaButton>
               </div>
             </div>
-          </Reveal>
-        </div>
-      </Section>
-
-      {/* His own description — verbatim */}
-      <Section className="border-t border-rule bg-paper-2/50 !py-16 md:!py-20">
-        <div className="shell">
-          <Reveal>
-            <figure className="reveal mx-auto max-w-4xl">
-              <blockquote className="font-display text-[1.375rem] leading-[1.45] tracking-[-0.015em] text-ink md:text-[1.75rem]">
-                {documentedSpeakerIntro}
-              </blockquote>
-              <figcaption className="t-label mt-7 text-faint">
-                From Columbus&rsquo;s published speaker profile
-              </figcaption>
-            </figure>
-          </Reveal>
-        </div>
-      </Section>
-
-      {/* What he brings */}
-      <Section className="border-t border-rule">
-        <div className="shell">
-          <Reveal>
-            <SectionLabel index="02" className="reveal">
-              In the room
-            </SectionLabel>
-            <h2 className="t-h2 reveal mt-8 max-w-2xl text-ink">
-              Five things an audience gets, in whatever order the room needs them.
-            </h2>
-          </Reveal>
-
-          <Reveal className="mt-14 grid gap-px border-t border-rule sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
-            {speakingIntro.qualities.map((q, i) => (
-              <article key={q.label} className="reveal border-b border-rule py-7 sm:pr-6">
-                <span className="t-label text-faint">{String(i + 1).padStart(2, "0")}</span>
-                <h3 className="mt-4 font-display text-[1.125rem] leading-snug tracking-[-0.01em] text-ink">
-                  {q.label}
-                </h3>
-                <p className="mt-2.5 text-[0.875rem] leading-relaxed text-muted">{q.note}</p>
-              </article>
-            ))}
-          </Reveal>
-        </div>
-      </Section>
-
-      {/* The talks */}
-      <Section className="border-t border-rule bg-paper-2/50">
-        <div className="shell">
-          <Reveal>
-            <SectionLabel index="03" className="reveal">
-              Keynotes
-            </SectionLabel>
-            <h2 className="t-h2 reveal mt-8 max-w-2xl text-ink">
-              Three talks, developed over years of delivering them.
-            </h2>
-            <p className="t-body reveal mt-6 max-w-xl">
-              Titles and descriptions are Columbus&rsquo;s own, from his published speaker
-              material.
-            </p>
-          </Reveal>
-
-          <div className="mt-16 space-y-px">
-            {talks.map((talk, i) => (
-              <Reveal key={talk.slug} className="border-t border-rule">
-                <article id={talk.slug} className="scroll-mt-28 py-10 md:py-14">
-                  <div className="grid gap-8 md:grid-cols-12">
-                    <div className="md:col-span-5">
-                      <span className="t-label text-accent">
-                        {String(i + 1).padStart(2, "0")} / Keynote
-                      </span>
-                      <h3 className="t-h3 reveal mt-5 text-[1.5rem] text-ink md:text-[2rem]">
-                        {talk.title}
-                      </h3>
-                      <p className="reveal mt-3 font-display text-[1.0625rem] italic leading-snug text-accent md:text-[1.125rem]">
-                        {talk.subtitle}
-                      </p>
-                    </div>
-
-                    <div className="md:col-span-6 md:col-start-7">
-                      <p className="t-body reveal">{talk.overview}</p>
-
-                      <blockquote className="reveal mt-6 border-l border-rule-strong pl-5 text-[0.9375rem] leading-relaxed text-muted">
-                        {talk.documentedDescription}
-                      </blockquote>
-
-                      <dl className="reveal mt-8 grid gap-6 border-t border-rule pt-6 sm:grid-cols-2">
-                        <div>
-                          <dt className="t-label text-faint">Ideal audience</dt>
-                          <dd className="mt-2.5 text-[0.9375rem] leading-relaxed text-ink/85">
-                            {talk.audience}
-                          </dd>
-                        </div>
-                        <div>
-                          <dt className="t-label text-faint">Formats</dt>
-                          <dd className="mt-2.5 flex flex-wrap gap-2">
-                            {talk.formats.map((f) => (
-                              <span
-                                key={f}
-                                className="rounded-[2px] border border-rule px-2.5 py-1 text-[0.8125rem] text-muted"
-                              >
-                                {f}
-                              </span>
-                            ))}
-                          </dd>
-                        </div>
-                      </dl>
-                    </div>
-                  </div>
-                </article>
-              </Reveal>
-            ))}
           </div>
-        </div>
-      </Section>
 
-      {/* Full-bleed photography band. Renders nothing until a photograph is
-          approved — see components/image-slot.tsx. */}
-      <ImageSlot slot="speaking01" className="w-full border-0" sizes="100vw" hideWhenEmpty />
-
-      {/* Engagements */}
-      <Section night className="border-t border-night-rule">
-        <div className="shell">
-          <Reveal>
-            <SectionLabel index="04" className="reveal">
-              History
-            </SectionLabel>
-            <div className="mt-10 grid gap-10 lg:grid-cols-12 lg:gap-16">
-              <div className="lg:col-span-5">
-                <h2 className="t-h1 reveal text-night-ink">Selected previous engagements</h2>
-              </div>
-              <div className="lg:col-span-6 lg:col-start-7">
-                <p className="t-body reveal">{engagementsNote}</p>
-              </div>
-            </div>
-          </Reveal>
-
-          <Reveal className="mt-14">
-            <ul className="border-t border-night-rule">
-              {engagements.map((e) => (
-                <li
-                  key={e.organization}
-                  className="reveal grid gap-2 border-b border-night-rule py-5 md:grid-cols-12 md:items-baseline md:gap-8"
-                >
-                  <span className="font-display text-[1.125rem] leading-snug tracking-[-0.01em] text-night-ink md:col-span-5">
-                    {e.organization}
-                  </span>
-                  <span className="text-[0.9375rem] text-night-muted md:col-span-4">
-                    {e.detail}
-                    {e.locations ? <span className="block text-[0.8125rem]">{e.locations}</span> : null}
-                  </span>
-                  <span className="t-label text-night-muted md:col-span-3 md:text-right">
-                    {e.years}
-                  </span>
+          {/* Contents plate */}
+          <nav aria-label="Keynotes" className="mt-10 border-t-2 border-ink pt-4">
+            <ol className="grid md:grid-cols-3">
+              {talks.map((t, i) => (
+                <li key={t.slug} className={i > 0 ? "md:border-l md:border-rule md:pl-5" : "md:pr-5"}>
+                  <a href={`#${t.slug}`} className="group block border-t border-rule py-3 md:border-t-0">
+                    <span className="t-label-sm text-accent">{t.ref}</span>
+                    <span className="mt-1.5 block font-display text-[1.125rem] leading-snug text-ink transition-colors group-hover:text-accent">
+                      {t.title}
+                    </span>
+                    <span className="meta mt-1 block">{t.subtitle}</span>
+                  </a>
                 </li>
               ))}
-            </ul>
-          </Reveal>
+            </ol>
+          </nav>
         </div>
-      </Section>
+      </Band>
+
+      {/* His own words, given a whole band */}
+      <Band rhythm="tight" ground="night">
+        <div className="shell">
+          <div className="egrid">
+            <div className="col-span-6 md:col-span-3">
+              <h2 className="t-label text-night-accent">In his own words</h2>
+              <p className="meta mt-4">Speaker profile · verbatim</p>
+            </div>
+            <blockquote className="col-span-6 md:col-span-8 md:col-start-5">
+              <p className="font-display text-[1.25rem] leading-[1.45] text-night-ink md:text-[1.75rem]">
+                {documentedSpeakerIntro}
+              </p>
+              <cite className="meta mt-5 block not-italic">
+                Columbus Brown II, published speaker profile
+                <Src n={src.ref("speaker-profile")} id="speaker-profile" />
+              </cite>
+            </blockquote>
+          </div>
+
+          <ul className="mt-12 grid border-t border-night-rule md:grid-cols-5">
+            {speakingIntro.qualities.map((q, i) => (
+              <li
+                key={q.label}
+                className={`border-b border-night-rule py-4 md:border-b-0 ${
+                  i > 0 ? "md:border-l md:border-night-rule md:pl-4" : ""
+                }`}
+              >
+                <span className="t-label-sm block text-night-muted">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <span className="mt-2 block font-display text-[1.0625rem] text-night-ink">
+                  {q.label}
+                </span>
+                <span className="t-tiny mt-1.5 block">{q.note}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </Band>
+
+      {/* The keynotes, each a full editorial entry */}
+      {talks.map((talk, i) => (
+        <Band
+          key={talk.slug}
+          id={talk.slug}
+          rhythm="tight"
+          ground={i % 2 === 1 ? "paper2" : "paper"}
+          rule
+          className="scroll-mt-32"
+        >
+          <div className="shell">
+            <div className="egrid items-end">
+              <div className="col-span-6 md:col-span-8">
+                <Stamp parts={["Keynote", talk.ref]} />
+                <h2 className="t-h1 mt-4 text-ink">{talk.title}</h2>
+                <p className="mt-3 font-display text-[1.125rem] italic leading-snug text-accent md:text-[1.375rem]">
+                  {talk.subtitle}
+                </p>
+              </div>
+              <div className="col-span-6 md:col-span-3 md:col-start-10">
+                <dl>
+                  <dt className="t-label-sm text-faint">Formats</dt>
+                  <dd className="mt-2 flex flex-wrap gap-2">
+                    {talk.formats.map((f) => (
+                      <span key={f} className="meta border border-rule-strong px-2 py-1">
+                        {f}
+                      </span>
+                    ))}
+                  </dd>
+                </dl>
+              </div>
+            </div>
+
+            <div className="egrid mt-8 border-t border-rule pt-7">
+              <blockquote className="col-span-6 md:col-span-5">
+                <p className="font-display text-[1.0625rem] leading-[1.5] text-ink md:text-[1.1875rem]">
+                  &ldquo;{talk.documentedDescription}&rdquo;
+                </p>
+                <cite className="meta mt-3 block not-italic">
+                  Verbatim, speaker profile
+                  <Src n={src.ref("speaker-profile")} id="speaker-profile" />
+                </cite>
+              </blockquote>
+
+              <div className="col-span-6 md:col-span-4 md:col-start-7">
+                <p className="t-body measure">{talk.overview}</p>
+                <dl className="mt-6 border-t border-rule pt-4">
+                  <dt className="t-label-sm text-faint">Ideal audience</dt>
+                  <dd className="t-small mt-2">
+                    {talk.audience}
+                    <Src n={src.ref("editorial")} id="editorial" />
+                  </dd>
+                </dl>
+              </div>
+
+              <aside className="col-span-6 md:col-span-2 md:col-start-11">
+                <h3 className="t-label-sm border-b border-rule pb-2 text-faint">See also</h3>
+                <ul className="mt-2 space-y-2">
+                  <li>
+                    <TextLink href={`/advisory/${TALK_LINKS[talk.slug]}`}>
+                      {capabilities.find((c) => c.slug === TALK_LINKS[talk.slug])?.title}
+                    </TextLink>
+                  </li>
+                  <li>
+                    <TextLink href={`/insights#${themes[i]?.id ?? "adoption"}`}>
+                      {themes[i]?.title}
+                    </TextLink>
+                  </li>
+                </ul>
+              </aside>
+            </div>
+          </div>
+        </Band>
+      ))}
+
+      {/* The record */}
+      <Band id="record" rhythm="tight" rule className="scroll-mt-32">
+        <div className="shell">
+          <div className="egrid">
+            <div className="col-span-6 md:col-span-3">
+              <h2 className="t-h2 text-ink">Selected previous engagements</h2>
+              <p className="t-tiny measure-xs mt-4">{engagementsNote}</p>
+              <p className="meta mt-4">2015–2019 · 7 entries</p>
+            </div>
+
+            <div className="col-span-6 md:col-span-8 md:col-start-5">
+              <Reveal>
+                <ul className="register reveal">
+                  {engagements.map((e) => (
+                    <li key={e.organization}>
+                      <span className="grid grid-cols-[1fr_auto] items-baseline gap-x-6 py-4">
+                        <span>
+                          <span className="block font-display text-[1.125rem] leading-snug text-ink md:text-[1.25rem]">
+                            {e.organization}
+                          </span>
+                          <span className="meta mt-1 block">
+                            {[e.detail, e.locations].filter(Boolean).join(" · ")}
+                          </span>
+                        </span>
+                        <span className="meta tabular whitespace-nowrap text-right">
+                          {e.years}
+                        </span>
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </Reveal>
+            </div>
+          </div>
+        </div>
+      </Band>
 
       {/* Testimonials */}
-      {visibleTestimonials.length > 0 ? (
-        <Section className="border-t border-rule">
+      {visibleTestimonials.length ? (
+        <Band ground="paper2" rhythm="tight" rule>
           <div className="shell">
-            <Reveal>
-              <SectionLabel index="05" className="reveal">
-                What people said
-              </SectionLabel>
-            </Reveal>
-            <Reveal className="mt-12 grid gap-10 md:grid-cols-2 md:gap-16">
+            <h2 className="t-label border-b border-rule pb-2 text-faint">What people said</h2>
+            <div className="egrid mt-8">
               {visibleTestimonials.map((t) => (
-                <figure key={t.attribution} className="reveal">
-                  <blockquote className="font-display text-[1.25rem] leading-[1.45] tracking-[-0.012em] text-ink md:text-[1.4375rem]">
-                    “{t.quote}”
+                <figure key={t.attribution} className="col-span-6 md:col-span-6">
+                  <blockquote className="font-display text-[1.1875rem] leading-[1.45] text-ink md:text-[1.375rem]">
+                    &ldquo;{t.quote}&rdquo;
                   </blockquote>
-                  <figcaption className="t-label mt-6 text-faint">
+                  <figcaption className="meta mt-4">
                     {t.attribution} · {t.source}
+                    <Src n={src.ref("speaker-profile")} id="speaker-profile" />
                   </figcaption>
                 </figure>
               ))}
-            </Reveal>
+            </div>
+            <p className="t-tiny mt-8 border-t border-rule pt-4">
+              Both reproduced character-for-character with the attribution as printed. They are
+              approximately seven years old.
+              <Src n={src.ref("needs-review")} id="needs-review" />
+            </p>
           </div>
-        </Section>
+        </Band>
       ) : null}
 
-      {/* CTA */}
-      <Section night className="border-t border-night-rule">
+      {/* Also available */}
+      <Band ground="night" rhythm="tight">
         <div className="shell">
-          <Reveal className="max-w-3xl">
-            <h2 className="t-h1 reveal text-night-ink">
-              Tell him about the room, and what you want it thinking about afterwards.
-            </h2>
-            <div className="reveal mt-10">
-              <CtaButton href="/contact?inquiry=speaking" variant="night">
-                Invite Columbus to Speak
-              </CtaButton>
-            </div>
-          </Reveal>
+          <BandHead
+            n="W"
+            label="Also available"
+            heading="Six working sessions."
+            headingClass="t-h2"
+            night
+            standfirst="Where a keynote changes how a room thinks, a workshop changes what it does."
+          />
+          <div className="mt-8">
+            <Register>
+              {workshops.map((w) => (
+                <RegisterRow
+                  key={w.slug}
+                  refCode={w.ref}
+                  title={w.title}
+                  meta={w.subtitle}
+                  right={w.subject}
+                  href={`/workshops#${w.slug}`}
+                  night
+                />
+              ))}
+            </Register>
+          </div>
+          <div className="mt-10 flex flex-col gap-2.5 sm:flex-row">
+            <CtaButton href="/contact?inquiry=speaking" variant="night">
+              Invite Columbus to Speak
+            </CtaButton>
+            <CtaButton href="/workshops" variant="outlineNight">
+              The workshop catalogue
+            </CtaButton>
+          </div>
         </div>
-      </Section>
+      </Band>
+
+      <SourceNotes notes={src.notes} />
     </>
   );
 }

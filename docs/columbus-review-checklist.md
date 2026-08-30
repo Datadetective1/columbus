@@ -28,6 +28,22 @@ Ordered roughly by how much it matters.
 - [ ] **Indexing.** The site is `noindex, nofollow` everywhere. It stays that way until
       someone deliberately flips it. → `SITE_PUBLIC=true`
 
+## 🟠 New in the redesign — all of this is ours, not his
+
+- [ ] **The six working notes** (`/insights`). Titles, claims and three-paragraph arguments
+      written by us, each anchored to a verbatim quotation from his own material. They are
+      labelled "In development" and carry no byline or date, but they are arguments made in
+      his name. He should read all six. → `src/content/themes.ts`
+- [ ] **The WAZA lexicon.** His phrases are quoted exactly; the glosses beneath them are
+      ours. → `src/content/lexicon.ts`
+- [ ] **"Discover. Unstick. Navigate."** presented as his method on the About page. The
+      sentence is verbatim from his speaker profile; calling it a method is our reading.
+- [ ] **The five advisory capabilities**, including the "heard as" challenge sentences —
+      entirely new writing. → `src/content/capabilities.ts`
+- [ ] **Reference numbers** (`K-01`, `W-01`, `A-01`, `N-01`). The keynote and workshop
+      numbers record real documented orderings; confirm he is comfortable with the
+      catalogue framing.
+
 ## 🟠 Your words, please
 
 - [ ] **Biography** (About page). Written from documented sources, but it is a narrative — it

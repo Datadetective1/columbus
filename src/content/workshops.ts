@@ -14,8 +14,16 @@
 
 export type Workshop = {
   slug: string;
+  /**
+   * Catalogue reference. Numbered in the reading order of the one-sheet’s 3x2
+   * grid, which was confirmed by coordinate extraction — so the numbering
+   * records a real documented order rather than inventing a series.
+   */
+  ref: string;
   title: string;
   subtitle: string;
+  /** One-line neutral descriptor for register rows. */
+  subject: string;
   who: string;
   problem: string;
   focus: string[];
@@ -27,25 +35,11 @@ export const formatNote = "Format can be tailored to the organization.";
 
 export const workshops: Workshop[] = [
   {
-    slug: "business-strategy-masterclass",
-    title: "Business Strategy Masterclass",
-    subtitle: "How Healthy Partnerships Maximize Business Value",
-    who: "Leadership teams and the managers who have to carry a strategy into the work.",
-    problem:
-      "The strategy exists. It is written down, it was presented, and it is not visibly changing what anyone does on a Tuesday.",
-    focus: [
-      "What a strategy has to contain to be executable",
-      "Where value leaks between functions that depend on each other",
-      "Reading an organization's real priorities from its behaviour, not its deck",
-      "Making trade-offs explicit rather than leaving them to be discovered",
-    ],
-    outcome:
-      "A shared, plain-language account of what the organization is actually trying to do — and what it is choosing not to do.",
-  },
-  {
     slug: "aligning-products-to-corporate-strategy",
+    ref: "W-01",
     title: "Aligning Your Products to Corporate Strategy",
     subtitle: "Perspective and Patterns that Bridge Strategy to Execution",
+    subject: "Portfolio · Strategy to execution",
     who: "Product, portfolio and program leaders sitting between corporate intent and delivery.",
     problem:
       "Every initiative can be justified against the strategy. That is usually the sign that the strategy is not deciding anything.",
@@ -59,9 +53,29 @@ export const workshops: Workshop[] = [
       "A defensible view of which work genuinely advances the strategy, and which has simply been argued into it.",
   },
   {
+    slug: "business-strategy-masterclass",
+    ref: "W-02",
+    title: "Business Strategy Masterclass",
+    subtitle: "How Healthy Partnerships Maximize Business Value",
+    subject: "Strategy · Leadership",
+    who: "Leadership teams and the managers who have to carry a strategy into the work.",
+    problem:
+      "The strategy exists. It is written down, it was presented, and it is not visibly changing what anyone does on a Tuesday.",
+    focus: [
+      "What a strategy has to contain to be executable",
+      "Where value leaks between functions that depend on each other",
+      "Reading an organization’s real priorities from its behaviour, not its deck",
+      "Making trade-offs explicit rather than leaving them to be discovered",
+    ],
+    outcome:
+      "A shared, plain-language account of what the organization is actually trying to do — and what it is choosing not to do.",
+  },
+  {
     slug: "business-modeling-101",
-    title: "Business Modeling 101 — Intrapreneurship",
+    ref: "W-03",
+    title: "Business Modeling 101 - Intrapreneurship",
     subtitle: "Leveraging Startup Techniques for Corporate Transformation",
+    subject: "Business modeling · Innovation",
     who: "Teams asked to build something new inside an organization built to run something existing.",
     problem:
       "Internal ventures are held to the certainty of established operations while being asked for the speed of a startup.",
@@ -76,8 +90,10 @@ export const workshops: Workshop[] = [
   },
   {
     slug: "foundational-change-management",
+    ref: "W-04",
     title: "Foundational Change Management",
     subtitle: "Fundamentals for Project Managers and Business Analysts",
+    subject: "Change · Adoption",
     who: "Project managers, business analysts and delivery leads responsible for change they do not own.",
     problem:
       "Change management arrives as a communications plan near the end, once the decisions that determined adoption have already been made.",
@@ -92,8 +108,10 @@ export const workshops: Workshop[] = [
   },
   {
     slug: "ambidextrous-teamwork",
+    ref: "W-05",
     title: "Ambidextrous Teamwork",
     subtitle: "Getting Dreamers and Doers to get things Done",
+    subject: "Teams · Collaboration",
     who: "Mixed teams where the people who imagine and the people who deliver keep frustrating each other.",
     problem:
       "The dreamers think the doers are blockers. The doers think the dreamers are unserious. Both are partly right, and the work suffers.",
@@ -108,8 +126,10 @@ export const workshops: Workshop[] = [
   },
   {
     slug: "conflict-without-chaos",
+    ref: "W-06",
     title: "Conflict without Chaos for Teams",
     subtitle: "Establishing Conflict Norms for Positive Outcomes",
+    subject: "Teams · Conflict",
     who: "Teams that either avoid disagreement entirely or handle it badly — and leaders who need them not to.",
     problem:
       "Disagreement is where the useful information is. Most teams route around it, so decisions get made without the objection that mattered.",

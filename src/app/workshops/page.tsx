@@ -1,6 +1,9 @@
-import { ImageSlot } from "@/components/image-slot";
-import { Reveal } from "@/components/reveal";
-import { CtaButton, Section, SectionLabel } from "@/components/ui";
+import { Register, RegisterRow, Stamp } from "@/components/modules";
+import { Src, SourceNotes } from "@/components/provenance";
+import { Band, BandHead, CtaButton, TextLink } from "@/components/ui";
+import { capabilities } from "@/content/capabilities";
+import { sourceIndex } from "@/content/sources";
+import { talks } from "@/content/speaking";
 import { formatNote, workshops } from "@/content/workshops";
 import { buildMetadata } from "@/lib/seo";
 
@@ -11,123 +14,180 @@ export const metadata = buildMetadata({
   path: "/workshops",
 });
 
+const src = sourceIndex(["speaker-profile", "editorial"]);
+
+/** Which capability each session sits closest to. */
+const LINKS: Record<string, string> = {
+  "aligning-products-to-corporate-strategy": "strategy-execution",
+  "business-strategy-masterclass": "strategy-execution",
+  "business-modeling-101": "business-architecture",
+  "foundational-change-management": "transformation-adoption",
+  "ambidextrous-teamwork": "leadership-teams",
+  "conflict-without-chaos": "leadership-teams",
+};
+
 export default function WorkshopsPage() {
   return (
     <>
-      <Section className="pt-14 md:pt-20 lg:pt-24">
+      <Band rhythm="tight" className="border-t-2 border-accent">
         <div className="shell">
-          <Reveal>
-            <SectionLabel index="01" className="reveal">
-              Workshops
-            </SectionLabel>
-            <div className="mt-10 grid gap-12 lg:grid-cols-12 lg:gap-16">
-              <div className="lg:col-span-7">
-                <h1 className="t-h1 reveal text-ink">
-                  A room that leaves agreeing on something.
-                </h1>
-                <p className="t-lede reveal mt-8 max-w-xl">
-                  A keynote changes how a room thinks. A workshop changes what it does on
-                  Monday. These are working sessions — the group does the work, and leaves
-                  with something they built rather than something they were shown.
-                </p>
-                <p className="t-body reveal mt-5 max-w-xl">
-                  Six sessions, developed and delivered over years with business analysis,
-                  project management, agile and enterprise architecture communities.
-                </p>
-              </div>
-              <div className="lg:col-span-4 lg:col-start-9">
-                <ImageSlot slot="workshop01" className="reveal" sizes="(min-width: 1024px) 33vw, 100vw" />
-              </div>
+          <div className="egrid items-end">
+            <div className="col-span-6 md:col-span-8">
+              <Stamp parts={["Workshops", "Six sessions", "W-01 to W-06"]} />
+              <h1 className="t-display mt-5 text-ink">From listening to doing.</h1>
             </div>
-          </Reveal>
-        </div>
-      </Section>
+            <div className="col-span-6 md:col-span-3 md:col-start-10">
+              <p className="t-small measure-xs">
+                A keynote changes how a room thinks. A workshop changes what it does on Monday
+                — the group does the work, and leaves with something it built rather than
+                something it was shown.
+              </p>
+            </div>
+          </div>
 
-      <Section className="border-t border-rule !pt-0">
-        <div className="shell">
-          <Reveal>
-            <ol className="border-t border-rule">
+          {/* Contents plate — the catalogue up front */}
+          <nav aria-label="Sessions" className="mt-10 border-t-2 border-ink pt-4">
+            <h2 className="t-label text-faint">The catalogue</h2>
+            <ol className="mt-3 grid md:grid-cols-3">
               {workshops.map((w, i) => (
-                <li key={w.slug} id={w.slug} className="reveal scroll-mt-28 border-b border-rule py-10 md:py-14">
-                  <div className="grid gap-8 md:grid-cols-12">
-                    <div className="md:col-span-4">
-                      <span className="t-label text-accent">
-                        {String(i + 1).padStart(2, "0")}
-                      </span>
-                      <h2 className="t-h3 mt-4 text-ink">{w.title}</h2>
-                      <p className="mt-3 font-display text-[1.0625rem] italic leading-snug text-muted">
-                        {w.subtitle}
-                      </p>
-
-                      <p className="t-label mt-7 text-faint">Who it&rsquo;s for</p>
-                      <p className="mt-2.5 text-[0.9375rem] leading-relaxed text-ink/85">
-                        {w.who}
-                      </p>
-                    </div>
-
-                    <div className="md:col-span-4">
-                      <p className="t-label text-faint">The problem</p>
-                      <p className="mt-2.5 text-[0.9375rem] leading-relaxed text-ink/85">
-                        {w.problem}
-                      </p>
-
-                      <p className="t-label mt-7 text-faint">Possible outcome</p>
-                      <p className="mt-2.5 text-[0.9375rem] leading-relaxed text-ink/85">
-                        {w.outcome}
-                      </p>
-                    </div>
-
-                    <div className="md:col-span-3 md:col-start-10">
-                      <p className="t-label text-faint">Focus</p>
-                      <ul className="mt-3 space-y-2.5">
-                        {w.focus.map((f) => (
-                          <li key={f} className="flex gap-2.5 text-[0.9375rem] leading-relaxed text-muted">
-                            <span aria-hidden="true" className="mt-2 h-px w-3 shrink-0 bg-accent" />
-                            <span>{f}</span>
-                          </li>
-                        ))}
-                      </ul>
-                      <p className="mt-6 border-t border-rule pt-4 text-[0.8125rem] leading-relaxed text-faint">
-                        {formatNote}
-                      </p>
-                    </div>
-                  </div>
+                <li
+                  key={w.slug}
+                  className={`${i % 3 !== 0 ? "md:border-l md:border-rule md:pl-5" : ""} md:pr-5`}
+                >
+                  <a href={`#${w.slug}`} className="group block border-t border-rule py-3">
+                    <span className="flex items-baseline justify-between gap-3">
+                      <span className="t-label-sm text-accent">{w.ref}</span>
+                      <span className="meta">{w.subject}</span>
+                    </span>
+                    <span className="mt-1.5 block font-display text-[1.0625rem] leading-snug text-ink transition-colors group-hover:text-accent">
+                      {w.title}
+                    </span>
+                  </a>
                 </li>
               ))}
             </ol>
-          </Reveal>
+          </nav>
         </div>
-      </Section>
+      </Band>
 
-      <Section night className="border-t border-night-rule">
-        <div className="shell">
-          <Reveal className="max-w-3xl">
-            <SectionLabel index="02" className="reveal">
-              Shaping a session
-            </SectionLabel>
-            <h2 className="t-h1 reveal mt-8 text-night-ink">
-              None of these arrive off the shelf.
-            </h2>
-            <p className="t-lede reveal mt-7">
-              Every one of them is shaped around what your group is actually stuck on, how much
-              time you have, and whether they are in a room together or not. Tell him the
-              situation and he will tell you which of these is the right starting point — or
-              whether it is a different session entirely.
-            </p>
-            <div className="reveal mt-10 flex flex-col gap-3 sm:flex-row">
-              <CtaButton href="/contact?inquiry=workshop" variant="night">
-                Plan a Workshop
-              </CtaButton>
-              <CtaButton
-                href="/speaking"
-                variant="outlineNight"
-              >
-                See speaking topics
-              </CtaButton>
+      {/* The sessions */}
+      {workshops.map((w, i) => (
+        <Band
+          key={w.slug}
+          id={w.slug}
+          rhythm="tight"
+          ground={i % 2 === 1 ? "paper2" : "paper"}
+          rule
+          className="scroll-mt-32"
+        >
+          <div className="shell">
+            <div className="egrid">
+              <div className="col-span-6 md:col-span-4">
+                <Stamp parts={["Workshop", w.ref, w.subject]} />
+                <h2 className="t-h2 mt-4 text-ink">{w.title}</h2>
+                <p className="mt-3 font-display text-[1.0625rem] italic leading-snug text-accent md:text-[1.1875rem]">
+                  {w.subtitle}
+                  <Src n={src.ref("speaker-profile")} id="speaker-profile" />
+                </p>
+
+                <dl className="mt-7 border-t border-rule pt-4">
+                  <dt className="t-label-sm text-faint">Who it&rsquo;s for</dt>
+                  <dd className="t-small mt-2">{w.who}</dd>
+                </dl>
+              </div>
+
+              <div className="col-span-6 md:col-span-4">
+                <dl>
+                  <dt className="t-label-sm text-faint">The problem</dt>
+                  <dd className="t-body mt-2 text-[1rem]">{w.problem}</dd>
+                </dl>
+                <dl className="mt-7 border-t border-rule pt-4">
+                  <dt className="t-label-sm text-faint">Possible outcome</dt>
+                  <dd className="t-small mt-2">{w.outcome}</dd>
+                </dl>
+              </div>
+
+              <div className="col-span-6 md:col-span-3 md:col-start-10">
+                <dl>
+                  <dt className="t-label-sm text-faint">Focus</dt>
+                  <dd>
+                    <ul className="mt-2 space-y-2">
+                      {w.focus.map((f) => (
+                        <li key={f} className="t-small flex gap-2.5">
+                          <span aria-hidden="true" className="mt-2.5 h-px w-3 shrink-0 bg-accent" />
+                          <span>{f}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </dd>
+                </dl>
+                <p className="meta mt-5 border-t border-rule pt-3">{formatNote}</p>
+                <div className="mt-3">
+                  <TextLink href={`/advisory/${LINKS[w.slug]}`}>
+                    {capabilities.find((c) => c.slug === LINKS[w.slug])?.title}
+                  </TextLink>
+                </div>
+              </div>
             </div>
-          </Reveal>
+          </div>
+        </Band>
+      ))}
+
+      {/* Shaping a session */}
+      <Band ground="night" rhythm="tight">
+        <div className="shell">
+          <BandHead
+            label="Shaping a session"
+            heading="None of these arrive off the shelf."
+            night
+            standfirst={
+              <>
+                No duration and no price is quoted anywhere on this site, because none is
+                documented. Format is shaped around the group.
+                <Src n={src.ref("editorial")} id="editorial" />
+              </>
+            }
+          />
+
+          <div className="egrid mt-10">
+            <p className="t-lede col-span-6 md:col-span-6">
+              Every one is shaped around what your group is actually stuck on, how much time you
+              have, and whether they are in a room together. Tell him the situation and he will
+              say which of these is the right starting point — or whether it is a different
+              session entirely.
+            </p>
+
+            <div className="col-span-6 md:col-span-5 md:col-start-8">
+              <h2 className="t-label border-b border-night-rule pb-2 text-night-accent">
+                Or a keynote
+              </h2>
+              <Register>
+                {talks.map((t) => (
+                  <RegisterRow
+                    key={t.slug}
+                    refCode={t.ref}
+                    title={t.title}
+                    right="Keynote"
+                    href={`/speaking#${t.slug}`}
+                    night
+                  />
+                ))}
+              </Register>
+            </div>
+          </div>
+
+          <div className="mt-10 flex flex-col gap-2.5 sm:flex-row">
+            <CtaButton href="/contact?inquiry=workshop" variant="night">
+              Plan a Workshop
+            </CtaButton>
+            <CtaButton href="/speaking" variant="outlineNight">
+              See speaking topics
+            </CtaButton>
+          </div>
         </div>
-      </Section>
+      </Band>
+
+      <SourceNotes notes={src.notes} />
     </>
   );
 }

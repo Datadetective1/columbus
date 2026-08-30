@@ -1,5 +1,5 @@
 import { Reveal } from "@/components/reveal";
-import { Section, SectionLabel } from "@/components/ui";
+import { Band } from "@/components/ui";
 import { site } from "@/content/site";
 import { buildMetadata } from "@/lib/seo";
 
@@ -16,10 +16,10 @@ export const metadata = buildMetadata({
  */
 export default function PrivacyPage() {
   return (
-    <Section className="pt-14 md:pt-20 lg:pt-24">
+    <Band className="pt-14 md:pt-20 lg:pt-24">
       <div className="shell-narrow">
         <Reveal>
-          <SectionLabel className="reveal">Privacy</SectionLabel>
+          <p className="t-label text-accent reveal">Privacy</p>
           <h1 className="t-h1 reveal mt-8 text-ink">How this site handles information.</h1>
 
           <div className="reveal mt-12 space-y-6 border-t border-rule pt-10">
@@ -42,6 +42,6 @@ export default function PrivacyPage() {
           </div>
         </Reveal>
       </div>
-    </Section>
+    </Band>
   );
 }
