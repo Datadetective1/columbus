@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Register, RegisterRow, Stamp } from "@/components/modules";
+import { NoteArt, NoteMark } from "@/components/art/figures";
 import { Src, SourceNotes } from "@/components/provenance";
 import { Reveal } from "@/components/reveal";
 import { Band, BandHead, CtaButton, StatusTag, TextLink } from "@/components/ui";
@@ -47,6 +48,19 @@ export default function InsightsPage() {
               <p className="t-small measure-xs">{insightsIntro.body}</p>
             </div>
           </div>
+
+          <figure className="mt-10 border-t border-rule pt-8">
+            <ul className="grid grid-cols-3 gap-3 sm:grid-cols-6">
+              {themes.map((t) => (
+                <li key={t.id} className="art-tile border border-rule">
+                  <NoteMark id={t.id} className="h-full w-full" />
+                </li>
+              ))}
+            </ul>
+            <figcaption className="meta mt-3">
+              Fig. 01 · Six arguments in development, N-01 to N-06
+            </figcaption>
+          </figure>
 
           {/* The honest standing note. */}
           <p className="t-body measure mt-8 border-t-2 border-ink pt-6">
@@ -126,28 +140,26 @@ export default function InsightsPage() {
           </div>
 
           <Reveal>
-            <ol className="register reveal mt-0 border-t-0">
-              {themes.map((t, i) => (
+            <ol className="reveal grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+              {themes.map((t) => (
                 <li key={t.id} id={t.id} className="scroll-mt-32">
-                  <Link
-                    href={`/insights/${t.id}`}
-                    className="row-link group -mx-3 grid grid-cols-[3.25rem_1fr] gap-x-4 px-3 py-6 md:grid-cols-[3.25rem_minmax(0,26rem)_minmax(0,1fr)] md:gap-x-8"
-                    style={{ "--i": i } as React.CSSProperties}
-                  >
-                    <span className="t-label-sm pt-1.5 text-faint">{t.n}</span>
-                    <span>
-                      <span className="block font-display text-[1.375rem] leading-snug tracking-[-0.012em] text-ink transition-colors group-hover:text-accent md:text-[1.5rem]">
-                        {t.title}
-                      </span>
-                      <span className="meta mt-2 block">
-                        Note · {t.category} · after &ldquo;{t.evidenceFrom}&rdquo;
+                  <Link href={`/insights/${t.id}`} className="group block">
+                    <span className="art-zoom art-tile block aspect-[16/9] border border-rule">
+                      <span className="art-inner block h-full w-full">
+                        <NoteArt id={t.id} className="h-full w-full" />
                       </span>
                     </span>
-                    <span className="col-start-2 mt-3 md:col-start-3 md:mt-0">
-                      <span className="t-small measure block">{t.claim}</span>
-                      <span className="mt-3 block">
-                        <StatusTag status="In development" />
-                      </span>
+                    <span className="mt-4 flex items-baseline justify-between gap-3">
+                      <span className="t-label-sm text-accent">{t.n}</span>
+                      <span className="meta">{t.category}</span>
+                    </span>
+                    <span className="mt-2 block font-display text-[1.3125rem] leading-snug tracking-[-0.012em] text-ink transition-colors group-hover:text-accent">
+                      {t.title}
+                    </span>
+                    <span className="t-small mt-2 block">{t.claim}</span>
+                    <span className="mt-3 flex items-baseline justify-between gap-3">
+                      <StatusTag status="In development" />
+                      <span className="meta">after &ldquo;{t.evidenceFrom}&rdquo;</span>
                     </span>
                   </Link>
                 </li>

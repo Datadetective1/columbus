@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Register, RegisterRow, Stamp } from "@/components/modules";
+import { CapabilityFocus, EngagementFigure } from "@/components/art/marks";
 import { Src, SourceNotes } from "@/components/provenance";
 import { Reveal } from "@/components/reveal";
 import { Band, CtaButton, TextLink } from "@/components/ui";
@@ -25,6 +26,15 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 }
 
 const src = sourceIndex(["editorial", "speaker-profile"]);
+
+/** Which part of the organisational system each capability works on. */
+const TOUCHES: Record<string, string[]> = {
+  "strategy-execution": ["strategy", "execution", "capabilities"],
+  "business-technology": ["technology", "people", "process"],
+  "transformation-adoption": ["people", "process", "execution"],
+  "business-architecture": ["capabilities", "process", "technology"],
+  "leadership-teams": ["people", "strategy"],
+};
 
 /**
  * A single advisory capability.
@@ -67,7 +77,15 @@ export default async function CapabilityPage({
             </div>
           </div>
 
-          <p className="t-lede measure mt-8 border-t border-rule pt-6">{c.lede}</p>
+          <div className="egrid mt-8 items-center border-t border-rule pt-8">
+            <p className="t-lede col-span-6 measure md:col-span-7">{c.lede}</p>
+            <figure className="col-span-6 md:col-span-4 md:col-start-9">
+              <CapabilityFocus touches={TOUCHES[c.slug] ?? []} />
+              <figcaption className="meta mt-3">
+                Fig. 01 · Where {c.title} works in the system
+              </figcaption>
+            </figure>
+          </div>
         </div>
       </Band>
 
@@ -183,6 +201,9 @@ export default async function CapabilityPage({
 
             <div className="col-span-6 md:col-span-3">
               <h2 className="t-label border-b border-rule pb-2 text-faint">How the work runs</h2>
+              <figure className="mt-4">
+                <EngagementFigure className="w-full" />
+              </figure>
               <ol>
                 {engagementModel.map((m) => (
                   <li key={m.step} className="border-b border-rule py-2.5">

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Register, RegisterRow, Stamp } from "@/components/modules";
+import { NoteArt, NoteMark } from "@/components/art/figures";
 import { Src, SourceNotes } from "@/components/provenance";
 import { Band, CtaButton, StatusTag, TextLink } from "@/components/ui";
 import { capabilities } from "@/content/capabilities";
@@ -60,6 +61,9 @@ export default async function NotePage({ params }: { params: Promise<{ slug: str
               <Stamp parts={["Note", t.category]} />
               <h1 className="t-h1 mt-4 text-ink">{t.title}</h1>
               <p className="t-lede measure mt-6">{t.claim}</p>
+              <figure className="art-tile mt-8 aspect-[16/9] border border-rule">
+                <NoteArt id={t.id} className="h-full w-full" />
+              </figure>
             </div>
 
             {/* Where a byline and date would sit. Deliberately empty of both. */}
@@ -128,6 +132,10 @@ export default async function NotePage({ params }: { params: Promise<{ slug: str
                 </figcaption>
               </figure>
 
+              <figure className="art-tile my-10 aspect-[16/10] border border-rule">
+                <NoteArt id={t.id} className="h-full w-full" />
+              </figure>
+
               <h2 className="t-h3 mt-10 text-ink">Where this is worked out</h2>
               <ul className="mt-4 register">
                 {t.worksOut.map((w) => (
@@ -149,6 +157,9 @@ export default async function NotePage({ params }: { params: Promise<{ slug: str
             <aside className="col-span-6 min-w-0 md:col-span-4 md:col-start-9">
               {related.length ? (
                 <>
+                  <span className="art-tile mb-6 block aspect-square border border-rule">
+                    <NoteMark id={t.id} className="h-full w-full" />
+                  </span>
                   <h2 className="t-label border-b border-rule pb-2 text-faint">
                     Advisory capability
                   </h2>

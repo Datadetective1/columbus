@@ -179,7 +179,7 @@ export function TextLink({
   return (
     <Link
       href={href}
-      className={`group inline-flex items-center gap-2 whitespace-nowrap text-[0.9375rem] font-medium transition-colors duration-300 ${
+      className={`group inline-flex items-center gap-2 text-[0.9375rem] font-medium transition-colors duration-300 ${
         night ? "text-night-ink hover:text-night-accent" : "text-ink hover:text-accent"
       } ${className}`}
     >

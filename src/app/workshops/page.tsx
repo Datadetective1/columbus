@@ -1,4 +1,5 @@
 import { Register, RegisterRow, Stamp } from "@/components/modules";
+import { WorkshopMark } from "@/components/art/marks";
 import { Src, SourceNotes } from "@/components/provenance";
 import { Band, BandHead, CtaButton, TextLink } from "@/components/ui";
 import { capabilities } from "@/content/capabilities";
@@ -55,6 +56,11 @@ export default function WorkshopsPage() {
                   className={`${i % 3 !== 0 ? "md:border-l md:border-rule md:pl-5" : ""} md:pr-5`}
                 >
                   <a href={`#${w.slug}`} className="group block border-t border-rule py-3">
+                    <span className="art-zoom art-tile mb-3 block aspect-[4/3] border border-rule">
+                      <span className="art-inner block h-full w-full">
+                        <WorkshopMark slug={w.slug} className="h-full w-full" />
+                      </span>
+                    </span>
                     <span className="flex items-baseline justify-between gap-3">
                       <span className="t-label-sm text-accent">{w.ref}</span>
                       <span className="meta">{w.subject}</span>
@@ -82,6 +88,10 @@ export default function WorkshopsPage() {
         >
           <div className="shell">
             <div className="egrid">
+              <figure className="art-tile col-span-6 mb-6 aspect-[4/3] self-start border border-rule md:col-span-3 md:mb-0">
+                <WorkshopMark slug={w.slug} className="h-full w-full" />
+              </figure>
+
               <div className="col-span-6 md:col-span-4">
                 <Stamp parts={["Workshop", w.ref, w.subject]} />
                 <h2 className="t-h2 mt-4 text-ink">{w.title}</h2>
@@ -96,7 +106,7 @@ export default function WorkshopsPage() {
                 </dl>
               </div>
 
-              <div className="col-span-6 md:col-span-4">
+              <div className="col-span-6 md:col-span-5">
                 <dl>
                   <dt className="t-label-sm text-faint">The problem</dt>
                   <dd className="t-body mt-2 text-[1rem]">{w.problem}</dd>
@@ -107,7 +117,7 @@ export default function WorkshopsPage() {
                 </dl>
               </div>
 
-              <div className="col-span-6 md:col-span-3 md:col-start-10">
+              <div className="col-span-6 md:col-span-4 md:col-start-9">
                 <dl>
                   <dt className="t-label-sm text-faint">Focus</dt>
                   <dd>

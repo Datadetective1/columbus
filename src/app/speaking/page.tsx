@@ -1,4 +1,5 @@
 import { Register, RegisterRow, Stamp } from "@/components/modules";
+import { POSTERS } from "@/components/art/posters";
 import { Src, SourceNotes } from "@/components/provenance";
 import { Reveal } from "@/components/reveal";
 import { Band, BandHead, CtaButton, TextLink } from "@/components/ui";
@@ -51,6 +52,14 @@ export default function SpeakingPage() {
               {talks.map((t, i) => (
                 <li key={t.slug} className={i > 0 ? "md:border-l md:border-rule md:pl-5" : "md:pr-5"}>
                   <a href={`#${t.slug}`} className="group block border-t border-rule py-3 md:border-t-0">
+                    <span className="art-zoom art-tile mb-3 block aspect-[4/5] border border-rule">
+                      <span className="art-inner block h-full w-full">
+                        {(() => {
+                          const P = POSTERS[t.slug as keyof typeof POSTERS];
+                          return P ? <P className="h-full w-full" /> : null;
+                        })()}
+                      </span>
+                    </span>
                     <span className="t-label-sm text-accent">{t.ref}</span>
                     <span className="mt-1.5 block font-display text-[1.125rem] leading-snug text-ink transition-colors group-hover:text-accent">
                       {t.title}
@@ -138,7 +147,16 @@ export default function SpeakingPage() {
             </div>
 
             <div className="egrid mt-8 border-t border-rule pt-7">
-              <blockquote className="col-span-6 md:col-span-5">
+              <figure className="art-zoom art-tile col-span-6 mb-6 aspect-[4/5] border border-rule md:col-span-3 md:mb-0">
+                <span className="art-inner block h-full w-full">
+                  {(() => {
+                    const P = POSTERS[talk.slug as keyof typeof POSTERS];
+                    return P ? <P className="h-full w-full" /> : null;
+                  })()}
+                </span>
+              </figure>
+
+              <blockquote className="col-span-6 md:col-span-4">
                 <p className="font-display text-[1.0625rem] leading-[1.5] text-ink md:text-[1.1875rem]">
                   &ldquo;{talk.documentedDescription}&rdquo;
                 </p>
@@ -148,7 +166,7 @@ export default function SpeakingPage() {
                 </cite>
               </blockquote>
 
-              <div className="col-span-6 md:col-span-4 md:col-start-7">
+              <div className="col-span-6 md:col-span-5 md:col-start-8">
                 <p className="t-body measure">{talk.overview}</p>
                 <dl className="mt-6 border-t border-rule pt-4">
                   <dt className="t-label-sm text-faint">Ideal audience</dt>
@@ -159,7 +177,7 @@ export default function SpeakingPage() {
                 </dl>
               </div>
 
-              <aside className="col-span-6 md:col-span-2 md:col-start-11">
+              <aside className="col-span-6 md:col-span-5 md:col-start-8">
                 <h3 className="t-label-sm border-b border-rule pb-2 text-faint">See also</h3>
                 <ul className="mt-2 space-y-2">
                   <li>

@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { Register, RegisterRow, Stamp } from "@/components/modules";
+import { SystemMap } from "@/components/art/system-map";
+import { EngagementFigure } from "@/components/art/marks";
 import { Src, SourceNotes } from "@/components/provenance";
 import { Reveal } from "@/components/reveal";
 import { Band, BandHead, CtaButton, TextLink } from "@/components/ui";
@@ -41,6 +43,13 @@ export default function AdvisoryPage() {
               <p className="t-small measure-xs">{advisoryIntro.body[0]}</p>
             </div>
           </div>
+
+          <figure className="mt-10 border-t border-rule pt-8">
+            <EngagementFigure className="w-full" />
+            <figcaption className="meta mt-3">
+              Fig. 01 · Understand · Align · Design · Act
+            </figcaption>
+          </figure>
         </div>
       </Band>
 
@@ -93,36 +102,10 @@ export default function AdvisoryPage() {
             standfirst="Each answers the same three questions: what happens, what gets clear, what the work aims at."
           />
 
-          <Reveal className="mt-10">
-            <Register className="reveal">
-              {capabilities.map((c) => (
-                <li key={c.slug} className="border-b border-rule">
-                  <Link
-                    href={`/advisory/${c.slug}`}
-                    className="row-link group -mx-3 grid grid-cols-[3.25rem_1fr] gap-x-4 px-3 py-6 md:grid-cols-[3.25rem_minmax(0,22rem)_minmax(0,1fr)] md:gap-x-8"
-                  >
-                    <span className="t-label-sm pt-1.5 text-faint">{c.n}</span>
-                    <span>
-                      <span className="block font-display text-[1.375rem] leading-snug tracking-[-0.012em] text-ink transition-colors group-hover:text-accent md:text-[1.625rem]">
-                        {c.title}
-                      </span>
-                      <span className="t-small measure mt-2 block">{c.short}</span>
-                    </span>
-                    <span className="col-start-2 mt-4 md:col-start-3 md:mt-0">
-                      <span className="t-label-sm block text-faint">What gets clear</span>
-                      <ul className="mt-2 space-y-1.5">
-                        {c.clarifies.slice(0, 2).map((x) => (
-                          <li key={x} className="t-small flex gap-2.5">
-                            <span aria-hidden="true" className="mt-2.5 h-px w-3 shrink-0 bg-accent" />
-                            <span>{x}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </span>
-                  </Link>
-                </li>
-              ))}
-            </Register>
+          <Reveal className="mt-12">
+            <div className="reveal">
+              <SystemMap />
+            </div>
           </Reveal>
         </div>
       </Band>

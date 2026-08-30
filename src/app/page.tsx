@@ -1,17 +1,13 @@
 import Link from "next/link";
-import {
-  CareerTrack,
-  DefinitionBlock,
-  Register,
-  RegisterRow,
-  Stamp,
-  TitleBlock,
-} from "@/components/modules";
+import { DefinitionBlock, Register, Stamp, TitleBlock } from "@/components/modules";
 import { Src, SourceNotes } from "@/components/provenance";
 import { Reveal } from "@/components/reveal";
-import { SystemsFigure } from "@/components/systems-figure";
+import { HeroSystems } from "@/components/art/hero-systems";
+import { NoteArt, NoteMark, SystemEvolution, WazaDuality } from "@/components/art/figures";
+import { PosterAdoption, POSTERS } from "@/components/art/posters";
+import { WorkshopMark } from "@/components/art/marks";
 import { Band, BandHead, CtaButton, TextLink } from "@/components/ui";
-import { careerArc, descriptors, heroCopy } from "@/content/bio";
+import { descriptors } from "@/content/bio";
 import { capabilities } from "@/content/capabilities";
 import { experienceDomains, experienceStatement } from "@/content/experience";
 import { lexicon } from "@/content/lexicon";
@@ -66,22 +62,25 @@ export default function HomePage() {
 
 function Lead() {
   return (
-    <section className="relative border-t-2 border-accent">
-      <div className="shell pt-10 pb-8 md:pt-16 md:pb-12">
-        <div className="egrid items-end">
-          <div className="col-span-6 md:col-span-8">
+    <section className="relative overflow-hidden border-t-2 border-accent paper-grain">
+      <div className="shell relative pt-12 pb-0 md:pt-20 lg:pt-24 lg:pb-16">
+        <div className="egrid items-center">
+          <div className="col-span-6 md:col-span-8 lg:col-span-5">
             <Reveal>
               <Stamp
                 className="reveal"
                 parts={["WAZA", "Founded by Columbus Brown II, MBA, CBA®"]}
               />
-              <h1 className="t-display reveal mt-5 text-ink">{heroCopy.headline}</h1>
+              <h1 className="t-display reveal mt-5 text-ink">
+                Make complex
+                <br />
+                change easier.
+              </h1>
               <p className="t-lede reveal measure mt-6 text-ink/80">
                 Strategy, transformation, leadership and execution for organizations
                 working through consequential change.
               </p>
-              <p className="t-body reveal measure-sm mt-4">{heroCopy.body}</p>
-              <div className="reveal mt-7 flex flex-col gap-2.5 sm:flex-row sm:flex-wrap">
+              <div className="reveal mt-8 flex flex-col gap-2.5 sm:flex-row sm:flex-wrap">
                 <CtaButton href="/contact">Work With Columbus</CtaButton>
                 <CtaButton href="/insights" variant="outline">
                   Explore His Thinking
@@ -89,22 +88,17 @@ function Lead() {
               </div>
             </Reveal>
           </div>
-
-          <div className="col-span-6 md:col-span-3 md:col-start-10">
-            <figure>
-              <SystemsFigure className="w-full" />
-              <TitleBlock
-                figure="01"
-                title="Three systems, one axis"
-                drawnFrom="WAZA position"
-              />
-            </figure>
+          {/* The drawing is the environment, not an illustration beside the
+              text: it holds seven of twelve columns and bleeds past the shell's
+              right edge so the sheet reads as larger than the page. */}
+          <div className="col-span-6 mt-6 lg:col-span-7 lg:mt-0 lg:mr-[calc(var(--gutter)*-1)] xl:mr-[-4vw]">
+            <HeroSystems />
           </div>
         </div>
       </div>
 
       {/* Standing descriptor rail — a masthead line, not a row of pills. */}
-      <div className="border-y border-rule">
+      <div className="relative border-y border-rule bg-paper/80 backdrop-blur-[2px]">
         <div className="shell">
           <ul className="grid grid-cols-2 md:grid-cols-4">
             {descriptors.map((d, i) => (
@@ -143,6 +137,16 @@ function Perspectives() {
           <div className="egrid">
             {/* Rank 1 */}
             <article className="reveal col-span-6 md:col-span-6">
+              <Link
+                href={`/insights/${lead.id}`}
+                aria-hidden="true"
+                tabIndex={-1}
+                className="art-zoom art-tile group mb-6 block aspect-[16/9] border border-rule"
+              >
+                <span className="art-inner block h-full w-full">
+                  <NoteArt id={lead.id} className="h-full w-full" />
+                </span>
+              </Link>
               <Stamp parts={["Perspective", lead.n, "In development"]} />
               <h3 className="t-h1 mt-4 text-ink">
                 <Link href={`/insights#${lead.id}`} className="link-underline">
@@ -166,15 +170,26 @@ function Perspectives() {
             <div className="col-span-6 md:col-span-5 md:col-start-8">
               <Register className="reveal">
                 {rest.map((t) => (
-                  <RegisterRow
-                    key={t.id}
-                    refCode={t.n}
-                    title={t.title}
-                    meta={`Perspective · after "${t.evidenceFrom}"`}
-                    note={t.claim}
-                    right={t.category}
-                    href={`/insights#${t.id}`}
-                  />
+                  <li key={t.id} className="border-b border-rule">
+                    <Link
+                      href={`/insights/${t.id}`}
+                      className="row-link group -mx-3 flex items-start gap-4 px-3 py-4"
+                    >
+                      <span className="art-tile w-16 shrink-0 border border-rule sm:w-20">
+                        <NoteMark id={t.id} className="h-full w-full" />
+                      </span>
+                      <span className="min-w-0 flex-1">
+                        <span className="flex items-baseline justify-between gap-3">
+                          <span className="t-label-sm text-faint">{t.n}</span>
+                          <span className="meta">{t.category}</span>
+                        </span>
+                        <span className="mt-1.5 block font-display text-[1.0625rem] leading-snug text-ink transition-colors group-hover:text-accent md:text-[1.1875rem]">
+                          {t.title}
+                        </span>
+                        <span className="t-small mt-1 block">{t.claim}</span>
+                      </span>
+                    </Link>
+                  </li>
                 ))}
               </Register>
             </div>
@@ -291,32 +306,25 @@ function FeaturedIdea() {
   const talk = talks[2];
 
   return (
-    <Band ground="paper2" rhythm="normal" rule>
-      <div className="shell">
-        <Reveal>
-          <div className="egrid items-end">
-            <div className="col-span-6 md:col-span-8">
-              <Stamp className="reveal" parts={["Featured idea", "Keynote", talk.ref]} />
-              <h2 className="t-display reveal mt-5 text-ink">{talk.title}</h2>
-              <p className="reveal mt-4 font-display text-[1.25rem] italic leading-snug text-accent md:text-[1.5rem]">
-                {talk.subtitle}
-              </p>
-            </div>
-            <div className="col-span-6 md:col-span-3 md:col-start-10">
-              <p className="t-small reveal">{talk.audience}</p>
-              <div className="reveal mt-5 flex flex-wrap gap-2">
-                {talk.formats.map((f) => (
-                  <span key={f} className="meta border border-rule-strong px-2 py-1">
-                    {f}
-                  </span>
-                ))}
-              </div>
-            </div>
+    <Band ground="night" rhythm="flush" className="overflow-hidden">
+      <div className="grid lg:grid-cols-12">
+        {/* The poster runs to the edge of the viewport */}
+        <div className="art-zoom relative lg:col-span-5 lg:min-h-[38rem]">
+          <div className="art-inner absolute inset-0">
+            <PosterAdoption className="h-full w-full object-cover" />
           </div>
+        </div>
 
-          <div className="egrid mt-10 border-t border-rule-strong pt-8">
-            <blockquote className="reveal col-span-6 md:col-span-6">
-              <p className="font-display text-[1.25rem] leading-[1.4] text-ink md:text-[1.625rem]">
+        <div className="flex items-center px-[var(--gutter)] py-14 lg:col-span-7 lg:py-20 lg:pl-14 xl:pl-20">
+          <Reveal>
+            <Stamp className="reveal" parts={["Featured idea", "Keynote", talk.ref]} />
+            <h2 className="t-display reveal mt-5 text-night-ink">{talk.title}</h2>
+            <p className="reveal mt-4 font-display text-[1.25rem] italic leading-snug text-night-accent md:text-[1.5rem]">
+              {talk.subtitle}
+            </p>
+
+            <blockquote className="reveal mt-8 border-l-2 border-night-accent pl-6">
+              <p className="font-display text-[1.125rem] leading-[1.45] text-night-ink md:text-[1.375rem]">
                 &ldquo;{talk.documentedDescription}&rdquo;
               </p>
               <cite className="meta mt-4 block not-italic">
@@ -325,17 +333,18 @@ function FeaturedIdea() {
               </cite>
             </blockquote>
 
-            <div className="reveal col-span-6 md:col-span-5 md:col-start-8">
-              <p className="t-body measure">{talk.overview}</p>
-              <div className="mt-7 flex flex-col gap-2.5 sm:flex-row">
-                <CtaButton href={`/speaking#${talk.slug}`}>Explore the talk</CtaButton>
-                <CtaButton href="/advisory/transformation-adoption" variant="outline">
-                  The advisory work behind it
-                </CtaButton>
-              </div>
+            <p className="t-body reveal measure mt-6">{talk.overview}</p>
+
+            <div className="reveal mt-8 flex flex-col gap-2.5 sm:flex-row">
+              <CtaButton href={`/speaking#${talk.slug}`} variant="night">
+                Explore the talk
+              </CtaButton>
+              <CtaButton href="/advisory/transformation-adoption" variant="outlineNight">
+                The advisory work behind it
+              </CtaButton>
             </div>
-          </div>
-        </Reveal>
+          </Reveal>
+        </div>
       </div>
     </Band>
   );
@@ -417,11 +426,11 @@ function CareerRecord() {
           </div>
 
           <figure className="reveal">
-            <CareerTrack stages={careerArc} />
+            <SystemEvolution />
             <figcaption className="mt-8">
               <TitleBlock
                 figure="02"
-                title="Engineering to enterprise"
+                title="The same way of seeing, at five scales"
                 drawnFrom="Documented career arc"
               />
             </figcaption>
@@ -469,19 +478,30 @@ function Speaking() {
         <div className="egrid mt-10">
           <div className="col-span-6 md:col-span-8">
             <Reveal>
-              <Register className="reveal">
-                {talks.map((t) => (
-                  <RegisterRow
-                    key={t.slug}
-                    refCode={t.ref}
-                    title={t.title}
-                    meta={`Keynote · ${t.subtitle}`}
-                    note={t.overview}
-                    right={`${t.formats.length} formats`}
-                    href={`/speaking#${t.slug}`}
-                  />
-                ))}
-              </Register>
+              <ul className="reveal grid gap-6 sm:grid-cols-3">
+                {talks.map((t) => {
+                  const Poster = POSTERS[t.slug as keyof typeof POSTERS];
+                  return (
+                    <li key={t.slug}>
+                      <Link href={`/speaking#${t.slug}`} className="group block">
+                        <span className="art-zoom art-tile block aspect-[4/5] border border-rule">
+                          <span className="art-inner block h-full w-full">
+                            {Poster ? <Poster className="h-full w-full" /> : null}
+                          </span>
+                        </span>
+                        <span className="mt-3 flex items-baseline justify-between gap-2">
+                          <span className="t-label-sm text-faint">{t.ref}</span>
+                          <span className="meta">Keynote</span>
+                        </span>
+                        <span className="mt-1.5 block font-display text-[1.0625rem] leading-snug text-ink transition-colors group-hover:text-accent md:text-[1.1875rem]">
+                          {t.title}
+                        </span>
+                        <span className="t-small mt-1 block italic">{t.subtitle}</span>
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
             </Reveal>
           </div>
 
@@ -530,16 +550,21 @@ function Workshops() {
               >
                 <Link
                   href={`/workshops#${w.slug}`}
-                  className="row-link group block h-full px-0 py-5 md:px-4"
+                  className="row-link group flex h-full gap-4 px-0 py-5 md:px-4"
                 >
-                  <span className="flex items-baseline justify-between gap-3">
-                    <span className="t-label-sm text-faint">{w.ref}</span>
-                    <span className="meta">{w.subject}</span>
+                  <span className="art-tile hidden w-20 shrink-0 self-start border border-rule sm:block">
+                    <WorkshopMark slug={w.slug} className="h-full w-full" />
                   </span>
-                  <span className="mt-3 block font-display text-[1.125rem] leading-snug text-ink transition-colors group-hover:text-accent md:text-[1.25rem]">
-                    {w.title}
+                  <span className="min-w-0 flex-1">
+                    <span className="flex items-baseline justify-between gap-3">
+                      <span className="t-label-sm text-faint">{w.ref}</span>
+                      <span className="meta">{w.subject}</span>
+                    </span>
+                    <span className="mt-2 block font-display text-[1.125rem] leading-snug text-ink transition-colors group-hover:text-accent md:text-[1.25rem]">
+                      {w.title}
+                    </span>
+                    <span className="t-small mt-1.5 block italic text-muted">{w.subtitle}</span>
                   </span>
-                  <span className="t-small mt-2 block italic text-muted">{w.subtitle}</span>
                 </Link>
               </li>
             ))}
@@ -610,7 +635,13 @@ function WazaStory() {
           <div className="egrid">
             <div className="col-span-6 md:col-span-5">
               <p className="t-label reveal text-night-accent">The name</p>
-              <div className="reveal mt-6">
+              <figure className="reveal mt-6">
+                <WazaDuality className="w-full" />
+                <figcaption className="meta mt-3">
+                  Fig. 03 · Technique and imagination in one frame
+                </figcaption>
+              </figure>
+              <div className="reveal mt-8">
                 <DefinitionBlock night />
               </div>
             </div>
@@ -678,14 +709,25 @@ function WorkingNotes() {
             <Reveal>
               <Register className="reveal">
                 {themes.map((t) => (
-                  <RegisterRow
-                    key={t.id}
-                    refCode={t.n}
-                    title={t.title}
-                    meta={`Note · ${t.category}`}
-                    right={t.evidenceFrom}
-                    href={`/insights#${t.id}`}
-                  />
+                  <li key={t.id} className="border-b border-rule">
+                    <Link
+                      href={`/insights/${t.id}`}
+                      className="row-link group -mx-3 flex items-center gap-4 px-3 py-3.5"
+                    >
+                      <span className="art-tile w-12 shrink-0 border border-rule">
+                        <NoteMark id={t.id} className="h-full w-full" />
+                      </span>
+                      <span className="min-w-0 flex-1">
+                        <span className="block font-display text-[1.0625rem] leading-snug text-ink transition-colors group-hover:text-accent">
+                          {t.title}
+                        </span>
+                        <span className="meta mt-1 block">Note · {t.category}</span>
+                      </span>
+                      <span className="meta hidden shrink-0 text-right sm:block">
+                        {t.evidenceFrom}
+                      </span>
+                    </Link>
+                  </li>
                 ))}
               </Register>
             </Reveal>

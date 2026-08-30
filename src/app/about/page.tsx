@@ -1,8 +1,10 @@
-import { CareerTrack, DefinitionBlock, Register, RegisterRow, Stamp } from "@/components/modules";
+import { DefinitionBlock, Register, RegisterRow, Stamp } from "@/components/modules";
+import { SystemEvolution, WazaDuality } from "@/components/art/figures";
+import { HeroSystems } from "@/components/art/hero-systems";
 import { Src, SourceNotes } from "@/components/provenance";
 import { Reveal } from "@/components/reveal";
 import { Band, BandHead, CtaButton, TextLink } from "@/components/ui";
-import { about, careerArc, documentedSpeakerIntro, documentedTagline } from "@/content/bio";
+import { about, documentedSpeakerIntro, documentedTagline } from "@/content/bio";
 import { visibleCertifications, visibleEducation } from "@/content/credentials";
 import { experienceDomains, experienceStatement } from "@/content/experience";
 import { lexicon } from "@/content/lexicon";
@@ -63,6 +65,10 @@ export default function AboutPage() {
               <p className="meta mt-3">His own description of the work</p>
             </div>
           </div>
+
+          <figure className="mt-10 border-t border-rule pt-8">
+            <HeroSystems />
+          </figure>
 
           {/* Contents plate */}
           <nav aria-label="Contents" className="mt-10 border-t-2 border-ink pt-4">
@@ -139,9 +145,12 @@ export default function AboutPage() {
           />
 
           <Reveal className="mt-10">
-            <div className="reveal">
-              <CareerTrack stages={careerArc} />
-            </div>
+            <figure className="reveal">
+              <SystemEvolution />
+              <figcaption className="meta mt-6">
+                Fig. 01 · The same way of seeing, pointed at successively larger systems
+              </figcaption>
+            </figure>
           </Reveal>
 
           <div className="egrid mt-10 border-t border-rule pt-8">
@@ -343,7 +352,13 @@ export default function AboutPage() {
           <div className="egrid">
             <div className="col-span-6 md:col-span-5">
               <span className="t-label block text-accent">§5</span>
-              <div className="mt-5">
+              <figure className="mt-5">
+                <WazaDuality className="w-full" />
+                <figcaption className="meta mt-3">
+                  Fig. 02 · Technique and imagination in one frame
+                </figcaption>
+              </figure>
+              <div className="mt-8">
                 <DefinitionBlock />
               </div>
             </div>
