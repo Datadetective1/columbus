@@ -272,7 +272,7 @@ export default function AboutPage() {
             <div className="col-span-6 md:col-span-7 md:col-start-6">
               <div className="flex items-baseline justify-between gap-4 border-b border-rule pb-2">
                 <h3 className="t-label text-faint">Selected engagements</h3>
-                <span className="meta">2015–2019 · 7 entries</span>
+                <span className="meta">2015–2019 · {engagements.length} entries</span>
               </div>
               <ul className="register">
                 {engagements.map((e) => (

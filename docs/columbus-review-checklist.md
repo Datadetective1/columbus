@@ -62,6 +62,16 @@ Ordered roughly by how much it matters.
 - [ ] **"Ideal audience" lines** on each keynote — ours, inferred from your descriptions.
       → `src/content/speaking.ts`
 
+## 🔴 The question the site cannot currently answer
+
+- [ ] **"Is he practising now?"** Every dated fact on this site ends in 2019, because every
+      dated fact we hold ends in 2019. The provenance apparatus makes that *more* visible,
+      not less — a cold visitor can see the record stop. We deliberately did not paper over
+      it, and we could not: there is no documented current engagement, client or talk.
+      This is the single biggest thing only Columbus can fix. Anything current — a recent
+      talk, a current role, an engagement from the last two years, even a date on one
+      published note — closes it immediately.
+
 ## 🟡 Confirm the facts
 
 - [ ] BS Mechanical Engineering, LeTourneau University

@@ -120,7 +120,9 @@ export default function InsightsPage() {
         <div className="shell">
           <div className="flex flex-wrap items-baseline justify-between gap-4 border-b border-rule pb-3">
             <h2 className="t-label text-accent">The agenda</h2>
-            <p className="meta">Six notes · N-01 to N-06 · none published</p>
+            <p className="meta">
+              {themes.length} notes · N-01 to N-{String(themes.length).padStart(2, "0")} · none published
+            </p>
           </div>
 
           <Reveal>

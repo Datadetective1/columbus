@@ -186,7 +186,7 @@ export default function SpeakingPage() {
             <div className="col-span-6 md:col-span-3">
               <h2 className="t-h2 text-ink">Selected previous engagements</h2>
               <p className="t-tiny measure-xs mt-4">{engagementsNote}</p>
-              <p className="meta mt-4">2015–2019 · 7 entries</p>
+              <p className="meta mt-4">2015–2019 · {engagements.length} entries</p>
             </div>
 
             <div className="col-span-6 md:col-span-8 md:col-start-5">

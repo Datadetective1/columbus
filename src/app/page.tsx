@@ -516,7 +516,9 @@ function Workshops() {
       <div className="shell">
         <div className="mb-8 flex flex-wrap items-baseline justify-between gap-4 border-b border-rule pb-3">
           <h2 className="t-label text-accent">Workshops · From listening to doing</h2>
-          <p className="meta">Six documented sessions · W-01 to W-06</p>
+          <p className="meta">
+            {workshops.length} documented sessions · W-01 to W-{String(workshops.length).padStart(2, "0")}
+          </p>
         </div>
 
         <Reveal>
@@ -566,7 +568,7 @@ function EngagementRecord() {
               <Src n={src.ref("speaker-profile")} id="speaker-profile" /> These are speaking
               engagements — not client relationships and not endorsements.
             </p>
-            <p className="meta mt-4">2015–2019 · 7 entries</p>
+            <p className="meta mt-4">2015–2019 · {engagements.length} entries</p>
           </div>
 
           <div className="col-span-6 md:col-span-8 md:col-start-5">
