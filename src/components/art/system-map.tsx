@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { capabilities } from "@/content/capabilities";
+import { CAPABILITY_MARKS } from "./icons";
 
 /**
  * The advisory capabilities as one system, not five cards.
@@ -134,10 +135,22 @@ export function SystemMap({ className = "" }: { className?: string }) {
                   <span className="t-label-sm text-faint">{c.n}</span>
                   <span className="meta">{(TOUCHES[c.slug] ?? []).join(" · ")}</span>
                 </span>
-                <span className="mt-2 block font-display text-[1.25rem] leading-snug text-ink transition-colors group-hover:text-accent md:text-[1.4375rem]">
-                  {c.title}
+                <span className="mt-2 flex items-start gap-4">
+                  {(() => {
+                    const Mark = CAPABILITY_MARKS[c.slug as keyof typeof CAPABILITY_MARKS];
+                    return Mark ? (
+                      <span className="hidden shrink-0 text-accent sm:block">
+                        <Mark />
+                      </span>
+                    ) : null;
+                  })()}
+                  <span>
+                    <span className="block font-display text-[1.25rem] leading-snug text-ink transition-colors group-hover:text-accent md:text-[1.4375rem]">
+                      {c.title}
+                    </span>
+                    <span className="t-small measure mt-1.5 block">{c.short}</span>
+                  </span>
                 </span>
-                <span className="t-small measure mt-1.5 block">{c.short}</span>
               </Link>
             </li>
           ))}

@@ -1,4 +1,5 @@
 import { Register, RegisterRow, Stamp } from "@/components/modules";
+import { FinalCta, PageHero } from "@/components/sections";
 import { POSTERS } from "@/components/art/posters";
 import { Src, SourceNotes } from "@/components/provenance";
 import { Reveal } from "@/components/reveal";
@@ -9,7 +10,7 @@ import { engagements, engagementsNote, speakingIntro, talks } from "@/content/sp
 import { sourceIndex } from "@/content/sources";
 import { visibleTestimonials } from "@/content/testimonials";
 import { themes } from "@/content/themes";
-import { workshops } from "@/content/workshops";
+import { additionalSessions, workshops } from "@/content/workshops";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
@@ -31,23 +32,22 @@ const TALK_LINKS: Record<string, string> = {
 export default function SpeakingPage() {
   return (
     <>
-      <Band rhythm="tight" className="border-t-2 border-accent">
-        <div className="shell">
-          <div className="egrid items-end">
-            <div className="col-span-6 md:col-span-8">
-              <Stamp parts={["Speaking", "Three keynotes", "K-01 to K-03"]} />
-              <h1 className="t-display mt-5 text-ink">{speakingIntro.headline}</h1>
-            </div>
-            <div className="col-span-6 md:col-span-3 md:col-start-10">
-              <p className="t-small measure-xs">{speakingIntro.body[0]}</p>
-              <div className="mt-5">
-                <CtaButton href="/contact?inquiry=speaking">Invite Columbus to Speak</CtaButton>
-              </div>
-            </div>
-          </div>
+      <PageHero
+        kicker="Speaking"
+        heading={speakingIntro.headline}
+        standfirst={speakingIntro.body[0]}
+        actions={
+          <CtaButton href="/contact?inquiry=speaking" variant="night">
+            Invite Columbus to Speak
+          </CtaButton>
+        }
+        wide
+      />
 
-          {/* Contents plate */}
-          <nav aria-label="Keynotes" className="mt-10 border-t-2 border-ink pt-4">
+      {/* Contents plate — the three keynotes, as posters. */}
+      <Band ground="paper" rhythm="tight">
+        <div className="shell">
+          <nav aria-label="Keynotes" className="border-t-2 border-ink pt-4">
             <ol className="grid md:grid-cols-3">
               {talks.map((t, i) => (
                 <li key={t.slug} className={i > 0 ? "md:border-l md:border-rule md:pl-5" : "md:pr-5"}>
@@ -267,7 +267,7 @@ export default function SpeakingPage() {
           <BandHead
             n="W"
             label="Also available"
-            heading="Six working sessions."
+            heading={`${workshops.length + additionalSessions.length} working sessions.`}
             headingClass="t-h2"
             night
             standfirst="Where a keynote changes how a room thinks, a workshop changes what it does."
@@ -286,6 +286,17 @@ export default function SpeakingPage() {
                 />
               ))}
             </Register>
+            <ul className="register mt-0">
+              {additionalSessions.map((title) => (
+                <li key={title}>
+                  <span className="grid grid-cols-[3rem_1fr_auto] items-baseline gap-x-4 py-3.5">
+                    <span className="meta">—</span>
+                    <span className="text-[0.9375rem] leading-snug text-night-muted">{title}</span>
+                    <span className="meta text-right">Detail to follow</span>
+                  </span>
+                </li>
+              ))}
+            </ul>
           </div>
           <div className="mt-10 flex flex-col gap-2.5 sm:flex-row">
             <CtaButton href="/contact?inquiry=speaking" variant="night">
@@ -297,6 +308,11 @@ export default function SpeakingPage() {
           </div>
         </div>
       </Band>
+
+      <FinalCta
+        heading="Bring Columbus to your stage."
+        body="Keynotes, breakouts, leadership sessions and full-day workshops."
+      />
 
       <SourceNotes notes={src.notes} />
     </>

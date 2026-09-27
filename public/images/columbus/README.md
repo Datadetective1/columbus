@@ -1,12 +1,36 @@
 # Photography — where Columbus's approved photos go
 
-**Nothing in this folder yet, and that is deliberate.**
+**Still nothing in this folder, and the site is built to be fine either way.**
 
-We do not have approved photography of Columbus, so the site was designed to look
-finished without any. No image of him was generated, and no photo was taken from
-the web. Every slot renders a designed placeholder instead of a broken image.
+An approved headshot exists — the client supplied it during the build — but it arrived
+in conversation rather than as a file, so the bytes never reached this repository. The
+hero and About portrait slots are already composed for it and render a designed
+placeholder until it lands. No image of Columbus was generated, and no photo was taken
+from the web.
 
-Adding a photograph is a three-line change. No layout code needs touching.
+## To finish the portraits (three lines, no layout code)
+
+1. Save the headshot as `public/images/columbus/columbus.jpg` (or `.webp` / `.png`).
+2. In `src/content/images.ts`, set `src: "/images/columbus/columbus.jpg"` on both the
+   `hero` and `about` slots.
+3. Write a real `alt` on each.
+
+## What the slots expect
+
+Both `hero` and `about` are `shape: "circle"` and square (1000×1000 in the config, which
+only prevents layout shift — any square file works). They are **masked to a disc** and
+composed against an offset cobalt plate on the navy hero.
+
+That is deliberate: the supplied headshot is already a monochrome circular crop on a
+black field, chest-up, three-quarter turn. Forcing it into a rectangle would mean either
+letterboxing it or cropping into his head, and the disc reads as intentional rather than
+as a workaround. Monochrome sits particularly well on the deep navy.
+
+**Supply the highest-resolution original available.** The version received for this build
+is low-resolution and will soften noticeably at hero size on a retina display.
+
+If a future photograph is landscape or environmental instead, change `shape` to `"rect"`
+on that slot and set real `width`/`height`; the component handles the rest.
 
 ---
 

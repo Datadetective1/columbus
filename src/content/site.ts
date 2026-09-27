@@ -17,8 +17,12 @@
 export const isPublic = process.env.SITE_PUBLIC === "true";
 
 export const site = {
-  /** Brand shown in the header, footer and page titles. */
-  brandName: "WAZA",
+  /**
+   * The site is a personal brand site, so the wordmark is his name. WAZA is the
+   * practice behind it and is credited in the footer, not used as the masthead.
+   */
+  brandName: "Columbus Brown",
+  practiceName: "WAZA",
 
   /**
    * Registered entity name for the copyright line.
@@ -29,6 +33,7 @@ export const site = {
 
   personName: "Columbus Brown II",
   personShortName: "Columbus Brown",
+  personCredentials: "MBA, CBA®",
 
   /**
    * Canonical origin. Used for canonical URLs, OpenGraph and the sitemap.
@@ -37,10 +42,10 @@ export const site = {
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://waza.example",
 
   positioning: "Strategy. Transformation. Leadership. Execution.",
-  descriptor: "Helping organizations turn complex ideas into meaningful change.",
+  descriptor: "Helping leaders turn transformation into traction.",
 
   metaDescription:
-    "Columbus Brown II works at the intersection of engineering, strategy and organizations — advisory, speaking and workshops that turn complicated change into clear direction.",
+    "Columbus Brown II — strategy, transformation and business architecture advisory, keynotes and workshops. Helping leaders align strategy, technology, people and execution.",
 
   contact: {
     /**
@@ -54,7 +59,7 @@ export const site = {
     formEndpoint: null as string | null,
 
     /**
-     * Columbus’s historical phone number and personal email appear in the 2018
+     * Columbus's historical phone number and personal email appear in the 2018
      * speaker one-sheet. They are deliberately absent from this codebase and
      * must not be added without his explicit approval.
      */
@@ -62,125 +67,28 @@ export const site = {
 } as const;
 
 /**
- * Navigation.
+ * Primary navigation.
  *
- * Ideas sit first, deliberately: a practice whose thinking is downstream of its
- * services reads as a brochure. The expanded panels are a click-and-keyboard
- * disclosure, never hover — hover menus fail on touch and fail without
- * JavaScript. Every destination in them is also printed into the footer sitemap,
- * so nothing is reachable only through the menu.
+ * Five destinations and one call to action. The previous build carried a
+ * two-storey masthead with five disclosure panels — good for a research
+ * institution, wrong for a personal advisory site, where the job of the nav is
+ * to get someone to the enquiry.
+ *
+ * Secondary destinations (/insights, /workshops, the capability and note detail
+ * pages) are reachable from the pages themselves and printed in the footer, so
+ * nothing is orphaned.
  */
-export type NavGroup = {
-  label: string;
-  href: string;
-  /** Printed in the disclosure panel and in the footer. */
-  panel?: { heading: string; items: { label: string; href: string; meta?: string }[] }[];
-};
+export type NavItem = { label: string; href: string };
 
-export const nav: NavGroup[] = [
-  {
-    label: "Ideas",
-    href: "/insights",
-    panel: [
-      {
-        heading: "Perspectives",
-        items: [
-          { label: "Adoption is the deliverable", href: "/insights#adoption", meta: "N-01" },
-          { label: "Partnering beats parenting", href: "/insights#partnering", meta: "N-02" },
-          { label: "Purpose is a working tool", href: "/insights#purpose", meta: "N-03" },
-          { label: "Strategy is only real where it changes the work", href: "/insights#execution", meta: "N-04" },
-          { label: "Disagreement is information", href: "/insights#disagreement", meta: "N-05" },
-          { label: "You cannot change a shape you cannot see", href: "/insights#shape", meta: "N-06" },
-        ],
-      },
-      {
-        heading: "Working notes",
-        items: [
-          { label: "The agenda", href: "/insights", meta: "Index" },
-          { label: "The WAZA lexicon", href: "/insights#lexicon", meta: "Glossary" },
-        ],
-      },
-    ],
-  },
-  {
-    label: "Advisory",
-    href: "/advisory",
-    panel: [
-      {
-        heading: "Capabilities",
-        items: [
-          { label: "Strategy & Execution", href: "/advisory/strategy-execution", meta: "A-01" },
-          { label: "Business & Technology", href: "/advisory/business-technology", meta: "A-02" },
-          { label: "Transformation & Adoption", href: "/advisory/transformation-adoption", meta: "A-03" },
-          { label: "Business Architecture", href: "/advisory/business-architecture", meta: "A-04" },
-          { label: "Leadership & Teams", href: "/advisory/leadership-teams", meta: "A-05" },
-        ],
-      },
-      {
-        heading: "How the work runs",
-        items: [{ label: "Understand · Align · Design · Act", href: "/advisory#engagement", meta: "Model" }],
-      },
-    ],
-  },
-  {
-    label: "Speaking",
-    href: "/speaking",
-    panel: [
-      {
-        heading: "Keynotes",
-        items: [
-          { label: "Power of a Name", href: "/speaking#power-of-a-name", meta: "K-01" },
-          { label: "Make IT Easy Now", href: "/speaking#make-it-easy-now", meta: "K-02" },
-          { label: "I Built It, & They Didn’t Come", href: "/speaking#i-built-it-and-they-didnt-come", meta: "K-03" },
-        ],
-      },
-      {
-        heading: "Record",
-        items: [
-          { label: "Selected engagements, 2015–2019", href: "/speaking#record", meta: "7 entries" },
-        ],
-      },
-    ],
-  },
-  {
-    label: "Workshops",
-    href: "/workshops",
-    panel: [
-      {
-        heading: "Sessions",
-        items: [
-          { label: "Aligning Your Products to Corporate Strategy", href: "/workshops#aligning-products-to-corporate-strategy", meta: "W-01" },
-          { label: "Business Strategy Masterclass", href: "/workshops#business-strategy-masterclass", meta: "W-02" },
-          { label: "Business Modeling 101 - Intrapreneurship", href: "/workshops#business-modeling-101", meta: "W-03" },
-          { label: "Foundational Change Management", href: "/workshops#foundational-change-management", meta: "W-04" },
-          { label: "Ambidextrous Teamwork", href: "/workshops#ambidextrous-teamwork", meta: "W-05" },
-          { label: "Conflict without Chaos for Teams", href: "/workshops#conflict-without-chaos", meta: "W-06" },
-        ],
-      },
-    ],
-  },
-  {
-    label: "About Columbus",
-    href: "/about",
-    panel: [
-      {
-        heading: "The founder",
-        items: [
-          { label: "Position", href: "/about#position", meta: "§1" },
-          { label: "Route", href: "/about#route", meta: "§2" },
-          { label: "Method", href: "/about#method", meta: "§3" },
-          { label: "Record", href: "/about#record", meta: "§4" },
-        ],
-      },
-      {
-        heading: "The practice",
-        items: [{ label: "Why WAZA", href: "/about#why-waza", meta: "Name" }],
-      },
-    ],
-  },
+export const nav: NavItem[] = [
+  { label: "Home", href: "/" },
+  { label: "Advisory", href: "/advisory" },
+  { label: "Speaking", href: "/speaking" },
+  { label: "About", href: "/about" },
+  { label: "Contact", href: "/contact" },
 ];
 
-export const primaryCta = { href: "/contact", label: "Work With Columbus" } as const;
+export const primaryCta = { href: "/contact", label: "Work with Columbus" } as const;
 export const speakingCta = {
   href: "/contact?inquiry=speaking",
   label: "Book Columbus to Speak",

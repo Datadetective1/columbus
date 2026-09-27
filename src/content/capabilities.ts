@@ -299,3 +299,52 @@ export const notPromised = [
   "A deck that substitutes for a decision",
   "A dependency on Columbus after the work is done",
 ];
+
+/**
+ * How an engagement is actually bought.
+ *
+ * Deliberately says nothing about duration or price. We hold no rate card, and
+ * inventing one would commit Columbus to a number he has not agreed to.
+ */
+export const engagementModes = [
+  {
+    title: "Advisory",
+    body: "Retained guidance for a leader carrying a decision that does not fit in a meeting.",
+  },
+  {
+    title: "Strategy workshops",
+    body: "A facilitated room, a real problem, and a decision at the end of it.",
+  },
+  {
+    title: "Executive working sessions",
+    body: "Small, senior, and pointed at the disagreement everyone has been routing around.",
+  },
+  {
+    title: "Team facilitation",
+    body: "Where the work is stuck between groups rather than inside one.",
+  },
+  {
+    title: "Speaking & keynotes",
+    body: "For the moment an organisation needs the whole room to hear the same thing.",
+  },
+] as const;
+
+/** Why Columbus, in four lines. Each one traces to something on this site. */
+export const whyColumbus = [
+  {
+    title: "Engineering grounding",
+    body: "A former aircraft design engineer. Technologists trust the questions because he has had to answer them.",
+  },
+  {
+    title: "Executive fluency",
+    body: "MBA, enterprise architect, consulting director. The business case is not a translation layer for him.",
+  },
+  {
+    title: "He has led the change, not just recommended it",
+    body: "Accountability for adoption, inside organisations, after the deck was delivered.",
+  },
+  {
+    title: "He leaves the capability behind",
+    body: "The measure of the work is what a team can do once he has gone.",
+  },
+] as const;

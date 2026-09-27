@@ -5,6 +5,30 @@ Conducted before any visual work, per the brief. Findings are blunt: this enviro
 
 ---
 
+## 0. Correction — the scope of this audit
+
+**This document originally claimed to audit "all available visual/image/design
+capabilities". It did not.** It covered MCP servers, browser tooling and CLI utilities,
+and omitted **skills** entirely. Three relevant enabled skills were never examined:
+
+| Skill | What it does | Why the omission mattered |
+| --- | --- | --- |
+| `canvas-design` | Renders `.png` / `.pdf` **locally** | The "no raster art is possible" conclusion in §2 rested on the CDN being blocked. A skill that renders on this machine is not affected by that block at all. |
+| `algorithmic-art` | p5.js generative art, rendered locally | Same — local rendering, no retrieval problem. |
+| `design` | Claude Design canvas | Not assessed. |
+
+The §2 conclusion ("AI raster generation could not be used") is still true *for the
+Gamma/Canva route it describes*, because that route depends on downloading from a blocked
+CDN. It was wrong to generalise it into "raster art is impossible here". It is not; it was
+simply never tried by the one route that would have worked.
+
+The vector-first approach the site actually uses is still defensible on its own merits —
+SVG is themeable, scales, weighs nothing, and survived the palette change in this build
+without a single asset being re-exported. But it was chosen partly on a false premise, and
+this note exists so nobody inherits that premise.
+
+---
+
 ## 1. What is actually available
 
 | Capability | Tool | Status | Verdict |

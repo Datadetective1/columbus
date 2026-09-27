@@ -18,7 +18,14 @@ export type SourceKind =
   /** Our words, unpacking a documented source. Adds framing, not facts. */
   | "derived"
   /** Asserted but not confirmed. Must not be published as fact. */
-  | "unverified";
+  | "unverified"
+  /**
+   * Supplied by the client as the content source of truth. Published, because
+   * the client is the party commissioning the site and is asserting it — but
+   * recorded separately from `documented` so nobody later mistakes an assertion
+   * for something we hold a source for.
+   */
+  | "client-supplied";
 
 export type Source = {
   id: string;
@@ -62,6 +69,13 @@ export const sources = {
     detail:
       "Our words, written by unpacking a documented source. Adds framing and no new facts. Columbus should read these and make them his own.",
     kind: "derived",
+  },
+  "client-brief": {
+    id: "client-brief",
+    short: "Client brief",
+    detail:
+      "Supplied directly by the client as the content source of truth for this build: employer names, proof-point figures and certifications. Not independently confirmed from any source reachable by this build environment, and not present in the 2018 speaker one-sheet. Listed in docs/columbus-review-checklist.md for Columbus to confirm before launch.",
+    kind: "client-supplied",
   },
   "needs-review": {
     id: "needs-review",

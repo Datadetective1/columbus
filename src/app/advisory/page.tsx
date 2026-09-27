@@ -1,108 +1,100 @@
 import Link from "next/link";
-import { Register, RegisterRow, Stamp } from "@/components/modules";
 import { SystemMap } from "@/components/art/system-map";
-import { EngagementFigure } from "@/components/art/marks";
 import { Src, SourceNotes } from "@/components/provenance";
 import { Reveal } from "@/components/reveal";
-import { Band, BandHead, CtaButton, TextLink } from "@/components/ui";
+import { Band, BandHead, TextLink } from "@/components/ui";
+import { AffiliationStrip, FinalCta, PageHero, StatBlock } from "@/components/sections";
 import {
   advisoryIntro,
   capabilities,
   engagementModel,
+  engagementModes,
   notPromised,
+  whyColumbus,
 } from "@/content/capabilities";
+import { impact, impactExtended } from "@/content/proof";
 import { sourceIndex } from "@/content/sources";
-import { themes } from "@/content/themes";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
   title: "Advisory",
   description:
-    "Strategy and execution, business and technology, transformation and adoption, business architecture, leadership and teams — advisory capabilities with Columbus Brown.",
+    "Strategy and execution, business and technology, transformation and adoption, business architecture, leadership and teams — advisory with Columbus Brown.",
   path: "/advisory",
 });
 
-const src = sourceIndex(["editorial", "speaker-profile"]);
+const src = sourceIndex(["editorial", "client-brief", "speaker-profile"]);
 
-/** Every challenge sentence, kept with the capability it belongs to. */
+/**
+ * Two challenge sentences per capability, kept with the capability they belong
+ * to. All twenty would be a wall; ten still lets a reader find their own
+ * problem, and the rest are on each capability page.
+ */
 const challenges = capabilities.flatMap((c) =>
-  c.challenges.map((q) => ({ quote: q, slug: c.slug, title: c.title, ref: c.n })),
+  c.challenges.slice(0, 2).map((q) => ({ quote: q, slug: c.slug, title: c.title, ref: c.n })),
 );
+
+/** Four figures for the "why" band — the widest span of the work. */
+const proof = [impact[0], impact[1], impactExtended[0], impactExtended[3]];
 
 export default function AdvisoryPage() {
   return (
     <>
-      <Band rhythm="tight" className="border-t-2 border-accent">
+      {/* ------------------------------------------------------ 1 · Hero */}
+      <PageHero
+        kicker="Work with Columbus"
+        heading={advisoryIntro.headline}
+        standfirst={advisoryIntro.body[0]}
+        wide
+      />
+
+      {/* ------------------------------------ 2 · What he helps solve */}
+      <Band ground="night2" rhythm="normal">
         <div className="shell">
-          <div className="egrid items-end">
-            <div className="col-span-6 md:col-span-8">
-              <Stamp parts={["Advisory", "Five capabilities", "A-01 to A-05"]} />
-              <h1 className="t-display mt-5 text-ink">{advisoryIntro.headline}</h1>
-            </div>
-            <div className="col-span-6 md:col-span-3 md:col-start-10">
-              <p className="t-small measure-xs">{advisoryIntro.body[0]}</p>
-            </div>
-          </div>
-
-          <figure className="mt-10 border-t border-rule pt-8">
-            <EngagementFigure className="w-full" />
-            <figcaption className="meta mt-3">
-              Fig. 01 · Understand · Align · Design · Act
-            </figcaption>
-          </figure>
-        </div>
-      </Band>
-
-      {/* Challenges — the page opens on the reader’s problem, not our offer. */}
-      <Band rhythm="tight" ground="night">
-        <div className="shell">
-          <div className="flex flex-wrap items-baseline justify-between gap-4 border-b border-night-rule pb-3">
-            <h2 className="t-label text-night-accent">
-              Challenges WAZA helps leaders work through
-            </h2>
-            <p className="meta">Said out loud, roughly like this</p>
-          </div>
-
           <Reveal>
-            <ul className="reveal mt-6 grid gap-x-10 md:grid-cols-2">
-              {challenges.map((c, i) => (
-                <li
-                  key={c.quote}
-                  className="border-b border-night-rule py-4"
-                  style={{ "--i": i % 6 } as React.CSSProperties}
-                >
-                  <Link href={`/advisory/${c.slug}`} className="row-link group -mx-3 block px-3">
-                    <p className="font-display text-[1.0625rem] leading-snug text-night-ink transition-colors group-hover:text-night-accent md:text-[1.1875rem]">
-                      &ldquo;{c.quote}&rdquo;
-                    </p>
-                    <p className="meta mt-2">
-                      {c.ref} · {c.title}
-                    </p>
-                  </Link>
-                </li>
-              ))}
-            </ul>
+            <BandHead
+              n="01"
+              label="What Columbus helps solve"
+              heading="It usually starts as a sentence someone says out loud."
+              standfirst={advisoryIntro.body[1]}
+              night
+            />
           </Reveal>
 
-          <p className="t-small mt-8 measure">
-            {advisoryIntro.body[1]}
-            <Src n={src.ref("editorial")} id="editorial" />
-          </p>
+          <Reveal as="ul" className="mt-12 grid gap-x-10 md:mt-16 md:grid-cols-2">
+            {challenges.map((c, i) => (
+              <li
+                key={c.quote}
+                className="reveal border-b border-night-rule py-4"
+                style={{ "--i": i % 6 } as React.CSSProperties}
+              >
+                <Link href={`/advisory/${c.slug}`} className="row-link group -mx-3 block px-3">
+                  <p className="font-display text-[1.0625rem] leading-snug text-night-ink transition-colors group-hover:text-night-accent md:text-[1.1875rem]">
+                    &ldquo;{c.quote}&rdquo;
+                  </p>
+                  <p className="meta mt-2">
+                    {c.ref} · {c.title}
+                  </p>
+                </Link>
+              </li>
+            ))}
+          </Reveal>
         </div>
       </Band>
 
-      {/* The capabilities */}
-      <Band rhythm="tight">
+      {/* ---------------------------------------- 3 · The capabilities */}
+      <Band ground="paper" rhythm="normal" className="aura-light">
         <div className="shell">
-          <BandHead
-            n="A"
-            label="Capabilities"
-            heading="Five ways in."
-            headingClass="t-h2"
-            standfirst="Each answers the same three questions: what happens, what gets clear, what the work aims at."
-          />
+          <Reveal>
+            <BandHead
+              n="02"
+              label="Capabilities"
+              heading="Five ways in."
+              standfirst="Each answers the same three questions: what happens, what gets clear, and what the work aims at."
+            />
+          </Reveal>
 
-          <Reveal className="mt-12">
+          <Reveal className="mt-12 md:mt-16">
             <div className="reveal">
               <SystemMap />
             </div>
@@ -110,12 +102,38 @@ export default function AdvisoryPage() {
         </div>
       </Band>
 
-      {/* Engagement model */}
-      <Band id="engagement" ground="paper2" rhythm="tight" rule>
+      {/* -------------------------------------- 4 · Engagement modes */}
+      <Band id="engagement" ground="paper2" rhythm="normal" rule className="aura-light">
         <div className="shell">
-          <div className="egrid">
+          <Reveal>
+            <BandHead
+              n="03"
+              label="Engagement modes"
+              heading="How the work is bought."
+              standfirst="Five shapes. Which one fits depends on where the problem actually sits."
+            />
+          </Reveal>
+
+          <Reveal as="ul" className="mt-12 grid gap-px border border-rule bg-rule md:mt-16 md:grid-cols-2 lg:grid-cols-5">
+            {engagementModes.map((m, i) => (
+              <li key={m.title} className="bg-paper">
+                <div
+                  className="reveal flex h-full flex-col p-6"
+                  style={{ "--i": i } as React.CSSProperties}
+                >
+                  <span className="t-label-sm text-accent">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <h3 className="t-h4 mt-4 text-ink">{m.title}</h3>
+                  <p className="t-small mt-3 text-muted">{m.body}</p>
+                </div>
+              </li>
+            ))}
+          </Reveal>
+
+          <div className="egrid mt-16">
             <div className="col-span-6 md:col-span-3">
-              <h2 className="t-h2 text-ink">Four moves, in order, every time.</h2>
+              <h3 className="t-h3 text-ink">Four moves, in order, every time.</h3>
               <p className="t-small measure-xs mt-4">
                 Not a methodology with a trademark. The sequence that keeps a difficult
                 engagement from skipping the part it cannot afford to skip.
@@ -129,7 +147,7 @@ export default function AdvisoryPage() {
                   className="grid grid-cols-[3rem_1fr] gap-x-4 border-t border-rule py-5 md:grid-cols-[3rem_10rem_1fr] md:gap-x-8"
                 >
                   <span className="t-label-sm pt-1.5 text-accent">{m.n}</span>
-                  <h3 className="font-display text-[1.25rem] leading-none text-ink">{m.step}</h3>
+                  <h4 className="font-display text-[1.25rem] leading-none text-ink">{m.step}</h4>
                   <p className="col-start-2 md:col-start-3">
                     <span className="block text-[0.9375rem] font-medium text-ink">{m.title}</span>
                     <span className="t-small mt-1.5 block">{m.body}</span>
@@ -141,59 +159,84 @@ export default function AdvisoryPage() {
         </div>
       </Band>
 
-      {/* Not promised + the thinking behind it */}
-      <Band rhythm="tight" rule>
+      {/* ------------------------------------------ 5 · Why Columbus */}
+      <Band ground="night" rhythm="normal" className="field-rule">
+        <div className="shell">
+          <Reveal>
+            <BandHead
+              n="04"
+              label="Why Columbus"
+              heading="An uncommon combination."
+              standfirst="Technical grounding, business design and accountability for the change itself — rarely found in the same person."
+              night
+            />
+          </Reveal>
+
+          <Reveal as="ul" className="mt-12 grid gap-x-10 gap-y-8 md:mt-16 md:grid-cols-2">
+            {whyColumbus.map((w, i) => (
+              <li
+                key={w.title}
+                className="rule-hair reveal pt-5"
+                style={{ "--i": i } as React.CSSProperties}
+              >
+                <h3 className="t-h4 text-night-ink">{w.title}</h3>
+                <p className="t-small measure-sm mt-3 text-night-muted">{w.body}</p>
+              </li>
+            ))}
+          </Reveal>
+
+          <Reveal as="ul" className="mt-16 grid gap-x-8 gap-y-10 md:grid-cols-4">
+            {proof.map((point, i) => (
+              <StatBlock key={point.figure + point.label} point={point} index={i} />
+            ))}
+          </Reveal>
+          <p className="t-tiny mt-5 text-night-muted">
+            Career figures across engineering, consulting and enterprise transformation — not
+            WAZA engagements.
+            <Src n={src.ref("client-brief")} id="client-brief" />
+          </p>
+
+          <div className="mt-14 border-t border-night-rule pt-8">
+            <AffiliationStrip night />
+          </div>
+        </div>
+      </Band>
+
+      {/* ------------------------------------------- 6 · What it is not */}
+      <Band ground="paper" rhythm="tight" rule>
         <div className="shell">
           <div className="egrid">
-            <div className="col-span-6 md:col-span-5">
+            <div className="col-span-6 md:col-span-4">
               <h2 className="t-h2 text-ink">What this is not.</h2>
-              <ul className="mt-6 register">
-                {notPromised.map((n) => (
-                  <li key={n} className="py-3">
-                    <span className="t-small flex gap-3">
-                      <span aria-hidden="true" className="mt-2.5 h-px w-4 shrink-0 bg-accent" />
-                      <span>{n}</span>
-                    </span>
-                  </li>
-                ))}
-              </ul>
-              <p className="t-tiny mt-4">
-                Anyone offering a guaranteed number before understanding your organization is
+              <p className="t-tiny measure-xs mt-4">
+                Anyone offering a guaranteed number before understanding your organisation is
                 selling something else.
                 <Src n={src.ref("editorial")} id="editorial" />
               </p>
             </div>
 
-            <div className="col-span-6 md:col-span-6 md:col-start-7">
-              <h2 className="t-label border-b border-rule pb-2 text-faint">
-                The thinking behind the work
-              </h2>
-              <Register>
-                {themes.map((t) => (
-                  <RegisterRow
-                    key={t.id}
-                    refCode={t.n}
-                    title={t.title}
-                    meta={`Note · ${t.category}`}
-                    right={t.evidenceFrom}
-                    href={`/insights#${t.id}`}
-                  />
-                ))}
-              </Register>
-              <div className="mt-6">
-                <TextLink href="/insights">All working notes</TextLink>
-              </div>
-            </div>
+            <ul className="register col-span-6 md:col-span-7 md:col-start-6">
+              {notPromised.map((n) => (
+                <li key={n} className="py-3.5">
+                  <span className="t-small flex gap-3">
+                    <span aria-hidden="true" className="mt-2.5 h-px w-4 shrink-0 bg-accent" />
+                    <span>{n}</span>
+                  </span>
+                </li>
+              ))}
+            </ul>
           </div>
 
-          <div className="mt-12 flex flex-col gap-2.5 border-t-2 border-ink pt-8 sm:flex-row">
-            <CtaButton href="/contact">Start a Conversation</CtaButton>
-            <CtaButton href="/speaking" variant="outline">
-              Or invite him to speak
-            </CtaButton>
+          <div className="mt-10">
+            <TextLink href="/insights">The thinking behind the work</TextLink>
           </div>
         </div>
       </Band>
+
+      <FinalCta
+        heading="Tell him what is stuck."
+        body="A first conversation is about the problem, not the proposal."
+      />
 
       <SourceNotes notes={src.notes} />
     </>

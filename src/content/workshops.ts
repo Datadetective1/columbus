@@ -143,3 +143,18 @@ export const workshops: Workshop[] = [
       "Explicit conflict norms a team has agreed to, and can hold each other to.",
   },
 ];
+
+/**
+ * Further sessions named in the client brief.
+ *
+ * Titles only, deliberately. We hold no description, subtitle or audience for
+ * these — inventing one would be exactly the fabrication this project has
+ * avoided throughout. They are listed so the catalogue is complete and so
+ * Columbus can fill them in, and they render as a plain list rather than as
+ * cards, which is honest about how much we know.
+ */
+export const additionalSessions = [
+  "Fundamentals for Project Managers and Business Analysts",
+  "Getting Dreamers and Doers to Get Things Done",
+  "Establishing Conflict Norms for Positive Outcomes",
+] as const;

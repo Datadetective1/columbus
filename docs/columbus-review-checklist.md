@@ -19,10 +19,34 @@ Ordered roughly by how much it matters.
       verbatim from the speaker one-sheet. Are you comfortable publishing them, and do the
       people who wrote them need to be asked again? → `src/content/testimonials.ts` →
       `enabled: false` removes both instantly.
-- [ ] **Employer references.** Southwest Airlines and Bell are currently **not** rendered as
-      logos or claims. Southwest appears only inside the verbatim engagement list ("Southwest
-      Airlines – Building Business Capability Conference"). Decide whether you want employers
-      named at all. → `src/content/experience.ts` → `showEmployerNames`
+- [ ] **🆕 The proof-point figures.** Home and Advisory now publish specific numbers —
+      $100M identified, 80+ engagements, 25% cost reduction, $40M benefit, 1,300+ process
+      maps, 85% adoption with $2M savings, and on Advisory a $1.3B acquisition, a $14B
+      outcome, $1.5M revenue and 30% growth. **Every one of these came from the project
+      brief and none could be independently confirmed.** They are worded attributively
+      ("identified", "supported", "contributed to") and no client is named against any of
+      them. Read each one and confirm it is both accurate and something you are willing to
+      say publicly. → `src/content/proof.ts`
+- [ ] **🆕 Employer references are now shown.** Bell Flight, Southwest Airlines, Unify
+      Consulting, FromHereOn, Daugherty/CGI and Slalom appear on About as selected roles and
+      as a text strip on Home and Advisory, captioned *"Career experience. Not a client list
+      — WAZA publishes no client names."* No logos are used. Confirm you want former
+      employers named at all, and that every title is right.
+      → `src/content/experience.ts` → `showEmployerNames`, `selectedRoles`
+- [ ] **🆕 Certifications are now published.** Prosci Change Practitioner, Certified SAFe 4
+      Agilist, ITSMF Management Academy, Power Communications Leadership Breakthrough I & II,
+      Successful Public Speaking and The Heart, Art & Business of Speaking were previously
+      hidden as unconfirmed and are now shown. Confirm each is current.
+      → `src/content/credentials.ts` → `verified`
+- [ ] **🆕 "16+ years" is stale.** It came from a ~2018 document, which makes the real
+      figure closer to 24. It ships as supplied because an understatement is not a false
+      claim, but it wants updating rather than merely confirming. → `src/content/proof.ts`
+      → `trustStrip`
+- [ ] **🆕 The headshot.** The site is built for one approved portrait and renders a
+      designed placeholder until the file exists. Confirm the image being used is one you
+      are happy to publish, and supply the highest-resolution original available — the
+      version received for this build is low-resolution.
+      → `public/images/columbus/` and `src/content/images.ts`
 - [ ] **Domain.** Nothing is connected. The existing Wix site is untouched.
       → `src/content/site.ts` → `url`
 - [ ] **Indexing.** The site is `noindex, nofollow` everywhere. It stays that way until

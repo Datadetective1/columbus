@@ -37,6 +37,7 @@ export function Band({
   className = "",
   rule = false,
   as: Tag = "section",
+  ...rest
 }: {
   children: ReactNode;
   rhythm?: Rhythm;
@@ -46,11 +47,12 @@ export function Band({
   /** Hairline across the top of the band. */
   rule?: boolean;
   as?: "section" | "div" | "footer";
-}) {
+} & React.HTMLAttributes<HTMLElement>) {
   return (
     <Tag
       id={id}
       className={`${GROUND[ground]} ${RHYTHM[rhythm]} ${rule ? "border-t border-rule" : ""} ${className}`.trim()}
+      {...rest}
     >
       {children}
     </Tag>

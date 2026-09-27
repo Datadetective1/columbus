@@ -1,54 +1,57 @@
 @import "tailwindcss";
 
 /* ==========================================================================
-   WAZA — editorial design system
+   Columbus Brown — design system
 
-   The register is a technical publication: an engineer's specification set,
-   typeset like a serious review. Warm ivory ground, warm near-black ink, one
-   deep oxblood accent drawn from the historical WAZA mark.
+   The register is a premium advisory practice: warm white and soft grey for
+   reading, deep navy for weight, one cobalt accent for direction. Editorial
+   composition, strong type, generous air.
 
-   Two rules govern the whole system:
+   Three rules govern the whole system:
      1. Air belongs BETWEEN groups, never inside them. Dense blocks, generous
         margins — not uniform padding everywhere.
      2. No two adjacent bands share a rhythm, a ground, or a module archetype.
+     3. Every colour pairing that carries meaning clears WCAG AA: 4.5:1 for
+        text, 3:1 for large text and interactive boundaries.
    ========================================================================== */
 
 @theme {
-  /* --- ground -------------------------------------------------------- */
-  --color-paper: #f8f5ee;
-  --color-paper-2: #f2ede3;
-  --color-paper-3: #e9e2d3;
-  --color-paper-4: #ded5c2;
+  /* --- ground: warm white through soft grey ---------------------------- */
+  --color-paper: #fbfaf8;
+  --color-paper-2: #f3f2ef;
+  --color-paper-3: #e9e8e4;
+  --color-paper-4: #dcdad4;
 
-  /* --- ink ----------------------------------------------------------- */
-  --color-ink: #16140f;
-  --color-muted: #5f584c;
-  --color-faint: #6a6355;
+  /* --- ink: navy-leaning, never pure black ---------------------------- */
+  --color-ink: #0e1626;        /* 17.3:1 on paper */
+  --color-muted: #4a5468;      /* 6.8:1 on paper-2 */
+  --color-faint: #565f73;      /* 5.7:1 on paper-2 */
 
-  /* --- rules --------------------------------------------------------- */
-  --color-rule: #ddd5c5;
-  --color-rule-strong: #c6bda9;
-  /* Interactive boundaries only. 3.7:1 on paper, 3.5:1 on paper-2, 3.1:1 on
-     paper-3 — clears WCAG 1.4.11 on every ground the site actually uses. */
-  --color-edge: #857e6e;
-  /* Large decorative-but-meaningful numerals. 3.7:1 light, 3.5:1 dark. */
-  --color-numeral: #857e6e;
-  --color-night-numeral: #71695a;
-  --color-rule-heavy: #16140f;
+  /* --- rules ---------------------------------------------------------- */
+  --color-rule: #e2e1dc;
+  --color-rule-strong: #cbc9c3;
+  /* Interactive boundaries only. 3.9:1 on paper-2, 3.6:1 on paper-3,
+     3.1:1 on paper-4 — clears WCAG 1.4.11 on every ground in use. */
+  --color-edge: #71798c;
+  /* Large decorative-but-meaningful numerals. 3:1 or better everywhere. */
+  --color-numeral: #71798c;
+  --color-night-numeral: #66738a;
+  --color-rule-heavy: #0e1626;
 
-  /* --- accent -------------------------------------------------------- */
-  --color-accent: #8c2b1c;
-  --color-accent-2: #b34b30;
-  --color-accent-soft: #f0e2dc;
+  /* --- accent: cobalt ------------------------------------------------- */
+  --color-accent: #1b49cf;     /* 6.9:1 on paper */
+  --color-accent-2: #3a66e0;
+  --color-accent-soft: #e8eefc;
 
-  /* --- dark register (inverted, not a second palette) ----------------- */
-  --color-night: #14120d;
-  --color-night-2: #1e1b14;
-  --color-night-3: #2a251b;
-  --color-night-ink: #f2ede2;
-  --color-night-muted: #a49b8a;
-  --color-night-rule: #3a3428;
-  --color-night-accent: #d9694a;
+  /* --- dark register: deep navy --------------------------------------- */
+  --color-night: #0a1020;
+  --color-night-2: #111b2e;
+  --color-night-3: #1a2740;
+  --color-night-ink: #eef1f7;   /* 16.8:1 on night */
+  --color-night-muted: #9facc4; /* 7.5:1 on night-2 */
+  --color-night-rule: #26334c;
+  --color-night-accent: #7fa8ff; /* 8.1:1 on night */
+  --color-night-accent-2: #a8c4ff;
 
   --font-display: var(--font-fraunces), Georgia, "Iowan Old Style", "Times New Roman", serif;
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -64,12 +67,17 @@
 :root {
   color-scheme: light;
   --gutter: 1.25rem;
+  --masthead-h: 4.5rem;
   /* Band rhythm. Deliberately much tighter than a conventional marketing site:
      the previous build spent ~2300px of the homepage on section padding alone. */
   --band-xtight: 2.25rem;
   --band-tight: 3rem;
   --band: 4rem;
   --band-loose: 5.5rem;
+}
+
+@media (min-width: 1024px) {
+  :root { --masthead-h: 5rem; }
 }
 
 @media (min-width: 768px) {
@@ -908,3 +916,287 @@ body {
   .system-map .sm-label,
   .system-map .sm-dot { transition: none; }
 }
+
+/* --------------------------------------------------------------------------
+   Atmosphere
+
+   Dark bands get depth from very large, very soft radial fields rather than
+   from images. Two of them, offset, drifting slowly against each other — the
+   effect is weather, not decoration. Everything here is `pointer-events: none`
+   and sits behind content in its own stacking context.
+   -------------------------------------------------------------------------- */
+
+.aura { position: relative; isolation: isolate; overflow: clip; }
+
+.aura::before,
+.aura::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  border-radius: 50%;
+  pointer-events: none;
+  /* No blur filter. A radial-gradient is already soft, and blurring an element
+     that is also being transformed forces the blur to be recomputed every
+     frame — it cost ~100ms of style and layout on the home page for no visible
+     difference. */
+  will-change: transform;
+}
+
+.aura::before {
+  inset-block-start: -30%;
+  inset-inline-start: -18%;
+  width: 70%;
+  aspect-ratio: 1;
+  background: radial-gradient(circle, color-mix(in oklab, var(--color-accent) 46%, transparent) 0%, transparent 68%);
+  opacity: 0.4;
+}
+
+.aura::after {
+  inset-block-end: -38%;
+  inset-inline-end: -14%;
+  width: 62%;
+  aspect-ratio: 1;
+  background: radial-gradient(circle, color-mix(in oklab, var(--color-night-accent) 38%, transparent) 0%, transparent 66%);
+  opacity: 0.26;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .aura::before { animation: aura-a 34s ease-in-out infinite alternate; }
+  .aura::after  { animation: aura-b 42s ease-in-out infinite alternate; }
+}
+
+@keyframes aura-a {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to   { transform: translate3d(6%, 5%, 0) scale(1.12); }
+}
+@keyframes aura-b {
+  from { transform: translate3d(0, 0, 0) scale(1.06); }
+  to   { transform: translate3d(-7%, -4%, 0) scale(1); }
+}
+
+/* A light-ground equivalent: one cool wash, no motion, much quieter. */
+.aura-light { position: relative; isolation: isolate; overflow: clip; }
+.aura-light::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset-block-start: -45%;
+  inset-inline-end: -20%;
+  width: 66%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(circle, var(--color-accent-soft) 0%, transparent 70%);
+}
+
+/* Ruled field. Reads as drafting paper at 1px; never competes with type. */
+/**
+ * The field sits in its own layer behind content, faded out towards the edges
+ * and held well below full strength. Painted straight onto the band it reads
+ * as a table, and its lines strike through display type.
+ */
+.field-rule { position: relative; isolation: isolate; }
+
+.field-rule::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.55;
+  background-image:
+    linear-gradient(to right, var(--color-rule) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--color-rule) 1px, transparent 1px);
+  background-size: 96px 96px;
+  mask-image: radial-gradient(ellipse 80% 75% at 55% 35%, #000 10%, transparent 78%);
+}
+
+.on-night.field-rule::after,
+.on-night .field-rule::after {
+  background-image:
+    linear-gradient(to right, var(--color-night-rule) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--color-night-rule) 1px, transparent 1px);
+  opacity: 0.7;
+}
+
+/* --------------------------------------------------------------------------
+   Cards
+
+   One card primitive, two grounds. The hover is a 1px border darkening plus a
+   2px lift — enough to feel responsive, small enough that a grid of twelve
+   does not shimmer.
+   -------------------------------------------------------------------------- */
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--color-rule);
+  background-color: var(--color-paper);
+  transition:
+    border-color 0.35s var(--ease-out-soft),
+    transform 0.35s var(--ease-out-soft),
+    box-shadow 0.35s var(--ease-out-soft);
+}
+
+.card-link:hover,
+.card-link:focus-within {
+  border-color: var(--color-ink);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px -18px color-mix(in oklab, var(--color-ink) 45%, transparent);
+}
+
+.on-night .card {
+  border-color: var(--color-night-rule);
+  background-color: color-mix(in oklab, var(--color-night-2) 82%, transparent);
+}
+
+.on-night .card-link:hover,
+.on-night .card-link:focus-within {
+  border-color: var(--color-night-accent);
+  box-shadow: 0 14px 34px -20px color-mix(in oklab, #000 80%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-link:hover,
+  .card-link:focus-within { transform: none; }
+}
+
+/* The whole card is one target: the heading holds the real link, and this
+   pseudo-element extends its hit area. Keeps one link per card for a11y. */
+.card-hit::after { content: ""; position: absolute; inset: 0; }
+
+/* Accent edge that grows on hover. Used on the capability cards. */
+.card-edge::before {
+  content: "";
+  position: absolute;
+  inset-block-start: -1px;
+  inset-inline-start: -1px;
+  height: 2px;
+  width: 3.5rem;
+  background-color: var(--color-accent);
+  transition: width 0.45s var(--ease-out-soft);
+}
+.on-night .card-edge::before { background-color: var(--color-night-accent); }
+.card-link.card-edge:hover::before,
+.card-link.card-edge:focus-within::before { width: calc(100% + 2px); }
+
+/* --------------------------------------------------------------------------
+   Figures — statistics
+
+   A proof point is a number and a sentence. The number is display type at
+   reading size, not a poster: inflated statistics read as marketing.
+   -------------------------------------------------------------------------- */
+
+.stat-fig {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(2.25rem, 1.4rem + 3.2vw, 3.5rem);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* --------------------------------------------------------------------------
+   Portrait composition
+
+   The headshot sits in a frame offset against a ruled field, so that a single
+   photograph can carry a hero without looking like a profile picture. The
+   offset plate is drawn in CSS, so it works identically when the slot is still
+   empty and rendering its placeholder.
+   -------------------------------------------------------------------------- */
+
+.portrait { position: relative; }
+
+.portrait::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  inset-block: 1.75rem -1.75rem;
+  inset-inline: 1.75rem -1.75rem;
+  border: 1px solid var(--color-accent);
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.on-night .portrait::before { border-color: var(--color-night-accent); opacity: 0.45; }
+
+.portrait > * { position: relative; z-index: 1; }
+
+@media (max-width: 767px) {
+  .portrait::before { inset-block: 1rem -1rem; inset-inline: 1rem -1rem; }
+}
+
+/* --------------------------------------------------------------------------
+   Sticky header
+
+   Transparent over a dark hero, solid once the page has moved. The state is
+   set by an IntersectionObserver on a sentinel, so there is no scroll handler,
+   and the solid state is the no-JS default — a legible header is the safe
+   fallback, not a transparent one.
+   -------------------------------------------------------------------------- */
+
+.masthead {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 50;
+  /* The bar overlays the hero rather than sitting above it — which is what
+     lets it be transparent at the top of the page. Every page hero carries
+     matching top padding to clear it. */
+  margin-block-end: calc(var(--masthead-h) * -1);
+  transition:
+    background-color 0.4s var(--ease-out-soft),
+    border-color 0.4s var(--ease-out-soft),
+    backdrop-filter 0.4s var(--ease-out-soft);
+}
+
+/**
+ * Transparency is opt-in, and the page opts in by containing a dark hero.
+ *
+ * `main` carries the clearance for the overlaying bar by default and gives it
+ * up only when a dark hero is present (that hero pads itself instead). Written
+ * this way round so a browser without `:has()` gets the safe outcome on every
+ * page — clearance kept, bar solid — rather than content under an invisible
+ * header.
+ */
+main { padding-block-start: var(--masthead-h); }
+
+body:has([data-hero="dark"]) main { padding-block-start: 0; }
+
+.js body:has([data-hero="dark"]) .masthead[data-lifted="false"] {
+  background-color: transparent;
+  border-block-end-color: transparent;
+}
+
+.masthead[data-lifted="true"] {
+  background-color: color-mix(in oklab, var(--color-night) 88%, transparent);
+  backdrop-filter: saturate(140%) blur(14px);
+  border-block-end-color: var(--color-night-rule);
+}
+
+@supports not (backdrop-filter: blur(1px)) {
+  .masthead[data-lifted="true"] { background-color: var(--color-night); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .masthead { transition: none; }
+}
+
+/* --------------------------------------------------------------------------
+   Marquee-free credibility strip
+
+   A wrapping row of names divided by hairlines. No scrolling logos, no motion
+   — the point is that these are readable.
+   -------------------------------------------------------------------------- */
+
+.strip { display: flex; flex-wrap: wrap; }
+.strip > li { position: relative; }
+.strip > li + li::before {
+  content: "";
+  position: absolute;
+  inset-block: 0.15em 0.15em;
+  inset-inline-start: 0;
+  width: 1px;
+  background-color: var(--color-rule-strong);
+}
+.on-night .strip > li + li::before { background-color: var(--color-night-rule); }

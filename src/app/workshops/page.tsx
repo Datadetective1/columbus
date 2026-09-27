@@ -1,6 +1,7 @@
 import { Register, RegisterRow, Stamp } from "@/components/modules";
 import { WorkshopMark } from "@/components/art/marks";
 import { Src, SourceNotes } from "@/components/provenance";
+import { PageHero } from "@/components/sections";
 import { Band, BandHead, CtaButton, TextLink } from "@/components/ui";
 import { capabilities } from "@/content/capabilities";
 import { sourceIndex } from "@/content/sources";
@@ -30,22 +31,15 @@ const LINKS: Record<string, string> = {
 export default function WorkshopsPage() {
   return (
     <>
-      <Band rhythm="tight" className="border-t-2 border-accent">
-        <div className="shell">
-          <div className="egrid items-end">
-            <div className="col-span-6 md:col-span-8">
-              <Stamp parts={["Workshops", "Six sessions", "W-01 to W-06"]} />
-              <h1 className="t-display mt-5 text-ink">From listening to doing.</h1>
-            </div>
-            <div className="col-span-6 md:col-span-3 md:col-start-10">
-              <p className="t-small measure-xs">
-                A keynote changes how a room thinks. A workshop changes what it does on Monday
-                — the group does the work, and leaves with something it built rather than
-                something it was shown.
-              </p>
-            </div>
-          </div>
+      <PageHero
+        kicker={`Workshops · W-01 to W-0${workshops.length}`}
+        heading="From listening to doing."
+        standfirst="A keynote changes how a room thinks. A workshop changes what it does on Monday — the group does the work, and leaves with something it built rather than something it was shown."
+        wide
+      />
 
+      <Band ground="paper" rhythm="tight">
+        <div className="shell">
           {/* Contents plate — the catalogue up front */}
           <nav aria-label="Sessions" className="mt-10 border-t-2 border-ink pt-4">
             <h2 className="t-label text-faint">The catalogue</h2>

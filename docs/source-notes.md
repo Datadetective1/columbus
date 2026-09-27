@@ -5,10 +5,49 @@ currency (current vs historical), whether it is safe to publish, and whether Col
 to confirm it before public launch.
 
 **Legend**
-- **Source** — `PDF` = provided speaker profile PDF · `WIX` = indexed content from the dormant Wix site · `SEARCH` = public search-engine summary of a page that could not be opened directly · `BRIEF` = asserted by Amary in the project brief · `DERIVED` = written by us from a documented source, adding no new facts
+- **Source** — `PDF` = provided speaker profile PDF · `WIX` = indexed content from the dormant Wix site · `SEARCH` = public search-engine summary of a page that could not be opened directly · `BRIEF` = asserted by Amary in the project brief · `CLIENT` = supplied by Amary as the declared content source of truth, and published on that basis · `DERIVED` = written by us from a documented source, adding no new facts
 - **Currency** — Current · Historical (≈2015–2019) · Unknown
 - **Publish** — ✅ safe · ⚠️ published but needs confirmation · ⛔ deliberately not published
 - **Verify** — does Columbus need to confirm it?
+
+---
+
+## ⚠️ Change of posture — client-supplied content
+
+Earlier builds of this site **withheld** employer names, proof-point figures and four of
+the certifications, because they rested on assertions this environment could not confirm.
+The client then supplied all of it directly, in writing, as the declared content source of
+truth for the build, and it is now published.
+
+This is a deliberate change, not a lapse, and it is recorded rather than quietly absorbed:
+
+| Material | Was | Is now | Recorded as |
+| --- | --- | --- | --- |
+| Employer names (Bell Flight, Southwest Airlines, Unify, FromHereOn, Daugherty/CGI, Slalom) | Hidden behind `showEmployerNames = false` | Published, framed as career experience and never as clients | `CLIENT` |
+| Proof-point figures ($100M, 80+, 25%, $40M, $1.3B, $14B, $2M/85%, $1.5M, 30%, 1,300+) | No metrics claimed anywhere | Published on Home and Advisory | `CLIENT` |
+| Certifications (Prosci, SAFe 4 Agilist, ITSMF, Power Communications, Successful Public Speaking, Heart/Art/Business of Speaking) | `verified: false`, filtered out at render | Published | `CLIENT` |
+| "16+ years" | Suppressed as stale | Published as supplied | `CLIENT` |
+
+**What has NOT changed.** Nothing was invented to fill a gap. Three sessions named in the
+brief (*Fundamentals for Project Managers and Business Analysts*, *Getting Dreamers and
+Doers to Get Things Done*, *Establishing Conflict Norms for Positive Outcomes*) ship as
+**titles only**, rendered as a plain list marked "Detail to follow", because no
+description, audience or subtitle exists for them and writing one would be fabrication.
+No date was attached to any role for the same reason.
+
+**How the figures are worded.** Attributive verbs only — *identified*, *directed*,
+*supported*, *contributed to*, *delivered on*. Columbus worked on these; he did not
+single-handedly cause them. No client is named against any figure, because the brief names
+employers and not the clients behind each number, and inferring one would be invention.
+
+Every item above carries the `client-brief` source marker in `src/content/sources.ts`, so
+the superscript apparatus on the page resolves to *"Supplied directly by the client… not
+independently confirmed… listed for Columbus to confirm before launch."* A reader can see
+the status; it is not buried in a repo.
+
+**⚠️ "16+ years" is almost certainly an understatement.** It also appears in the 2018
+one-sheet, which would make the current figure closer to 24. An understatement is not a
+false claim, so it ships as supplied — but it should be updated, not just confirmed.
 
 ---
 

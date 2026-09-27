@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { Src, SourceNotes } from "@/components/provenance";
 import { Register, RegisterRow, Stamp } from "@/components/modules";
-import { Band, BandHead } from "@/components/ui";
+import { Band, Kicker } from "@/components/ui";
+import { PageHero } from "@/components/sections";
 import { capabilities } from "@/content/capabilities";
 import { site } from "@/content/site";
 import { sourceIndex } from "@/content/sources";
@@ -24,6 +25,25 @@ const INQUIRY_TYPES = [
 ];
 
 const src = sourceIndex(["editorial", "needs-review"]);
+
+/** The three ways in, each deep-linking the form below to the right enquiry. */
+const ROUTES = [
+  {
+    href: "/contact?inquiry=advisory#form",
+    title: "Advisory",
+    body: "A decision that does not fit in a meeting, or a transformation that has stopped moving.",
+  },
+  {
+    href: "/contact?inquiry=speaking#form",
+    title: "Speaking",
+    body: "A keynote, a breakout or a leadership session. Three talks, adaptable to the room.",
+  },
+  {
+    href: "/contact?inquiry=workshop#form",
+    title: "Workshops",
+    body: "A facilitated working session with a decision at the end of it.",
+  },
+];
 
 /**
  * Contact.
@@ -50,24 +70,36 @@ export default async function ContactPage({
 
   return (
     <>
-      <Band rhythm="tight" className="border-t-2 border-accent">
+      <PageHero
+        kicker="Contact"
+        heading={<>Let&rsquo;s talk about what you&rsquo;re trying to change.</>}
+        standfirst="You do not need a defined scope, a budget, or a tidy version of the problem. A description of what is stuck is a better starting point."
+        wide
+      />
+
+      {/* Three ways in. Each preselects the enquiry type on the form below. */}
+      <Band ground="paper" rhythm="tight">
         <div className="shell">
-          <BandHead
-            as="h1"
-            headingClass="t-display"
-            label="Contact"
-            heading="Let’s talk about what you’re trying to change."
-            standfirst={
-              <>
-                You do not need a defined scope, a budget, or a tidy version of the problem. A
-                description of what is stuck is a better starting point.
-              </>
-            }
-          />
+          <ul className="grid gap-px border border-rule bg-rule md:grid-cols-3">
+            {ROUTES.map((r, i) => (
+              <li key={r.href} className="bg-paper">
+                <Link
+                  href={r.href}
+                  className="group flex h-full flex-col p-6 transition-colors duration-300 hover:bg-paper-2 md:p-7"
+                >
+                  <Kicker>{String(i + 1).padStart(2, "0")}</Kicker>
+                  <h2 className="t-h4 mt-4 text-ink transition-colors group-hover:text-accent">
+                    {r.title}
+                  </h2>
+                  <p className="t-small mt-3 text-muted">{r.body}</p>
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
       </Band>
 
-      <Band rhythm="tight" rule>
+      <Band id="form" rhythm="tight" rule className="scroll-mt-32">
         <div className="shell">
           <div className="egrid">
             {/* The form */}

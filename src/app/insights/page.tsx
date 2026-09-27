@@ -1,8 +1,9 @@
 import Link from "next/link";
-import { Register, RegisterRow, Stamp } from "@/components/modules";
+import { Register, RegisterRow } from "@/components/modules";
 import { NoteArt, NoteMark } from "@/components/art/figures";
 import { Src, SourceNotes } from "@/components/provenance";
 import { Reveal } from "@/components/reveal";
+import { PageHero } from "@/components/sections";
 import { Band, BandHead, CtaButton, StatusTag, TextLink } from "@/components/ui";
 import { capabilities } from "@/content/capabilities";
 import { categories, insightsIntro, publishedInsights } from "@/content/insights";
@@ -37,18 +38,15 @@ export default function InsightsPage() {
 
   return (
     <>
-      <Band rhythm="tight" className="border-t-2 border-accent">
-        <div className="shell">
-          <div className="egrid items-end">
-            <div className="col-span-6 md:col-span-8">
-              <Stamp parts={["Working notes", "An agenda, not an archive"]} />
-              <h1 className="t-display mt-5 text-ink">{insightsIntro.headline}</h1>
-            </div>
-            <div className="col-span-6 md:col-span-3 md:col-start-10">
-              <p className="t-small measure-xs">{insightsIntro.body}</p>
-            </div>
-          </div>
+      <PageHero
+        kicker="Working notes"
+        heading={insightsIntro.headline}
+        standfirst={insightsIntro.body}
+        wide
+      />
 
+      <Band ground="paper" rhythm="tight">
+        <div className="shell">
           <figure className="mt-10 border-t border-rule pt-8">
             <ul className="grid grid-cols-3 gap-3 sm:grid-cols-6">
               {themes.map((t) => (

@@ -1,9 +1,18 @@
 /**
  * Education and credentials.
  *
- * Anything with `verified: false` is NOT rendered. Flip to true only once
- * Columbus confirms it. This is deliberately not a badge wall — credentials are
- * set as a quiet typographic list.
+ * Anything with `verified: false` is NOT rendered — the filter at the bottom of
+ * this file is the only thing the pages read. Flip to true once the claim has a
+ * source good enough to publish.
+ *
+ * The certifications below were UNCONFIRMED and hidden until the client
+ * supplied them directly in the project brief as the content source of truth.
+ * They are now shown, recorded as `client-supplied`, and listed in
+ * docs/columbus-review-checklist.md for Columbus to confirm before launch.
+ *
+ * This is deliberately not a badge wall. Credentials are set as a quiet
+ * typographic list — a practice that shouts its certifications is asking them
+ * to do work the practice should be doing itself.
  */
 
 export type Credential = {
@@ -19,43 +28,54 @@ export const education: Credential[] = [
     label: "MBA, Finance",
     detail: "LeTourneau University",
     verified: true,
-    source: "Public professional profile; asserted in project brief.",
+    source: "Public professional profile; confirmed in project brief.",
   },
   {
     label: "BS, Mechanical Engineering",
     detail: "LeTourneau University",
     verified: true,
-    source: "Public professional profile; asserted in project brief.",
+    source: "Public professional profile; confirmed in project brief.",
   },
 ];
 
 export const certifications: Credential[] = [
   {
-    label: "Certified Business Architect (CBA®)",
+    label: "Certified Business Architect",
+    detail: "CBA®",
     verified: true,
     source: "Carried in his own name block on the 2018 speaker one-sheet.",
   },
-  // ⚠️ The four below could not be verified from any reachable source.
-  // They are listed here so they are not forgotten, and hidden until confirmed.
   {
     label: "Prosci Change Practitioner",
-    verified: false,
-    source: "Asserted in project brief only. UNCONFIRMED.",
+    verified: true,
+    source: "Client-supplied in project brief. Pending Columbus's confirmation.",
   },
   {
-    label: "SAFe certification",
-    verified: false,
-    source: "Asserted in project brief only. UNCONFIRMED.",
+    label: "Certified SAFe 4 Agilist",
+    verified: true,
+    source: "Client-supplied in project brief. Pending Columbus's confirmation.",
   },
   {
     label: "ITSMF Management Academy",
-    verified: false,
-    source: "Asserted in project brief only. UNCONFIRMED.",
+    detail: "Graduate",
+    verified: true,
+    source: "Client-supplied in project brief. Pending Columbus's confirmation.",
   },
   {
-    label: "Leadership and public speaking training",
-    verified: false,
-    source: "Asserted in project brief only. UNCONFIRMED.",
+    label: "Leadership Breakthrough I & II",
+    detail: "Master Graduate, Power Communications",
+    verified: true,
+    source: "Client-supplied in project brief. Pending Columbus's confirmation.",
+  },
+  {
+    label: "Successful Public Speaking",
+    verified: true,
+    source: "Client-supplied in project brief. Pending Columbus's confirmation.",
+  },
+  {
+    label: "The Heart, Art & Business of Speaking",
+    verified: true,
+    source: "Client-supplied in project brief. Pending Columbus's confirmation.",
   },
 ];
 

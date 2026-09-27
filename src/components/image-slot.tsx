@@ -30,12 +30,16 @@ export function ImageSlot({
 }) {
   const config = images[slot];
   const ratio = `${config.width} / ${config.height}`;
+  const round = "shape" in config && config.shape === "circle" ? "rounded-full" : "";
 
   if (!config.src && hideWhenEmpty) return null;
 
   if (config.src) {
     return (
-      <div className={`relative overflow-hidden bg-paper-3 ${className}`} style={{ aspectRatio: ratio }}>
+      <div
+        className={`relative overflow-hidden bg-paper-3 ${round} ${className}`}
+        style={{ aspectRatio: ratio }}
+      >
         <Image
           src={config.src}
           alt={config.alt}
@@ -50,13 +54,19 @@ export function ImageSlot({
 
   return (
     <div
-      className={`relative overflow-hidden border border-rule bg-paper-2 ${className}`}
+      className={`relative overflow-hidden border border-rule bg-paper-2 ${round} ${className}`}
       style={{ aspectRatio: ratio }}
       // Decorative while empty — it carries no information a reader needs.
       aria-hidden="true"
     >
       <PlaceholderFigure />
-      <span className="t-label absolute bottom-4 left-4 text-faint">
+      <span
+        className={
+          round
+            ? "t-label absolute inset-x-0 bottom-[14%] text-center text-faint"
+            : "t-label absolute bottom-4 left-4 text-faint"
+        }
+      >
         {config.fallbackLabel}
       </span>
     </div>

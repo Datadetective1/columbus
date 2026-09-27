@@ -1,8 +1,10 @@
 /**
  * Photography slots.
  *
- * There is no approved photography of Columbus yet, so every slot is `null` and
- * every one of them renders a designed fallback instead of a broken image.
+ * The client has supplied one approved headshot of Columbus. Until the file is
+ * placed in public/images/columbus/ every slot stays `null` and renders a
+ * designed fallback instead of a broken image, so the site is complete either
+ * way.
  *
  * TO ADD A PHOTO (this is the whole process):
  *   1. Put the file in  public/images/columbus/
@@ -25,26 +27,35 @@ export type ImageSlot = {
   fallbackLabel: string;
   /** Guidance for whoever supplies the photograph. */
   guidance: string;
+  /**
+   * Circular slots are masked to a disc. The approved headshot is already a
+   * monochrome circular crop on a black field, so a disc is the honest frame
+   * for it — squaring it off would mean either letterboxing or cropping into
+   * his head.
+   */
+  shape?: "rect" | "circle";
 };
 
 export const images = {
   hero: {
     src: null,
-    alt: "",
-    width: 1200,
-    height: 1500,
+    alt: "Columbus Brown II",
+    width: 1000,
+    height: 1000,
     fallbackLabel: "Portrait",
+    shape: "circle",
     guidance:
-      "Portrait, 4:5. Natural light, mid-tone warm background, relaxed and direct. Not a studio headshot on white.",
+      "The approved headshot. Square file, subject centred — it is masked to a disc and composed against a cobalt plate on the navy hero. Monochrome suits the dark register; a colour file will also work.",
   },
   about: {
     src: null,
-    alt: "",
-    width: 1400,
-    height: 1050,
-    fallbackLabel: "About portrait",
+    alt: "Columbus Brown II",
+    width: 1000,
+    height: 1000,
+    fallbackLabel: "Portrait",
+    shape: "circle",
     guidance:
-      "Environmental portrait, 4:3. Working context rather than posed. Room to breathe on one side for type.",
+      "Same approved headshot, or a second frame if one is available. Square, subject centred, masked to a disc.",
   },
   speaking01: {
     src: null,

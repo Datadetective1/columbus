@@ -1,12 +1,19 @@
-import { DefinitionBlock, Register, RegisterRow, Stamp } from "@/components/modules";
+import { DefinitionBlock, Register, RegisterRow } from "@/components/modules";
 import { SystemEvolution, WazaDuality } from "@/components/art/figures";
 import { HeroSystems } from "@/components/art/hero-systems";
 import { Src, SourceNotes } from "@/components/provenance";
 import { Reveal } from "@/components/reveal";
-import { Band, BandHead, CtaButton, TextLink } from "@/components/ui";
+import { Band, BandHead, CtaButton, Kicker, TextLink } from "@/components/ui";
+import { FinalCta, PageHero, Portrait } from "@/components/sections";
 import { about, documentedSpeakerIntro, documentedTagline } from "@/content/bio";
 import { visibleCertifications, visibleEducation } from "@/content/credentials";
-import { experienceDomains, experienceStatement } from "@/content/experience";
+import {
+  experienceDomains,
+  experienceStatement,
+  focusAreas,
+  selectedRoles,
+  showEmployerNames,
+} from "@/content/experience";
 import { lexicon } from "@/content/lexicon";
 import { engagements, talks } from "@/content/speaking";
 import { sourceIndex } from "@/content/sources";
@@ -25,6 +32,7 @@ const src = sourceIndex([
   "public-profile",
   "editorial",
   "waza-site",
+  "client-brief",
   "needs-review",
 ]);
 
@@ -32,8 +40,9 @@ const CONTENTS = [
   { n: "§1", id: "position", label: "Position", note: "What he does and for whom" },
   { n: "§2", id: "route", label: "Route", note: "Engineering to enterprise" },
   { n: "§3", id: "method", label: "Method", note: "Discover · Unstick · Navigate" },
-  { n: "§4", id: "record", label: "Record", note: "Education, credentials, engagements" },
-  { n: "§5", id: "why-waza", label: "The name", note: "Why the practice is called WAZA" },
+  { n: "§4", id: "experience", label: "Experience", note: "Selected roles and focus" },
+  { n: "§5", id: "record", label: "Record", note: "Education, credentials, engagements" },
+  { n: "§6", id: "why-waza", label: "The name", note: "Why the practice is called WAZA" },
 ];
 
 /**
@@ -48,32 +57,28 @@ export default function AboutPage() {
   return (
     <>
       {/* Masthead */}
-      <Band rhythm="tight" className="border-t-2 border-accent">
-        <div className="shell">
-          <div className="egrid items-end">
-            <div className="col-span-6 md:col-span-8">
-              <Stamp parts={["The founder", "Columbus Brown II, MBA, CBA®"]} />
-              <h1 className="t-display mt-5 text-ink">
-                An engineer&rsquo;s mind. A strategist&rsquo;s perspective.
-              </h1>
-            </div>
-            <div className="col-span-6 md:col-span-3 md:col-start-10">
-              <p className="t-small measure-xs">
-                &ldquo;{documentedTagline}&rdquo;
-                <Src n={src.ref("speaker-profile")} id="speaker-profile" />
-              </p>
-              <p className="meta mt-3">His own description of the work</p>
-            </div>
-          </div>
+      <PageHero
+        kicker="Columbus Brown II, MBA, CBA®"
+        heading={<>An engineer&rsquo;s mind. A strategist&rsquo;s perspective.</>}
+        standfirst={
+          <>
+            &ldquo;{documentedTagline}&rdquo;
+            <Src n={src.ref("speaker-profile")} id="speaker-profile" />
+          </>
+        }
+        aside={<Portrait slot="about" priority />}
+      />
 
-          <figure className="mt-10 border-t border-rule pt-8">
+      {/* The four converging systems, and the contents plate. */}
+      <Band ground="paper" rhythm="tight">
+        <div className="shell">
+          <figure>
             <HeroSystems />
           </figure>
 
-          {/* Contents plate */}
           <nav aria-label="Contents" className="mt-10 border-t-2 border-ink pt-4">
             <h2 className="t-label text-faint">Contents</h2>
-            <ol className="mt-3 grid md:grid-cols-5">
+            <ol className="mt-3 grid md:grid-cols-6">
               {CONTENTS.map((c, i) => (
                 <li key={c.id} className={i > 0 ? "md:border-l md:border-rule md:pl-4" : ""}>
                   <a href={`#${c.id}`} className="group block border-t border-rule py-3 md:border-t-0">
@@ -234,10 +239,68 @@ export default function AboutPage() {
       </Band>
 
       {/* §4 Record */}
-      <Band id="record" rhythm="tight" rule>
+      {/* §4 Selected experience */}
+      <Band id="experience" ground="night2" rhythm="normal" rule className="aura">
         <div className="shell">
           <BandHead
             n="§4"
+            label="Experience"
+            heading="Selected roles."
+            headingClass="t-h2"
+            night
+            standfirst={
+              <>
+                A curated selection rather than a full employment history, and no dates — we
+                hold none we can verify.
+                <Src n={src.ref("client-brief")} id="client-brief" />
+              </>
+            }
+          />
+
+          {showEmployerNames ? (
+            <Reveal as="ol" className="mt-10 md:mt-14">
+              {selectedRoles.map((role, i) => (
+                <li
+                  key={role.title + role.org}
+                  className="reveal grid grid-cols-[2.5rem_1fr] gap-x-4 border-t border-night-rule py-4 md:grid-cols-[3rem_1fr_16rem] md:gap-x-8"
+                  style={{ "--i": i } as React.CSSProperties}
+                >
+                  <span className="t-label-sm pt-1.5 text-night-numeral">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <span>
+                    <span className="block font-display text-[1.0625rem] leading-snug text-night-ink md:text-[1.1875rem]">
+                      {role.title}
+                    </span>
+                    <span className="meta mt-1 block">{role.org}</span>
+                  </span>
+                  {role.note ? (
+                    <span className="t-small col-start-2 mt-2 block text-night-muted md:col-start-3 md:mt-0">
+                      {role.note}
+                    </span>
+                  ) : null}
+                </li>
+              ))}
+            </Reveal>
+          ) : null}
+
+          <div className="mt-12 border-t border-night-rule pt-8">
+            <Kicker tone="night">Focus</Kicker>
+            <ul className="mt-4 flex flex-wrap gap-x-6 gap-y-2">
+              {focusAreas.map((f) => (
+                <li key={f} className="t-label-sm text-night-muted">
+                  {f}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </Band>
+
+      <Band id="record" rhythm="tight" rule>
+        <div className="shell">
+          <BandHead
+            n="§5"
             label="Record"
             heading="Education, credentials and a documented speaking history."
             headingClass="t-h2"
@@ -268,13 +331,14 @@ export default function AboutPage() {
                 {visibleCertifications.map((c) => (
                   <div key={c.label} className="border-b border-rule py-3">
                     <dt className="font-display text-[1.0625rem] text-ink">{c.label}</dt>
+                    {c.detail ? <dd className="meta mt-1">{c.detail}</dd> : null}
                   </div>
                 ))}
               </dl>
               <p className="t-tiny mt-3">
-                Further certifications are recorded in the codebase but are not published until
-                Columbus confirms them.
-                <Src n={src.ref("needs-review")} id="needs-review" />
+                Supplied by the client for this build. Awaiting Columbus&rsquo;s confirmation
+                before launch.
+                <Src n={src.ref("client-brief")} id="client-brief" />
               </p>
             </div>
 
@@ -346,12 +410,12 @@ export default function AboutPage() {
         </div>
       </Band>
 
-      {/* §5 The name */}
+      {/* §6 The name */}
       <Band id="why-waza" ground="paper2" rhythm="tight" rule>
         <div className="shell">
           <div className="egrid">
             <div className="col-span-6 md:col-span-5">
-              <span className="t-label block text-accent">§5</span>
+              <span className="t-label block text-accent">§6</span>
               <figure className="mt-5">
                 <WazaDuality className="w-full" />
                 <figcaption className="meta mt-3">
@@ -377,7 +441,6 @@ export default function AboutPage() {
                 practice is an instance of its own argument.
               </p>
               <div className="mt-7 flex flex-col gap-2.5 sm:flex-row">
-                <CtaButton href="/contact">Work With Columbus</CtaButton>
                 <CtaButton href="/speaking#power-of-a-name" variant="outline">
                   The keynote it comes from
                 </CtaButton>
@@ -389,6 +452,11 @@ export default function AboutPage() {
           </div>
         </div>
       </Band>
+
+      <FinalCta
+        heading="Work with Columbus."
+        body="Advisory, workshops or a keynote — start with the problem."
+      />
 
       <SourceNotes notes={src.notes} />
     </>
