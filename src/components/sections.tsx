@@ -1,8 +1,10 @@
+import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { Band, CtaButton, Kicker, TextLink } from "./ui";
 import { Reveal } from "./reveal";
 import { ImageSlot } from "./image-slot";
+import { images, type ImageKey } from "@/content/images";
 import { affiliationCaption, affiliationStrip, trustStrip, type ProofPoint } from "@/content/proof";
 import { primaryCta, speakingCta } from "@/content/site";
 import type { Talk } from "@/content/speaking";
@@ -75,6 +77,73 @@ export function Portrait({
   );
 }
 
+/**
+ * A photograph in a panel.
+ *
+ * Three of the four supplied photographs are low resolution, so `sizes` is kept
+ * honest per usage rather than left at a default that would ask the browser for
+ * a variant the file cannot supply.
+ */
+export function Photo({
+  slot,
+  className = "",
+  sizes,
+  priority = false,
+}: {
+  slot: ImageKey;
+  className?: string;
+  sizes: string;
+  priority?: boolean;
+}) {
+  return (
+    <ImageSlot
+      slot={slot}
+      sizes={sizes}
+      priority={priority}
+      className={`border border-rule ${className}`}
+    />
+  );
+}
+
+/**
+ * A full-bleed photographic strip under a dark scrim.
+ *
+ * The scrim is doing real work: the panorama is 780px wide and this band is not,
+ * so the image is being asked to stretch. Darkened and overlaid it reads as
+ * atmosphere, which a soft image can carry, rather than as a photograph, which
+ * it cannot.
+ */
+export function PhotoStrip({
+  slot,
+  children,
+}: {
+  slot: ImageKey;
+  children?: ReactNode;
+}) {
+  const config = images[slot];
+  if (!config.src) return null;
+  return (
+    <div className="on-night relative isolate overflow-hidden bg-night">
+      <Image
+        src={config.src}
+        alt={config.alt}
+        width={config.width}
+        height={config.height}
+        /* The file is 780px wide. Asking for 100vw would make next/image
+           generate a 1920px upscale — more bytes, no more detail. Capped near
+           native; the element is stretched by object-cover, not by the source. */
+        sizes="828px"
+        className="absolute inset-0 -z-10 h-full w-full object-cover opacity-40"
+      />
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 -z-10 bg-gradient-to-r from-night via-night/70 to-night/85"
+      />
+      <div className="shell py-12 md:py-16">{children}</div>
+    </div>
+  );
+}
+
 /* --------------------------------------------------------------- Proof */
 
 /** The four-item credibility strip. Short claims, hairline-divided. */
@@ -105,11 +174,11 @@ export function TrustStrip() {
 export function AffiliationStrip({ night = false }: { night?: boolean }) {
   return (
     <div>
-      <ul className="strip gap-x-5 gap-y-2 sm:gap-x-7">
+      <ul className="strip gap-x-8 gap-y-3 sm:gap-x-10">
         {affiliationStrip.map((name) => (
           <li
             key={name}
-            className={`t-label pl-5 first:pl-0 sm:pl-7 ${night ? "text-night-muted" : "text-faint"}`}
+            className={`t-label ${night ? "text-night-muted" : "text-faint"}`}
           >
             {name}
           </li>
@@ -172,7 +241,6 @@ export function TalkCard({
       className="card card-link card-edge reveal h-full p-6 md:p-7"
       style={{ "--i": index } as React.CSSProperties}
     >
-      <Kicker tone={night ? "night" : "accent"}>{talk.ref}</Kicker>
       <h3 className={`t-h4 mt-4 ${night ? "text-night-ink" : "text-ink"}`}>
         <Link href={`/speaking#${talk.slug}`} className="card-hit link-underline">
           {talk.title}
@@ -204,11 +272,14 @@ export function TalkCard({
  * someone reaches the bottom, the question should always be the same one.
  */
 export function FinalCta({
-  heading = "Ready to move the work forward?",
-  body = "Bring Columbus in for advisory, workshops or speaking.",
+  heading = "Ready to move something forward?",
+  body = "Advisory, venture partnerships, keynotes and workshops.",
+  showVentures = true,
 }: {
   heading?: string;
   body?: string;
+  /** The third path, offered quietly rather than as a third button. */
+  showVentures?: boolean;
 }) {
   return (
     <Band ground="night" rhythm="normal" className="aura">
@@ -227,11 +298,13 @@ export function FinalCta({
                 {speakingCta.label}
               </CtaButton>
             </div>
-            <p className="mt-6">
-              <TextLink href="/advisory" night>
-                See how the work runs
-              </TextLink>
-            </p>
+            {showVentures ? (
+              <p className="mt-6">
+                <TextLink href="/ventures" night>
+                  Explore venture partnerships
+                </TextLink>
+              </p>
+            ) : null}
           </div>
         </div>
       </div>

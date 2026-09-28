@@ -56,7 +56,7 @@ export default function InsightsPage() {
               ))}
             </ul>
             <figcaption className="meta mt-3">
-              Fig. 01 · Six arguments in development, N-01 to N-06
+              Six arguments in development
             </figcaption>
           </figure>
 

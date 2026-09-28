@@ -63,17 +63,24 @@ export function RegisterRow({
   /** For narrow aside columns: drops the fixed metadata column. */
   compact?: boolean;
 }) {
+  // Without a catalogue reference the leading column is dropped entirely rather
+  // than left standing empty — an indent with nothing in it is the visual tell
+  // of a document, which is exactly what these rows should not look like.
+  const cols = refCode
+    ? compact
+      ? "grid-cols-[2.75rem_minmax(0,1fr)_auto]"
+      : "grid-cols-[3.25rem_1fr] md:grid-cols-[3.25rem_minmax(0,1fr)_9rem]"
+    : compact
+      ? "grid-cols-[minmax(0,1fr)_auto]"
+      : "grid-cols-[1fr] md:grid-cols-[minmax(0,1fr)_9rem]";
+
   const inner = (
-    <span
-      className={`grid w-full items-baseline gap-x-4 gap-y-1 py-3.5 md:py-4 ${
-        compact
-          ? "grid-cols-[2.75rem_minmax(0,1fr)_auto]"
-          : "grid-cols-[3.25rem_1fr] md:grid-cols-[3.25rem_minmax(0,1fr)_9rem]"
-      }`}
-    >
-      <span className={`t-label-sm ${night ? "text-night-muted" : "text-faint"}`}>
-        {refCode}
-      </span>
+    <span className={`grid w-full items-baseline gap-x-4 gap-y-1 py-3.5 md:py-4 ${cols}`}>
+      {refCode ? (
+        <span className={`t-label-sm ${night ? "text-night-muted" : "text-faint"}`}>
+          {refCode}
+        </span>
+      ) : null}
 
       <span className="min-w-0">
         <span
@@ -93,7 +100,13 @@ export function RegisterRow({
 
       <span
         className={`flex items-baseline justify-between gap-3 ${
-          compact ? "col-start-3 justify-end" : "col-start-2 md:col-start-3 md:justify-end"
+          refCode
+            ? compact
+              ? "col-start-3 justify-end"
+              : "col-start-2 md:col-start-3 md:justify-end"
+            : compact
+              ? "col-start-2 justify-end"
+              : "col-start-1 md:col-start-2 md:justify-end"
         }`}
       >
         <span className="meta text-right">{right}</span>

@@ -115,7 +115,7 @@ export function SystemMap({ className = "" }: { className?: string }) {
             </div>
 
             <figcaption className="meta mt-6">
-              Fig. 04 · One system. Each capability works a different part of it.
+              One system. Each capability works a different part of it.
             </figcaption>
           </figure>
         </div>
@@ -132,7 +132,6 @@ export function SystemMap({ className = "" }: { className?: string }) {
                 className="row-link group -mx-3 block px-3 py-4"
               >
                 <span className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-                  <span className="t-label-sm text-faint">{c.n}</span>
                   <span className="meta">{(TOUCHES[c.slug] ?? []).join(" · ")}</span>
                 </span>
                 <span className="mt-2 flex items-start gap-4">

@@ -210,7 +210,6 @@ export default async function ContactPage({
                 {capabilities.map((c) => (
                   <RegisterRow
                     key={c.slug}
-                    refCode={c.n}
                     title={c.title}
                     href={`/advisory/${c.slug}`}
                   compact

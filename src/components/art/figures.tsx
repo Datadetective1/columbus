@@ -334,3 +334,114 @@ export function NoteArt({ id, className = "" }: { id: string; className?: string
     </svg>
   );
 }
+
+/**
+ * Ventures panel — an idea that branches into a business.
+ *
+ * One seed node on the left, a structure growing right, and a value line that
+ * only turns upward once the branches exist. Drawn 4:3 so it sits in the same
+ * frame as the photograph beside it on the home page.
+ */
+export function VentureFigure({ className = "" }: { className?: string }) {
+  const S = {
+    fill: "none" as const,
+    stroke: "currentColor",
+    strokeWidth: 1.1,
+    strokeLinecap: "square" as const,
+  };
+  return (
+    <svg viewBox="0 0 400 300" className={className} aria-hidden="true" focusable="false">
+      {/* ground line */}
+      <line {...S} x1="28" y1="262" x2="372" y2="262" opacity="0.35" />
+
+      {/* the branching structure */}
+      <g opacity="0.9">
+        <path {...S} d="M70 214 H150" />
+        <path {...S} d="M150 214 V150 H230" />
+        <path {...S} d="M150 214 V262" opacity="0.5" />
+        <path {...S} d="M230 150 V96 H300" />
+        <path {...S} d="M230 150 V206 H300" opacity="0.7" />
+      </g>
+
+      {/* nodes */}
+      <circle cx="70" cy="214" r="6" fill="var(--figure-accent, currentColor)" stroke="none" />
+      <circle {...S} cx="150" cy="214" r="5" />
+      <circle {...S} cx="230" cy="150" r="5" />
+      <circle cx="300" cy="96" r="6" fill="var(--figure-accent, currentColor)" stroke="none" />
+      <circle {...S} cx="300" cy="206" r="4.5" />
+
+      {/* the value line — flat, then turning once there is something to sell */}
+      <path
+        {...S}
+        d="M28 244 C 120 244, 170 238, 220 210 C 268 183, 320 120, 372 52"
+        strokeDasharray="4 4"
+        opacity="0.55"
+      />
+
+      {/* section ticks */}
+      {[100, 180, 260, 340].map((x) => (
+        <line key={x} {...S} x1={x} y1="262" x2={x} y2="270" opacity="0.3" />
+      ))}
+    </svg>
+  );
+}
+
+/**
+ * Advisory panel — scatter resolving into structure.
+ *
+ * Left: points with no relation to each other. Middle: the same points, sorted
+ * onto an axis. Right: one line leaving the frame. It is the whole argument of
+ * the advisory work in three moves, and it is drawn 4:3 so it sits in the same
+ * frame as the ventures figure and the photograph beside it.
+ */
+export function AdvisoryFigure({ className = "" }: { className?: string }) {
+  const S = {
+    fill: "none" as const,
+    stroke: "currentColor",
+    strokeWidth: 1.1,
+    strokeLinecap: "square" as const,
+  };
+  const scatter = [
+    [58, 92], [96, 168], [46, 214], [112, 118], [78, 250], [128, 206],
+  ];
+  const sorted = [180, 210, 240, 270];
+
+  return (
+    <svg viewBox="0 0 400 300" className={className} aria-hidden="true" focusable="false">
+      {/* 1 · scatter */}
+      <g opacity="0.75">
+        {scatter.map(([x, y]) => (
+          <circle key={`${x}-${y}`} {...S} cx={x} cy={y} r="4.5" />
+        ))}
+      </g>
+
+      {/* divider */}
+      <line {...S} x1="152" y1="56" x2="152" y2="262" opacity="0.28" />
+
+      {/* 2 · the same points, put in order against an axis */}
+      <line {...S} x1="178" y1="262" x2="300" y2="262" opacity="0.4" />
+      {sorted.map((x, i) => (
+        <g key={x}>
+          <line {...S} x1={x} y1="262" x2={x} y2={214 - i * 34} opacity="0.55" />
+          <circle
+            cx={x}
+            cy={214 - i * 34}
+            r="4.5"
+            fill={i === sorted.length - 1 ? "var(--figure-accent, currentColor)" : "none"}
+            stroke="currentColor"
+            strokeWidth="1.1"
+          />
+        </g>
+      ))}
+
+      {/* 3 · one line out */}
+      <path {...S} d="M300 112 H366" />
+      <path {...S} d="M356 102 l10 10 -10 10" />
+
+      {/* baseline ticks */}
+      {[40, 70, 100, 130].map((x) => (
+        <line key={x} {...S} x1={x} y1="278" x2={x} y2="284" opacity="0.25" />
+      ))}
+    </svg>
+  );
+}

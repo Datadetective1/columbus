@@ -20,7 +20,7 @@ export const heroCopy = {
   eyebrow: "Columbus Brown II, MBA, CBA®",
   headline: "Strategy that moves people, not just plans.",
   standfirst:
-    "Columbus Brown helps leaders align strategy, technology, people and execution — so the work that matters actually moves.",
+    "Columbus helps leaders and builders turn complex strategy, technology and organizational challenges into movement.",
 };
 
 /** The three-word method, from his own documented speaker language. */

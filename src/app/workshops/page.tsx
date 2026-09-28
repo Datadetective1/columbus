@@ -56,7 +56,6 @@ export default function WorkshopsPage() {
                       </span>
                     </span>
                     <span className="flex items-baseline justify-between gap-3">
-                      <span className="t-label-sm text-accent">{w.ref}</span>
                       <span className="meta">{w.subject}</span>
                     </span>
                     <span className="mt-1.5 block font-display text-[1.0625rem] leading-snug text-ink transition-colors group-hover:text-accent">
@@ -169,7 +168,6 @@ export default function WorkshopsPage() {
                 {talks.map((t) => (
                   <RegisterRow
                     key={t.slug}
-                    refCode={t.ref}
                     title={t.title}
                     right="Keynote"
                     href={`/speaking#${t.slug}`}

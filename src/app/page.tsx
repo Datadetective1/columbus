@@ -2,105 +2,75 @@ import Link from "next/link";
 import { Band, BandHead, CtaButton, Kicker, TextLink } from "@/components/ui";
 import { Reveal } from "@/components/reveal";
 import {
-  AffiliationStrip,
   FinalCta,
   PageHero,
+  Photo,
+  PhotoStrip,
   Portrait,
   StatBlock,
-  TalkCard,
-  TrustStrip,
 } from "@/components/sections";
-import { CAPABILITY_MARKS } from "@/components/art/icons";
-import { aboutPreview, heroCopy, method } from "@/content/bio";
-import { capabilities } from "@/content/capabilities";
-import { impact } from "@/content/proof";
-import { primaryCta, speakingCta } from "@/content/site";
-import { engagements, talks } from "@/content/speaking";
-import { additionalSessions, workshops } from "@/content/workshops";
+import { AdvisoryFigure, VentureFigure } from "@/components/art/figures";
+import { heroCopy, method } from "@/content/bio";
+import { affiliationStrip, impactHome, trustStrip } from "@/content/proof";
+import { speakingCta } from "@/content/site";
 
 /**
  * Home.
  *
- * Eight bands, in the order the brief set: position, proof, what he does, the
- * ideas, the numbers, the speaking, the person, the ask. The copy is
- * deliberately thin — every band here is a door into a page that carries the
- * detail, and the home page's job is to make someone want to open one.
+ * Six moments: who he is, how to work with him, what he has done, what he
+ * thinks, who he is as a person, and the ask. Everything else — the capability
+ * catalogue, the workshop register, the engagement history — lives on the page
+ * that owns it.
+ *
+ * The rule applied to every paragraph here was: if the headline and the visual
+ * already make the point, the paragraph goes. Most of them did.
  */
 
-/**
- * The three cards. Two map straight onto a capability; the third groups the
- * architecture work under the name the brief asked for, and links to the
- * capability page that carries it. Micro-outcomes are pulled from each
- * capability's own `clarifies` and `aims`, trimmed to four.
- */
-const HELPS = [
+/** The three ways in. One visual, one sentence, one link. No bullet lists. */
+const PATHWAYS = [
   {
-    slug: "strategy-execution",
-    title: "Strategy & Execution",
-    descriptor: "Turning direction into decisions, priorities and work that is actually happening.",
-    outcomes: [
-      "Clarify direction",
-      "Make trade-offs explicit",
-      "Rebuild the decision path",
-      "Translate strategy into execution",
-    ],
+    href: "/advisory",
+    kicker: "Advisory",
+    body: "Clarity on strategy, transformation, business architecture and execution.",
+    cta: "Explore advisory",
   },
   {
-    slug: "transformation-adoption",
-    title: "Transformation & Adoption",
-    descriptor: "Getting change past the pilot and into how the organisation actually works.",
-    outcomes: [
-      "Diagnose honestly",
-      "Design for the adopter",
-      "Improve adoption",
-      "Connect the portfolio",
-    ],
+    href: "/ventures",
+    kicker: "Venture partnerships",
+    body: "Business design, commercialization and market support for promising ideas and platforms.",
+    cta: "Explore partnerships",
   },
   {
-    slug: "business-architecture",
-    title: "Business & Technology Architecture",
-    descriptor: "Making the shape of the organisation visible enough to argue about honestly.",
-    outcomes: [
-      "Map what is, not what was designed",
-      "Resolve ownership",
-      "Reduce friction across business and technology",
-      "Build practical operating approaches",
-    ],
+    href: "/speaking",
+    kicker: "Speaking & workshops",
+    body: "Keynotes and working sessions that help teams see problems differently, and move.",
+    cta: "Explore speaking",
   },
 ] as const;
 
-/** The signature ideas. Three are keynotes; the first is the method itself. */
+/** Three ideas. Headline and one sentence — the tile does the rest. */
 const IDEAS = [
   {
-    label: "The method",
-    title: "Discover. Unstick. Navigate.",
-    body: "Find out where you actually are, work out what is holding, then move toward direction. It is the shape of every engagement.",
     href: "/advisory#engagement",
+    title: "Discover. Unstick. Navigate.",
+    body: "Find out where you actually are, work out what is holding, then move.",
   },
   {
-    label: "K-02",
-    title: "Make IT Easy Now",
-    body: "The gap between technology and the business is a relationship problem that has been formalised into process.",
     href: "/speaking#make-it-easy-now",
+    title: "Make IT Easy Now",
+    body: "The gap between technology and the business is a relationship problem that got formalised into process.",
   },
   {
-    label: "K-03",
-    title: "I Built It, & They Didn’t Come",
-    body: "Capable systems, delivered on time, quietly unused. The causes are knowable — including the uncomfortable ones.",
     href: "/speaking#i-built-it-and-they-didnt-come",
-  },
-  {
-    label: "K-01",
-    title: "Power of a Name",
-    body: "Organisations carry their history in what they call things. Stalled transformations are often serving a purpose nobody has questioned in a decade.",
-    href: "/speaking#power-of-a-name",
+    title: "I Built It, & They Didn’t Come",
+    body: "Capable systems, delivered on time, quietly unused.",
   },
 ] as const;
 
 export default function HomePage() {
   return (
     <>
-      {/* ------------------------------------------------- 1 · Hero */}
+      {/* ------------------------------------------------------ 1 · Hero */}
       <PageHero
         kicker={heroCopy.eyebrow}
         heading={heroCopy.headline}
@@ -108,8 +78,8 @@ export default function HomePage() {
         aside={<Portrait priority />}
         actions={
           <>
-            <CtaButton href={primaryCta.href} variant="night">
-              {primaryCta.label}
+            <CtaButton href="/contact?inquiry=advisory" variant="night">
+              Work with Columbus
             </CtaButton>
             <CtaButton href={speakingCta.href} variant="outlineNight">
               {speakingCta.label}
@@ -118,208 +88,144 @@ export default function HomePage() {
         }
       />
 
-      {/* The method, carried on the seam between the hero and the proof strip. */}
+      {/* The seam: the method, and the span of the career. One row, no section. */}
       <Band ground="night2" rhythm="flush">
         <div className="shell border-t border-night-rule py-6">
-          <ul className="flex flex-wrap items-baseline gap-x-10 gap-y-3">
-            {method.map((m) => (
-              <li key={m.word} className="flex items-baseline gap-2.5">
-                <span className="font-display text-[1.25rem] text-night-ink">{m.word}</span>
-                <span className="t-tiny text-night-muted">{m.note}</span>
+          <div className="flex flex-wrap items-baseline justify-between gap-x-10 gap-y-4">
+            <ul className="flex flex-wrap items-baseline gap-x-8 gap-y-2">
+              {method.map((m) => (
+                <li key={m.word} className="flex items-baseline gap-2.5">
+                  <span className="font-display text-[1.25rem] text-night-ink">{m.word}</span>
+                  <span className="t-tiny text-night-muted">{m.note}</span>
+                </li>
+              ))}
+            </ul>
+            <p className="t-tiny text-night-muted">
+              <span className="text-night-ink">{trustStrip[0].lead}</span> {trustStrip[0].body}
+            </p>
+          </div>
+        </div>
+      </Band>
+
+      {/* ------------------------------- 2 · Ways to work with Columbus */}
+      <Band ground="paper" rhythm="normal" id="work">
+        <div className="shell">
+          <Reveal>
+            <BandHead n="01" label="Ways to work" heading="Three ways in." />
+          </Reveal>
+
+          <Reveal as="ul" className="mt-12 grid gap-6 md:mt-16 md:grid-cols-3">
+            {PATHWAYS.map((p, i) => (
+              <li key={p.href} className="h-full">
+                <article
+                  className="card card-link reveal h-full overflow-hidden"
+                  style={{ "--i": i } as React.CSSProperties}
+                >
+                  <div className="aspect-[4/3] overflow-hidden border-b border-rule bg-paper-2">
+                    {i === 0 ? (
+                      <span className="flex h-full w-full items-center justify-center p-6 text-ink [--figure-accent:var(--color-accent)]">
+                        <AdvisoryFigure className="w-full" />
+                      </span>
+                    ) : i === 1 ? (
+                      <span className="flex h-full w-full items-center justify-center p-6 text-ink [--figure-accent:var(--color-accent)]">
+                        <VentureFigure className="w-full" />
+                      </span>
+                    ) : (
+                      <Photo
+                        slot="speaking01"
+                        sizes="(min-width: 768px) 30vw, 92vw"
+                        className="h-full w-full border-0"
+                      />
+                    )}
+                  </div>
+
+                  <div className="flex flex-1 flex-col p-6 md:p-7">
+                    <h3 className="t-h4 text-ink">
+                      <Link href={p.href} className="card-hit link-underline">
+                        {p.kicker}
+                      </Link>
+                    </h3>
+                    <p className="t-small mt-3 text-muted">{p.body}</p>
+                    <span className="t-label-sm mt-auto pt-6 text-accent">{p.cta} →</span>
+                  </div>
+                </article>
+              </li>
+            ))}
+          </Reveal>
+        </div>
+      </Band>
+
+      {/* --------------------------------------------- 3 · Selected impact */}
+      <Band ground="night" rhythm="normal" className="field-rule">
+        <div className="shell">
+          <Reveal>
+            <BandHead
+              n="02"
+              label="Selected career impact"
+              heading="Work that moved a number."
+              standfirst="Across engineering, consulting and enterprise transformation roles."
+              night
+            />
+          </Reveal>
+
+          <Reveal as="ul" className="mt-12 grid gap-x-8 gap-y-10 md:mt-16 md:grid-cols-4">
+            {impactHome.map((point, i) => (
+              <StatBlock key={point.figure + point.label} point={point} index={i} />
+            ))}
+          </Reveal>
+
+          <ul className="strip mt-14 gap-x-8 gap-y-3 border-t border-night-rule pt-8 sm:gap-x-10">
+            {affiliationStrip.map((name) => (
+              <li key={name} className="t-label text-night-muted">
+                {name}
               </li>
             ))}
           </ul>
         </div>
       </Band>
 
-      {/* ------------------------------------------- 2 · Trust strip */}
-      <TrustStrip />
-
-      {/* ------------------------------ 3 · What Columbus helps with */}
-      <Band ground="paper" rhythm="normal" id="help">
+      {/* --------------------------------------------- 4 · Signature ideas */}
+      <Band ground="paper2" rhythm="normal" className="aura-light">
         <div className="shell">
           <Reveal>
-            <BandHead
-              n="01"
-              label="Advisory"
-              heading="What Columbus helps with"
-              standfirst="Three kinds of problem, one underlying question: what is actually stopping this from moving?"
-            />
+            <BandHead n="03" label="Signature ideas" heading="The work has a point of view." />
           </Reveal>
 
-          <Reveal as="ul" className="mt-12 grid gap-5 md:mt-16 md:grid-cols-3 md:gap-6">
-            {HELPS.map((card, i) => {
-              const Mark = CAPABILITY_MARKS[card.slug];
-              return (
-                <li key={card.slug} className="h-full">
-                  <article
-                    className="card card-link card-edge reveal h-full p-6 md:p-7"
-                    style={{ "--i": i } as React.CSSProperties}
-                  >
-                    <span className="text-accent">
-                      <Mark />
-                    </span>
-                    <h3 className="t-h4 mt-6 text-ink">
-                      <Link href={`/advisory/${card.slug}`} className="card-hit link-underline">
-                        {card.title}
-                      </Link>
-                    </h3>
-                    <p className="t-small mt-3 text-muted">{card.descriptor}</p>
-                    <ul className="register mt-auto pt-6">
-                      {card.outcomes.map((o) => (
-                        <li key={o} className="py-2 text-[0.875rem] text-ink">
-                          {o}
-                        </li>
-                      ))}
-                    </ul>
-                  </article>
-                </li>
-              );
-            })}
-          </Reveal>
-
-          <div className="mt-10">
-            <TextLink href="/advisory">All five capabilities</TextLink>
-          </div>
-        </div>
-      </Band>
-
-      {/* ---------------------------------------- 4 · Signature ideas */}
-      <Band ground="night2" rhythm="normal" className="aura">
-        <div className="shell">
-          <Reveal>
-            <BandHead
-              n="02"
-              label="Signature ideas"
-              heading="The work has a point of view."
-              standfirst="Four ideas he keeps coming back to, on stage and in the room."
-              night
-            />
-          </Reveal>
-
-          <Reveal
-            as="ul"
-            className="mt-12 grid gap-px border border-night-rule bg-night-rule md:mt-16 md:grid-cols-2"
-          >
+          <Reveal as="ul" className="mt-12 grid gap-6 md:mt-16 md:grid-cols-3">
             {IDEAS.map((idea, i) => (
-              <li key={idea.title} className="bg-night-2">
+              <li key={idea.title} className="h-full">
                 <Link
                   href={idea.href}
-                  className="reveal group flex h-full flex-col p-7 transition-colors duration-300 hover:bg-night-3 md:p-9"
+                  className="card card-link card-edge reveal group h-full p-7 md:p-8"
                   style={{ "--i": i } as React.CSSProperties}
                 >
-                  <span className="t-label-sm text-night-accent">{idea.label}</span>
-                  <h3 className="t-h3 mt-4 text-night-ink">{idea.title}</h3>
-                  <p className="t-small measure-sm mt-4 text-night-muted">{idea.body}</p>
-                  <span className="t-label-sm mt-auto pt-8 text-night-muted transition-colors group-hover:text-night-accent">
-                    Read more →
-                  </span>
+                  <h3 className="t-h3 text-ink transition-colors group-hover:text-accent">
+                    {idea.title}
+                  </h3>
+                  <p className="t-small measure-sm mt-4 text-muted">{idea.body}</p>
                 </Link>
               </li>
             ))}
           </Reveal>
+        </div>
+      </Band>
 
-          <p className="mt-10">
-            <TextLink href="/insights" night>
-              Working notes and the lexicon
-            </TextLink>
+      {/* The room, as a strip. Its screen reads “I Built It and They Didn’t Come”. */}
+      <PhotoStrip slot="workshop01">
+        <div className="egrid items-center gap-y-6">
+          <p className="col-span-6 t-h3 text-night-ink md:col-span-7">
+            Three keynotes and a catalogue of working sessions.
           </p>
-        </div>
-      </Band>
-
-      {/* ---------------------------------------- 5 · Selected impact */}
-      <Band ground="night" rhythm="normal" className="field-rule">
-        <div className="shell">
-          <Reveal>
-            <BandHead
-              n="03"
-              label="Selected impact"
-              heading="Work that moved a number."
-              standfirst="A selection from engineering, consulting and enterprise transformation. Figures are Columbus’s across his career, not WAZA engagements."
-              night
-            />
-          </Reveal>
-
-          <Reveal as="ul" className="mt-12 grid gap-x-8 gap-y-10 md:mt-16 md:grid-cols-3">
-            {impact.map((point, i) => (
-              <StatBlock key={point.figure + point.label} point={point} index={i} />
-            ))}
-          </Reveal>
-
-          <div className="mt-14 border-t border-night-rule pt-8">
-            <AffiliationStrip night />
+          <div className="col-span-6 md:col-span-4 md:col-start-9 md:justify-self-end">
+            <CtaButton href="/speaking" variant="outlineNight">
+              Explore Speaking
+            </CtaButton>
           </div>
         </div>
-      </Band>
+      </PhotoStrip>
 
-      {/* -------------------------------------- 6 · Speaking & workshops */}
+      {/* --------------------------------------------------- 5 · The person */}
       <Band ground="paper" rhythm="normal">
-        <div className="shell">
-          <Reveal>
-            <BandHead
-              n="04"
-              label="Speaking & workshops"
-              heading="Keynotes and working sessions"
-              standfirst="Three keynotes and a catalogue of sessions, all of them built to be used the following Monday."
-            />
-          </Reveal>
-
-          <Reveal as="ul" className="mt-12 grid gap-5 md:mt-16 md:grid-cols-3 md:gap-6">
-            {talks.map((talk, i) => (
-              <li key={talk.slug} className="h-full">
-                <TalkCard talk={talk} index={i} compact />
-              </li>
-            ))}
-          </Reveal>
-
-          <div className="egrid mt-14 gap-y-10">
-            <div className="col-span-6 md:col-span-7">
-              <h3 className="t-label text-accent">Workshops & sessions</h3>
-              <ul className="register mt-4">
-                {workshops.map((w) => (
-                  <li key={w.slug}>
-                    <Link
-                      href={`/workshops#${w.slug}`}
-                      className="row-link group flex items-baseline justify-between gap-4 py-3"
-                    >
-                      <span className="text-[0.9375rem] text-ink transition-colors group-hover:text-accent">
-                        {w.title}
-                      </span>
-                      <span className="meta shrink-0">{w.ref}</span>
-                    </Link>
-                  </li>
-                ))}
-                {additionalSessions.map((title) => (
-                  <li key={title}>
-                    <span className="flex items-baseline justify-between gap-4 py-3">
-                      <span className="text-[0.9375rem] text-muted">{title}</span>
-                      <span className="meta shrink-0">—</span>
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="col-span-6 md:col-span-4 md:col-start-9">
-              <h3 className="t-label text-accent">Selected engagements</h3>
-              <ul className="mt-4 space-y-3">
-                {engagements.map((e) => (
-                  <li key={e.organization} className="rule-hair pt-3">
-                    <p className="text-[0.875rem] leading-snug text-ink">{e.organization}</p>
-                    <p className="meta mt-1">{e.years}</p>
-                  </li>
-                ))}
-              </ul>
-              <p className="mt-6">
-                <TextLink href="/speaking">Speaking in full</TextLink>
-              </p>
-            </div>
-          </div>
-        </div>
-      </Band>
-
-      {/* ------------------------------------------- 7 · About preview */}
-      <Band ground="paper2" rhythm="normal" rule className="aura-light">
         <div className="shell">
           <div className="egrid items-center gap-y-12">
             <div className="col-span-6 md:col-span-4">
@@ -328,26 +234,24 @@ export default function HomePage() {
 
             <div className="col-span-6 md:col-span-7 md:col-start-6">
               <Kicker>About Columbus</Kicker>
-              <h2 className="t-h1 mt-5 text-ink">{aboutPreview.heading}</h2>
-              <p className="t-lede measure mt-6 text-muted">{aboutPreview.body}</p>
-
-              <ul className="mt-8 flex flex-wrap gap-x-8 gap-y-3">
-                {capabilities.slice(0, 3).map((c) => (
-                  <li key={c.slug} className="t-label-sm text-faint">
-                    {c.title}
-                  </li>
-                ))}
-              </ul>
-
+              <h2 className="t-h1 mt-5 text-ink">
+                From aircraft design to enterprise transformation.
+              </h2>
+              <p className="t-lede measure mt-6 text-muted">
+                Columbus began in aircraft design and grew into strategy, consulting,
+                enterprise architecture, business design and transformation leadership. He
+                brings an engineer&rsquo;s discipline to problems that are ultimately about
+                people, decisions and execution.
+              </p>
               <div className="mt-8">
-                <TextLink href="/about">The longer story</TextLink>
+                <TextLink href="/about">Read Columbus&rsquo;s story</TextLink>
               </div>
             </div>
           </div>
         </div>
       </Band>
 
-      {/* ----------------------------------------------- 8 · Final CTA */}
+      {/* ----------------------------------------------- 6 · Final CTA */}
       <FinalCta />
     </>
   );

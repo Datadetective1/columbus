@@ -1,10 +1,21 @@
 /**
  * Photography slots.
  *
- * The client has supplied one approved headshot of Columbus. Until the file is
- * placed in public/images/columbus/ every slot stays `null` and renders a
- * designed fallback instead of a broken image, so the site is complete either
- * way.
+ * Four approved photographs, all supplied by the client and all in use.
+ *
+ * ⚠️ THREE OF THEM ARE LOW RESOLUTION and are used at or near their native size
+ * on purpose. `width`/`height` below are the true pixel dimensions of each file,
+ * which is what stops `next/image` from serving an upscaled, mushy variant:
+ *
+ *   columbus-headshot        960 x 960   ok at any size the site uses
+ *   columbus-waza-polo       364 x 470   small and medium frames only
+ *   columbus-speaking-room   477 x 301   small and medium frames only
+ *   columbus-workshop-wide   780 x 219   full-bleed strip, darkened
+ *
+ * The workshop panorama is the one deliberate stretch: at 780px wide it is
+ * softer than a full-bleed band would like, so it is treated as an atmospheric
+ * strip under a dark scrim rather than presented as a sharp photograph. If
+ * higher-resolution originals turn up, drop them in and nothing else changes.
  *
  * TO ADD A PHOTO (this is the whole process):
  *   1. Put the file in  public/images/columbus/
@@ -38,50 +49,51 @@ export type ImageSlot = {
 
 export const images = {
   hero: {
-    src: null,
+    src: "/images/columbus/columbus-headshot.jpg",
     alt: "Columbus Brown II",
-    width: 1000,
-    height: 1000,
+    width: 960,
+    height: 960,
     fallbackLabel: "Portrait",
     shape: "circle",
     guidance:
-      "The approved headshot. Square file, subject centred — it is masked to a disc and composed against a cobalt plate on the navy hero. Monochrome suits the dark register; a colour file will also work.",
+      "The approved headshot. Cropped square to the edge of its circular frame so the disc mask lands exactly on the photograph. Monochrome, which suits the dark register.",
   },
   about: {
-    src: null,
+    src: "/images/columbus/columbus-headshot.jpg",
     alt: "Columbus Brown II",
-    width: 1000,
-    height: 1000,
+    width: 960,
+    height: 960,
     fallbackLabel: "Portrait",
     shape: "circle",
     guidance:
-      "Same approved headshot, or a second frame if one is available. Square, subject centred, masked to a disc.",
+      "Currently the same headshot. Replace with a second frame when one is available — one portrait doing every job is the compromise, not the intent.",
   },
   speaking01: {
-    src: null,
-    alt: "",
-    width: 1600,
-    height: 1000,
+    src: "/images/columbus/columbus-speaking-room.jpg",
+    alt: "Columbus Brown speaking at the front of a room, mid-gesture, to a seated audience",
+    width: 477,
+    height: 301,
     fallbackLabel: "Speaking",
     guidance:
-      "On stage or front-of-room, mid-gesture. The historical photos are candid and room-level — keep that.",
+      "Front-of-room, candid, room-level. Low resolution — do not use above about 600px wide.",
   },
-  speaking02: {
-    src: null,
-    alt: "",
-    width: 1200,
-    height: 1500,
-    fallbackLabel: "Speaking, close",
-    guidance: "Closer frame, 4:5. Audience visible or implied.",
+  wazaPolo: {
+    src: "/images/columbus/columbus-waza-polo.jpg",
+    alt: "Columbus Brown outdoors, wearing a WAZA polo shirt reading “Make IT easy NOW!”",
+    width: 364,
+    height: 470,
+    fallbackLabel: "Portrait",
+    guidance:
+      "The warmest of the four and the only one in colour. It carries the WAZA mark and the Make IT Easy Now line on the shirt, so it belongs beside that keynote or the section about the name. Low resolution.",
   },
   workshop01: {
-    src: null,
-    alt: "",
-    width: 1600,
-    height: 1000,
+    src: "/images/columbus/columbus-workshop-wide.jpg",
+    alt: "A full conference room seated in front of a screen reading “I Built It and They Didn’t Come”",
+    width: 780,
+    height: 219,
     fallbackLabel: "Facilitation",
     guidance:
-      "Facilitating — at a wall, a board, or seated with a small group. Hands and materials in shot. No stock-photo whiteboard pointing.",
+      "A 3.6:1 panorama of a full room. Used as a full-bleed strip under a dark scrim, which is what lets a 780px-wide file carry a band that size.",
   },
 } satisfies Record<string, ImageSlot>;
 

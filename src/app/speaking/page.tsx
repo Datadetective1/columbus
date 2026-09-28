@@ -1,5 +1,5 @@
 import { Register, RegisterRow, Stamp } from "@/components/modules";
-import { FinalCta, PageHero } from "@/components/sections";
+import { FinalCta, PageHero, Photo } from "@/components/sections";
 import { POSTERS } from "@/components/art/posters";
 import { Src, SourceNotes } from "@/components/provenance";
 import { Reveal } from "@/components/reveal";
@@ -36,12 +36,19 @@ export default function SpeakingPage() {
         kicker="Speaking"
         heading={speakingIntro.headline}
         standfirst={speakingIntro.body[0]}
+        aside={
+          <Photo
+            slot="speaking01"
+            sizes="(min-width: 768px) 32vw, 92vw"
+            priority
+            className="border-night-rule"
+          />
+        }
         actions={
           <CtaButton href="/contact?inquiry=speaking" variant="night">
             Invite Columbus to Speak
           </CtaButton>
         }
-        wide
       />
 
       {/* Contents plate — the three keynotes, as posters. */}
@@ -60,7 +67,6 @@ export default function SpeakingPage() {
                         })()}
                       </span>
                     </span>
-                    <span className="t-label-sm text-accent">{t.ref}</span>
                     <span className="mt-1.5 block font-display text-[1.125rem] leading-snug text-ink transition-colors group-hover:text-accent">
                       {t.title}
                     </span>
@@ -126,7 +132,7 @@ export default function SpeakingPage() {
           <div className="shell">
             <div className="egrid items-end">
               <div className="col-span-6 md:col-span-8">
-                <Stamp parts={["Keynote", talk.ref]} />
+                <Stamp parts={["Keynote"]} />
                 <h2 className="t-h1 mt-4 text-ink">{talk.title}</h2>
                 <p className="mt-3 font-display text-[1.125rem] italic leading-snug text-accent md:text-[1.375rem]">
                   {talk.subtitle}
@@ -147,14 +153,27 @@ export default function SpeakingPage() {
             </div>
 
             <div className="egrid mt-8 border-t border-rule pt-7">
-              <figure className="art-zoom art-tile col-span-6 mb-6 aspect-[4/5] border border-rule md:col-span-3 md:mb-0">
-                <span className="art-inner block h-full w-full">
-                  {(() => {
-                    const P = POSTERS[talk.slug as keyof typeof POSTERS];
-                    return P ? <P className="h-full w-full" /> : null;
-                  })()}
-                </span>
-              </figure>
+              {talk.slug === "make-it-easy-now" ? (
+                <figure className="col-span-6 mb-6 md:col-span-3 md:mb-0">
+                  <Photo
+                    slot="wazaPolo"
+                    sizes="(min-width: 768px) 24vw, 92vw"
+                    className="w-full"
+                  />
+                  <figcaption className="meta mt-3">
+                    The line has been on the shirt for a while.
+                  </figcaption>
+                </figure>
+              ) : (
+                <figure className="art-zoom art-tile col-span-6 mb-6 aspect-[4/5] border border-rule md:col-span-3 md:mb-0">
+                  <span className="art-inner block h-full w-full">
+                    {(() => {
+                      const P = POSTERS[talk.slug as keyof typeof POSTERS];
+                      return P ? <P className="h-full w-full" /> : null;
+                    })()}
+                  </span>
+                </figure>
+              )}
 
               <blockquote className="col-span-6 md:col-span-4">
                 <p className="font-display text-[1.0625rem] leading-[1.5] text-ink md:text-[1.1875rem]">
@@ -197,6 +216,77 @@ export default function SpeakingPage() {
         </Band>
       ))}
 
+      {/* Also available */}
+      <Band ground="night" rhythm="tight">
+        <div className="shell">
+          <BandHead
+            n="W"
+            label="Also available"
+            heading={`${workshops.length + additionalSessions.length} working sessions.`}
+            headingClass="t-h2"
+            night
+            standfirst="Where a keynote changes how a room thinks, a workshop changes what it does."
+          />
+          <div className="mt-8">
+            <Register>
+              {workshops.map((w) => (
+                <RegisterRow
+                  key={w.slug}
+                  title={w.title}
+                  meta={w.subtitle}
+                  right={w.subject}
+                  href={`/workshops#${w.slug}`}
+                  night
+                />
+              ))}
+            </Register>
+            <ul className="register mt-0">
+              {additionalSessions.map((title) => (
+                <li key={title}>
+                  <span className="grid grid-cols-[3rem_1fr_auto] items-baseline gap-x-4 py-3.5">
+                    <span className="meta">—</span>
+                    <span className="text-[0.9375rem] leading-snug text-night-muted">{title}</span>
+                    <span className="meta text-right">Detail to follow</span>
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="mt-10">
+            <CtaButton href="/workshops" variant="outlineNight">
+              The full workshop catalogue
+            </CtaButton>
+          </div>
+        </div>
+      </Band>
+
+      {/* Testimonials */}
+      {visibleTestimonials.length ? (
+        <Band ground="paper2" rhythm="tight" rule>
+          <div className="shell">
+            <h2 className="t-label border-b border-rule pb-2 text-faint">What people said</h2>
+            <div className="egrid mt-8">
+              {visibleTestimonials.map((t) => (
+                <figure key={t.attribution} className="col-span-6 md:col-span-6">
+                  <blockquote className="font-display text-[1.1875rem] leading-[1.45] text-ink md:text-[1.375rem]">
+                    &ldquo;{t.quote}&rdquo;
+                  </blockquote>
+                  <figcaption className="meta mt-4">
+                    {t.attribution} · {t.source}
+                    <Src n={src.ref("speaker-profile")} id="speaker-profile" />
+                  </figcaption>
+                </figure>
+              ))}
+            </div>
+            <p className="t-tiny mt-8 border-t border-rule pt-4">
+              Both reproduced character-for-character with the attribution as printed. They are
+              approximately seven years old.
+              <Src n={src.ref("needs-review")} id="needs-review" />
+            </p>
+          </div>
+        </Band>
+      ) : null}
+
       {/* The record */}
       <Band id="record" rhythm="tight" rule className="scroll-mt-32">
         <div className="shell">
@@ -230,81 +320,6 @@ export default function SpeakingPage() {
                 </ul>
               </Reveal>
             </div>
-          </div>
-        </div>
-      </Band>
-
-      {/* Testimonials */}
-      {visibleTestimonials.length ? (
-        <Band ground="paper2" rhythm="tight" rule>
-          <div className="shell">
-            <h2 className="t-label border-b border-rule pb-2 text-faint">What people said</h2>
-            <div className="egrid mt-8">
-              {visibleTestimonials.map((t) => (
-                <figure key={t.attribution} className="col-span-6 md:col-span-6">
-                  <blockquote className="font-display text-[1.1875rem] leading-[1.45] text-ink md:text-[1.375rem]">
-                    &ldquo;{t.quote}&rdquo;
-                  </blockquote>
-                  <figcaption className="meta mt-4">
-                    {t.attribution} · {t.source}
-                    <Src n={src.ref("speaker-profile")} id="speaker-profile" />
-                  </figcaption>
-                </figure>
-              ))}
-            </div>
-            <p className="t-tiny mt-8 border-t border-rule pt-4">
-              Both reproduced character-for-character with the attribution as printed. They are
-              approximately seven years old.
-              <Src n={src.ref("needs-review")} id="needs-review" />
-            </p>
-          </div>
-        </Band>
-      ) : null}
-
-      {/* Also available */}
-      <Band ground="night" rhythm="tight">
-        <div className="shell">
-          <BandHead
-            n="W"
-            label="Also available"
-            heading={`${workshops.length + additionalSessions.length} working sessions.`}
-            headingClass="t-h2"
-            night
-            standfirst="Where a keynote changes how a room thinks, a workshop changes what it does."
-          />
-          <div className="mt-8">
-            <Register>
-              {workshops.map((w) => (
-                <RegisterRow
-                  key={w.slug}
-                  refCode={w.ref}
-                  title={w.title}
-                  meta={w.subtitle}
-                  right={w.subject}
-                  href={`/workshops#${w.slug}`}
-                  night
-                />
-              ))}
-            </Register>
-            <ul className="register mt-0">
-              {additionalSessions.map((title) => (
-                <li key={title}>
-                  <span className="grid grid-cols-[3rem_1fr_auto] items-baseline gap-x-4 py-3.5">
-                    <span className="meta">—</span>
-                    <span className="text-[0.9375rem] leading-snug text-night-muted">{title}</span>
-                    <span className="meta text-right">Detail to follow</span>
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className="mt-10 flex flex-col gap-2.5 sm:flex-row">
-            <CtaButton href="/contact?inquiry=speaking" variant="night">
-              Invite Columbus to Speak
-            </CtaButton>
-            <CtaButton href="/workshops" variant="outlineNight">
-              The workshop catalogue
-            </CtaButton>
           </div>
         </div>
       </Band>

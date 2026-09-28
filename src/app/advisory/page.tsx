@@ -26,13 +26,15 @@ export const metadata = buildMetadata({
 const src = sourceIndex(["editorial", "client-brief", "speaker-profile"]);
 
 /**
- * Two challenge sentences per capability, kept with the capability they belong
- * to. All twenty would be a wall; ten still lets a reader find their own
- * problem, and the rest are on each capability page.
+ * One challenge sentence per capability. A reader is looking for their own
+ * problem, not reading a list — five is enough to find it, and the rest are on
+ * each capability page.
  */
-const challenges = capabilities.flatMap((c) =>
-  c.challenges.slice(0, 2).map((q) => ({ quote: q, slug: c.slug, title: c.title, ref: c.n })),
-);
+const challenges = capabilities.map((c) => ({
+  quote: c.challenges[0],
+  slug: c.slug,
+  title: c.title,
+}));
 
 /** Four figures for the "why" band — the widest span of the work. */
 const proof = [impact[0], impact[1], impactExtended[0], impactExtended[3]];
@@ -56,7 +58,6 @@ export default function AdvisoryPage() {
               n="01"
               label="What Columbus helps solve"
               heading="It usually starts as a sentence someone says out loud."
-              standfirst={advisoryIntro.body[1]}
               night
             />
           </Reveal>
@@ -72,9 +73,7 @@ export default function AdvisoryPage() {
                   <p className="font-display text-[1.0625rem] leading-snug text-night-ink transition-colors group-hover:text-night-accent md:text-[1.1875rem]">
                     &ldquo;{c.quote}&rdquo;
                   </p>
-                  <p className="meta mt-2">
-                    {c.ref} · {c.title}
-                  </p>
+                  <p className="meta mt-2">{c.title}</p>
                 </Link>
               </li>
             ))}
@@ -109,12 +108,11 @@ export default function AdvisoryPage() {
             <BandHead
               n="03"
               label="Engagement modes"
-              heading="How the work is bought."
-              standfirst="Five shapes. Which one fits depends on where the problem actually sits."
+              heading="How the work runs."
             />
           </Reveal>
 
-          <Reveal as="ul" className="mt-12 grid gap-px border border-rule bg-rule md:mt-16 md:grid-cols-2 lg:grid-cols-5">
+          <Reveal as="ul" className="mt-12 grid gap-px border border-rule bg-rule md:mt-16 md:grid-cols-2 lg:grid-cols-4">
             {engagementModes.map((m, i) => (
               <li key={m.title} className="bg-paper">
                 <div
@@ -167,7 +165,6 @@ export default function AdvisoryPage() {
               n="04"
               label="Why Columbus"
               heading="An uncommon combination."
-              standfirst="Technical grounding, business design and accountability for the change itself — rarely found in the same person."
               night
             />
           </Reveal>

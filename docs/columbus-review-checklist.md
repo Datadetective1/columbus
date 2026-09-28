@@ -38,10 +38,22 @@ Ordered roughly by how much it matters.
       Successful Public Speaking and The Heart, Art & Business of Speaking were previously
       hidden as unconfirmed and are now shown. Confirm each is current.
       → `src/content/credentials.ts` → `verified`
-- [ ] **🆕 "16+ years" is stale.** It came from a ~2018 document, which makes the real
-      figure closer to 24. It ships as supplied because an understatement is not a false
-      claim, but it wants updating rather than merely confirming. → `src/content/proof.ts`
-      → `trustStrip`
+- [ ] **Experience span now reads "20+ years".** The earlier "16+" came from a ~2018
+      document. The client confirms the professional history goes back to 2002, so the site
+      now says *20+ years across engineering, consulting, architecture and transformation* —
+      open-ended on purpose, because a hard number goes stale the moment it ships. Confirm
+      the span. → `src/content/proof.ts` → `trustStrip`
+- [ ] **🔴 The Ventures page describes commercial structures.** `/ventures` states that a
+      collaboration *may* involve advisory, revenue participation, royalties, equity or other
+      agreed structures. Every one is worded as negotiable rather than offered, and the page
+      says plainly that WAZA is not a fund and holds no portfolio — but this is the most
+      commercially consequential page on the site and needs your explicit sign-off before it
+      is public. → `src/content/ventures.ts`, `src/app/ventures/page.tsx`
+- [ ] **🔴 The four photographs.** `columbus-headshot`, `columbus-waza-polo`,
+      `columbus-speaking-room` and `columbus-workshop-wide` are now published. Confirm you
+      are happy for each to be public, and that nobody else identifiable in the two room
+      shots needs to be asked. Three of the four are low resolution — higher-resolution
+      originals would visibly improve the site. → `public/images/columbus/`
 - [ ] **🆕 The headshot.** The site is built for one approved portrait and renders a
       designed placeholder until the file exists. Confirm the image being used is one you
       are happy to publish, and supply the highest-resolution original available — the

@@ -45,7 +45,7 @@ export const site = {
   descriptor: "Helping leaders turn transformation into traction.",
 
   metaDescription:
-    "Columbus Brown II — strategy, transformation and business architecture advisory, keynotes and workshops. Helping leaders align strategy, technology, people and execution.",
+    "Columbus Brown II — advisory, venture partnerships, keynotes and workshops. Helping leaders and builders turn complex strategy, technology and organizational challenges into movement.",
 
   contact: {
     /**
@@ -83,12 +83,20 @@ export type NavItem = { label: string; href: string };
 export const nav: NavItem[] = [
   { label: "Home", href: "/" },
   { label: "Advisory", href: "/advisory" },
+  { label: "Ventures", href: "/ventures" },
   { label: "Speaking", href: "/speaking" },
   { label: "About", href: "/about" },
-  { label: "Contact", href: "/contact" },
 ];
 
-export const primaryCta = { href: "/contact", label: "Work with Columbus" } as const;
+/**
+ * Contact is deliberately not in the nav. It is the call to action, and a site
+ * that lists its own conversion route as a peer of its content pages is
+ * competing with itself. It is reachable from every CTA and from the footer.
+ */
+export const primaryCta = { href: "/contact", label: "Start a Conversation" } as const;
+
+/** Used where the ask is specifically to work together rather than to enquire. */
+export const workCta = { href: "/contact?inquiry=advisory", label: "Work with Columbus" } as const;
 export const speakingCta = {
   href: "/contact?inquiry=speaking",
   label: "Book Columbus to Speak",

@@ -28,18 +28,17 @@ export type ProofPoint = {
 };
 
 /**
- * The six shown on the home page. Ordered so the eye meets the largest
- * financial figure first and the most human one last.
+ * The full set. `impactHome` below picks the four strongest for the home page —
+ * six numbers in a grid reads as a scoreboard, four reads as evidence.
  */
 export const impact: ProofPoint[] = [
   {
     figure: "$100M+",
-    label: "Value identified through enterprise capability gap analysis",
-    note: "Advisory to an EVP team on duplicated capabilities and technical debt",
+    label: "Value identified through enterprise capability analysis",
   },
   {
     figure: "80+",
-    label: "Engagements directed across service design, process optimisation and capability analysis",
+    label: "Engagements directed across service design, process optimization and capability analysis",
   },
   {
     figure: "25%",
@@ -51,15 +50,20 @@ export const impact: ProofPoint[] = [
   },
   {
     figure: "1,300+",
-    label: "Process maps published in a business navigation portal",
-    note: "Deployed as a single map of how the organisation actually worked",
+    label: "Process maps deployed in an enterprise navigation portal",
   },
   {
     figure: "85%",
-    label: "Adoption reached on a 10,000-person collaboration rollout",
-    note: "Alongside $2M in cost savings",
+    label: "Adoption on a 10,000-person collaboration rollout, alongside $2M in cost savings",
   },
 ];
+
+/**
+ * The four shown on the home page: the biggest financial figure, the volume of
+ * work, the most concrete artefact, and the one about people actually using
+ * something.
+ */
+export const impactHome: ProofPoint[] = [impact[0], impact[1], impact[4], impact[5]];
 
 /** Further figures, used on the Advisory page rather than the home page. */
 export const impactExtended: ProofPoint[] = [
@@ -84,14 +88,14 @@ export const impactExtended: ProofPoint[] = [
 /**
  * The credibility strip under the hero. Four claims, each one line.
  *
- * ⚠️ "16+ years" is the client-supplied figure and also appears in the 2018
- * one-sheet, which makes it an understatement today rather than an error. It is
- * kept as supplied — flagged for Columbus to update to the current number.
+ * "20+ years" replaces the "16+" that came from the 2018 one-sheet. His
+ * professional history goes back to 2002, so an open-ended figure is both more
+ * accurate and more durable — a hard number goes stale the moment it ships.
  */
 export const trustStrip = [
   {
-    lead: "16+ years",
-    body: "across engineering, consulting and enterprise transformation",
+    lead: "20+ years",
+    body: "across engineering, consulting, architecture and transformation",
   },
   {
     lead: "Advisory, speaking",
@@ -109,8 +113,9 @@ export const trustStrip = [
 
 /**
  * Names shown as a wrapping hairline-divided row. Set as text, never as logos —
- * these are former employers and conference hosts, not WAZA clients, and using
- * their trademarks would imply a relationship that does not exist.
+ * these are former employers, and using their trademarks would imply an
+ * endorsement that does not exist. The caption says "career experience", which
+ * is accurate without being defensive about it.
  */
 export const affiliationStrip = [
   "Bell Flight",
@@ -121,5 +126,4 @@ export const affiliationStrip = [
   "Slalom Consulting",
 ] as const;
 
-export const affiliationCaption =
-  "Career experience. Not a client list — WAZA publishes no client names.";
+export const affiliationCaption = "Career experience.";

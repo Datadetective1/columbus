@@ -26,7 +26,7 @@ This is a deliberate change, not a lapse, and it is recorded rather than quietly
 | Employer names (Bell Flight, Southwest Airlines, Unify, FromHereOn, Daugherty/CGI, Slalom) | Hidden behind `showEmployerNames = false` | Published, framed as career experience and never as clients | `CLIENT` |
 | Proof-point figures ($100M, 80+, 25%, $40M, $1.3B, $14B, $2M/85%, $1.5M, 30%, 1,300+) | No metrics claimed anywhere | Published on Home and Advisory | `CLIENT` |
 | Certifications (Prosci, SAFe 4 Agilist, ITSMF, Power Communications, Successful Public Speaking, Heart/Art/Business of Speaking) | `verified: false`, filtered out at render | Published | `CLIENT` |
-| "16+ years" | Suppressed as stale | Published as supplied | `CLIENT` |
+| "16+ years" | Suppressed as stale | Replaced by "20+ years", open-ended | `CLIENT` |
 
 **What has NOT changed.** Nothing was invented to fill a gap. Three sessions named in the
 brief (*Fundamentals for Project Managers and Business Analysts*, *Getting Dreamers and
@@ -45,9 +45,11 @@ the superscript apparatus on the page resolves to *"Supplied directly by the cli
 independently confirmed… listed for Columbus to confirm before launch."* A reader can see
 the status; it is not buried in a repo.
 
-**⚠️ "16+ years" is almost certainly an understatement.** It also appears in the 2018
-one-sheet, which would make the current figure closer to 24. An understatement is not a
-false claim, so it ships as supplied — but it should be updated, not just confirmed.
+**The experience span was corrected.** "16+ years" came from the 2018 one-sheet and was
+already an understatement when it shipped. The client confirms the professional history
+begins in 2002, so the site now reads *"20+ years across engineering, consulting,
+architecture and transformation"* — deliberately open-ended, because an exact count is
+wrong again every January.
 
 ---
 

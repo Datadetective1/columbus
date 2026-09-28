@@ -82,7 +82,7 @@ export default async function CapabilityPage({
             <figure className="col-span-6 md:col-span-4 md:col-start-9">
               <CapabilityFocus touches={TOUCHES[c.slug] ?? []} />
               <figcaption className="meta mt-3">
-                Fig. 01 · Where {c.title} works in the system
+                Where {c.title} works in the system
               </figcaption>
             </figure>
           </div>
@@ -228,7 +228,6 @@ export default async function CapabilityPage({
                 {others.map((o) => (
                   <RegisterRow
                     key={o.slug}
-                    refCode={o.n}
                     title={o.title}
                     href={`/advisory/${o.slug}`}
                   compact

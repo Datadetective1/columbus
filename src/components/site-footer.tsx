@@ -25,14 +25,14 @@ export function SiteFooter() {
       items: capabilities.map((c) => ({
         label: c.title,
         href: `/advisory/${c.slug}`,
-        meta: c.n,
+        meta: "",
       })),
     },
     {
       heading: "Speaking",
       items: [
-        ...talks.map((t) => ({ label: t.title, href: `/speaking#${t.slug}`, meta: t.ref })),
-        { label: "Selected engagements, 2015–2019", href: "/speaking#record", meta: "Record" },
+        ...talks.map((t) => ({ label: t.title, href: `/speaking#${t.slug}`, meta: "" })),
+        { label: "Selected engagements", href: "/speaking#record", meta: "" },
       ],
     },
     {
@@ -40,17 +40,17 @@ export function SiteFooter() {
       items: workshops.map((w) => ({
         label: w.title,
         href: `/workshops#${w.slug}`,
-        meta: w.ref,
+        meta: "",
       })),
     },
     {
       heading: "The practice",
       items: [
         { label: "About Columbus", href: "/about", meta: "" },
+        { label: "Venture partnerships", href: "/ventures", meta: "" },
         { label: "Why WAZA", href: "/about#why-waza", meta: "" },
         { label: "Working notes", href: "/insights", meta: "" },
-        { label: "The WAZA lexicon", href: "/insights#lexicon", meta: "" },
-        { label: "Work with Columbus", href: "/contact", meta: "" },
+        { label: "Start a conversation", href: "/contact", meta: "" },
       ],
     },
   ];

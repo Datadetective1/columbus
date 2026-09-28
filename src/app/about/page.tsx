@@ -153,7 +153,7 @@ export default function AboutPage() {
             <figure className="reveal">
               <SystemEvolution />
               <figcaption className="meta mt-6">
-                Fig. 01 · The same way of seeing, pointed at successively larger systems
+                The same way of seeing, pointed at successively larger systems
               </figcaption>
             </figure>
           </Reveal>
@@ -385,7 +385,6 @@ export default function AboutPage() {
                 {talks.map((t) => (
                   <RegisterRow
                     key={t.slug}
-                    refCode={t.ref}
                     title={t.title}
                     href={`/speaking#${t.slug}`}
                     compact
@@ -398,7 +397,6 @@ export default function AboutPage() {
                 {workshops.map((w) => (
                   <RegisterRow
                     key={w.slug}
-                    refCode={w.ref}
                     title={w.title}
                     href={`/workshops#${w.slug}`}
                     compact
@@ -419,7 +417,7 @@ export default function AboutPage() {
               <figure className="mt-5">
                 <WazaDuality className="w-full" />
                 <figcaption className="meta mt-3">
-                  Fig. 02 · Technique and imagination in one frame
+                  Technique and imagination in one frame
                 </figcaption>
               </figure>
               <div className="mt-8">

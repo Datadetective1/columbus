@@ -1108,14 +1108,18 @@ body {
 
 .portrait { position: relative; }
 
+/* An offset ring, not a rectangle. Once the slot holds a real circular
+   photograph a square plate behind it reads as a mistake; a ring echoes the
+   disc and gives the portrait somewhere to sit. */
 .portrait::before {
   content: "";
   position: absolute;
   z-index: 0;
-  inset-block: 1.75rem -1.75rem;
-  inset-inline: 1.75rem -1.75rem;
+  inset: 0;
+  transform: translate(1.5rem, 1.5rem);
   border: 1px solid var(--color-accent);
-  opacity: 0.4;
+  border-radius: 50%;
+  opacity: 0.45;
   pointer-events: none;
 }
 
@@ -1124,7 +1128,7 @@ body {
 .portrait > * { position: relative; z-index: 1; }
 
 @media (max-width: 767px) {
-  .portrait::before { inset-block: 1rem -1rem; inset-inline: 1rem -1rem; }
+  .portrait::before { transform: translate(0.85rem, 0.85rem); }
 }
 
 /* --------------------------------------------------------------------------
@@ -1189,14 +1193,11 @@ body:has([data-hero="dark"]) main { padding-block-start: 0; }
    — the point is that these are readable.
    -------------------------------------------------------------------------- */
 
+/**
+ * No dividers.
+ *
+ * A hairline before each item looks right on one line and wrong the moment the
+ * row wraps — every new line starts with a rule attached to nothing. Generous
+ * column gaps separate the names at any width, and read calmer besides.
+ */
 .strip { display: flex; flex-wrap: wrap; }
-.strip > li { position: relative; }
-.strip > li + li::before {
-  content: "";
-  position: absolute;
-  inset-block: 0.15em 0.15em;
-  inset-inline-start: 0;
-  width: 1px;
-  background-color: var(--color-rule-strong);
-}
-.on-night .strip > li + li::before { background-color: var(--color-night-rule); }

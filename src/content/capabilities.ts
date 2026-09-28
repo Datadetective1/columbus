@@ -309,23 +309,19 @@ export const notPromised = [
 export const engagementModes = [
   {
     title: "Advisory",
-    body: "Retained guidance for a leader carrying a decision that does not fit in a meeting.",
+    body: "Retained guidance for a decision that does not fit in a meeting.",
   },
   {
-    title: "Strategy workshops",
-    body: "A facilitated room, a real problem, and a decision at the end of it.",
-  },
-  {
-    title: "Executive working sessions",
-    body: "Small, senior, and pointed at the disagreement everyone has been routing around.",
+    title: "Strategy & executive sessions",
+    body: "Small, senior, and pointed at the disagreement everyone routes around.",
   },
   {
     title: "Team facilitation",
-    body: "Where the work is stuck between groups rather than inside one.",
+    body: "For work that is stuck between groups rather than inside one.",
   },
   {
-    title: "Speaking & keynotes",
-    body: "For the moment an organisation needs the whole room to hear the same thing.",
+    title: "Speaking & workshops",
+    body: "When the whole room needs to hear the same thing.",
   },
 ] as const;
 
