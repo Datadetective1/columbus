@@ -54,27 +54,27 @@ src/content/
   site.ts          brand name, legal name, canonical URL, navigation, contact config
   bio.ts           hero copy, career arc, About narrative, leadership principles
   capabilities.ts  the five advisory capabilities, challenges, engagement model
-  themes.ts        the six working notes — claim, argument, documented evidence
-  lexicon.ts       Columbus's own phrasing, quoted exactly and glossed
+  ventures.ts      what WAZA brings, who it fits, collaboration structures
+  proof.ts         the proof-point figures and the employer strip
   speaking.ts      keynotes (verbatim), speaker intro, previous engagements
-  workshops.ts     the six workshop sessions (titles verbatim, W-01…W-06)
-  experience.ts    career domains, employer-name switch
+  workshops.ts     the workshop sessions (titles verbatim)
+  experience.ts    selected roles, focus areas, employer-name switch
   credentials.ts   education and certifications, each with a `verified` flag
   testimonials.ts  the two documented quotes, with a master on/off switch
-  insights.ts      categories and the published-article structure (still empty)
-  sources.ts       the provenance registry behind every superscript marker
-  images.ts        photography slots
+  images.ts        the four approved photographs
   social.ts        external profile links
   waza.ts          the WAZA definition and brand story
 ```
 
-### Reference numbers
+### Catalogue codes
 
-`K-01…K-03` (keynotes), `W-01…W-06` (workshops), `A-01…A-05` (capabilities) and
-`N-01…N-06` (working notes) appear throughout. They are an authority device and they are
-only allowed to be one while they are true: the keynote order is the one-sheet's order,
-and the workshop order is the coordinate-verified reading order of its 3×2 grid. Do not
-invent a series that does not exist.
+The content files still carry reference codes (`K-01…K-03`, `W-01…W-06`,
+`A-01…A-05`). **They are no longer rendered anywhere.** They were an authority
+device borrowed from technical publishing, and on a personal advisory site they
+read as a dossier rather than as authority. They stay in the data because the
+keynote and workshop orders they encode are real — the keynote order is the
+one-sheet's, and the workshop order is the coordinate-verified reading order of
+its 3×2 grid — and that is worth not losing.
 
 ### Things that are switches, not rewrites
 
@@ -86,7 +86,7 @@ invent a series that does not exist.
 | Change the legal entity name | `site.ts` → `legalName` |
 | Remove a social link | `social.ts` → `enabled: false` |
 | Add a photograph | `images.ts` → set `src` (see the photography README) |
-| Publish the first article | `insights.ts` → add one object to `insights` |
+| Replace a photograph | `images.ts` → set `src`, `width`, `height`, `alt` |
 
 ---
 
@@ -155,42 +155,54 @@ Set `NEXT_PUBLIC_SITE_URL` before launch or canonical URLs will point at the
 ## Routes
 
 ```
-/                          home — 13 bands
-/about                     the deep page: §1 Position … §5 The name
-/advisory                  challenges → capabilities → engagement model
+/                          home — six sections
+/advisory                  capabilities, how the work runs, engagement modes
 /advisory/[slug]           five capability pages
-/speaking                  keynotes, the record, testimonials
-/workshops                 six sessions
-/insights                  the agenda + the lexicon
-/insights/[slug]           six working notes
+/ventures                  venture partnerships
+/speaking                  keynotes, workshops, engagements
+/about                     the story, the route, selected experience
 /contact                   a plain HTML form, no JavaScript required
 /privacy                   honest placeholder
 ```
 
+`/insights`, `/insights/[slug]` and `/workshops` were removed in the redesign.
+The workshop catalogue moved onto `/speaking`; the six unpublished working notes
+and the lexicon were the most academic material on the site and were the point of
+the exercise to remove. Their content is recoverable from git history.
+
 ## Design notes
 
-- **One committed light palette**: warm ivory ground, warm near-black ink, a single
-  deep rust accent taken from the historical WAZA mark (an angular black-and-red
-  "W"). Dark bands invert the same palette rather than introducing a second one.
-  There is no dark mode; `color-scheme: light` is set explicitly.
-- **Two rules govern every layout.** Air belongs *between* groups, never inside them; and
-  no two adjacent bands may share a rhythm, a ground, or a module archetype. The first
-  version broke both, which is why it read as a portfolio.
-- **Provenance is visible.** Documented claims carry a superscript marker resolving to a
-  *Notes & sources* block at the foot of the page (`src/content/sources.ts`,
-  `src/components/provenance.tsx`). It is the source-notes discipline made into a design
-  feature — see `docs/mckinsey-design-study.md` §3.
-- **Type**: Fraunces for display, Inter for text, IBM Plex Mono for labels. The
-  monospaced labels are the engineering-drawing voice, and they are what stop the
-  site reading as a generic consulting template.
-- **The motif** (`src/components/systems-figure.tsx`) is three isometric planes
-  pierced by the same vertical axes — human, business and technical systems as one
-  shape at three levels. It carries the argument of the site, which is why it can
-  stand in for photography rather than just decorating.
-- **Motion** is CSS-only and driven by one small `IntersectionObserver`
+- **Photography and type carry the page.** A rule or a border appears only where it
+  separates two things that would otherwise touch. The four approved photographs are
+  used at or near their native resolution — three of them are small, and
+  `src/content/images.ts` records true pixel dimensions so `next/image` never serves
+  an upscale.
+- **One palette**: warm white through warm sand, navy-leaning ink, deep navy for the
+  dark register, one cobalt accent used sparingly. No dark mode; `color-scheme: light`
+  is set explicitly.
+- **Type**: Fraunces for display, Inter for everything else. There is no third face.
+- **Motion** is CSS-only, driven by one small `IntersectionObserver`
   (`src/components/reveal.tsx`). No animation library. Everything collapses under
   `prefers-reduced-motion`.
 - Tokens live at the top of `src/app/globals.css`.
+
+### What the redesign removed, and why
+
+The previous build was an editorial system borrowed from management-consulting
+publishing: section numerals, a drafting-grid background, hand-drawn conceptual
+diagrams, catalogue codes, `Fig.` captions, monospaced technical labels, and a
+superscript citation apparatus resolving to *Notes & sources* blocks.
+
+Individually each was defensible. Together they made the site read as a document
+about a consultant rather than as a website belonging to a person, which is the
+opposite of what it has to do. The guiding rule of the redesign was: **if
+something is a design device rather than a trust-building website element, remove
+it.** That took the stylesheet from 1,203 lines to under 500, deleted six artwork
+files, and removed a whole font.
+
+**Provenance did not disappear, it moved.** Every claim still traces to a source —
+now in `docs/source-notes.md` and in comments in the content files, rather than in
+superscript markers on the page.
 
 ---
 

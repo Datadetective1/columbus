@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Fraunces, IBM_Plex_Mono, Inter } from "next/font/google";
+import { Fraunces, Inter } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import { SiteHeader } from "@/components/site-header";
@@ -23,13 +23,9 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
-/** Labels and annotations — the engineering-drawing voice. */
-const plexMono = IBM_Plex_Mono({
-  subsets: ["latin"],
-  display: "swap",
-  weight: ["400", "500"],
-  variable: "--font-plex-mono",
-});
+/* The monospace face is gone. It was the strongest "technical document" signal
+   in the previous design — it turned every label into a specification
+   annotation — and dropping it also removes a font download. */
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -47,13 +43,13 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#fbfaf8",
+  themeColor: "#fdfcf9",
   colorScheme: "light",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${fraunces.variable} ${inter.variable} ${plexMono.variable}`}>
+    <html lang="en" className={`${fraunces.variable} ${inter.variable}`}>
       <head>
         {/* Marks the document as JavaScript-capable before first paint. The
             scroll-reveal styles are scoped to html.js, so if this never runs the

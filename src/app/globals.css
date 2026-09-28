@@ -3,61 +3,59 @@
 /* ==========================================================================
    Columbus Brown — design system
 
-   The register is a premium advisory practice: warm white and soft grey for
-   reading, deep navy for weight, one cobalt accent for direction. Editorial
-   composition, strong type, generous air.
+   Warm, photographic, editorial. The register is a premium personal practice,
+   not a research publication.
 
-   Three rules govern the whole system:
-     1. Air belongs BETWEEN groups, never inside them. Dense blocks, generous
-        margins — not uniform padding everywhere.
-     2. No two adjacent bands share a rhythm, a ground, or a module archetype.
+   What this system deliberately does NOT have, because the previous one did
+   and it made the site read as a dossier: section numerals, drafting grids,
+   diagram artwork, monospaced technical labels, figure numbering, citation
+   markers and footnote apparatus.
+
+   Three rules:
+     1. Photography and type carry the page. A rule or a border is allowed
+        only where it separates two things that would otherwise touch.
+     2. Air belongs BETWEEN groups. Dense blocks, generous margins.
      3. Every colour pairing that carries meaning clears WCAG AA: 4.5:1 for
         text, 3:1 for large text and interactive boundaries.
    ========================================================================== */
 
 @theme {
-  /* --- ground: warm white through soft grey ---------------------------- */
-  --color-paper: #fbfaf8;
-  --color-paper-2: #f3f2ef;
-  --color-paper-3: #e9e8e4;
-  --color-paper-4: #dcdad4;
+  /* --- ground: warm white through warm sand ---------------------------- */
+  --color-paper: #fdfcf9;
+  --color-paper-2: #f6f2ea;
+  --color-paper-3: #ede7dc;
 
-  /* --- ink: navy-leaning, never pure black ---------------------------- */
-  --color-ink: #0e1626;        /* 17.3:1 on paper */
-  --color-muted: #4a5468;      /* 6.8:1 on paper-2 */
-  --color-faint: #565f73;      /* 5.7:1 on paper-2 */
+  /* --- ink -------------------------------------------------------------- */
+  --color-ink: #151a23;        /* 17.0:1 on paper */
+  --color-muted: #4e5666;      /* 6.6:1 on paper-2 */
+  --color-faint: #5c6474;      /* 5.3:1 on paper-2 */
 
-  /* --- rules ---------------------------------------------------------- */
-  --color-rule: #e2e1dc;
-  --color-rule-strong: #cbc9c3;
-  /* Interactive boundaries only. 3.9:1 on paper-2, 3.6:1 on paper-3,
-     3.1:1 on paper-4 — clears WCAG 1.4.11 on every ground in use. */
-  --color-edge: #71798c;
-  /* Large decorative-but-meaningful numerals. 3:1 or better everywhere. */
-  --color-numeral: #71798c;
-  --color-night-numeral: #66738a;
-  --color-rule-heavy: #0e1626;
+  /* --- rules: few, and quiet -------------------------------------------- */
+  --color-rule: #e7e1d6;
+  --color-rule-strong: #d3ccbe;
+  /* Interactive boundaries only. 3.6:1 on paper-2, 3.2:1 on paper-3. */
+  --color-edge: #79808f;
 
-  /* --- accent: cobalt ------------------------------------------------- */
-  --color-accent: #1b49cf;     /* 6.9:1 on paper */
-  --color-accent-2: #3a66e0;
-  --color-accent-soft: #e8eefc;
+  /* --- accent: used sparingly ------------------------------------------- */
+  --color-accent: #1e4fd1;     /* 6.6:1 on paper */
+  --color-accent-soft: #e9eefc;
 
-  /* --- dark register: deep navy --------------------------------------- */
-  --color-night: #0a1020;
-  --color-night-2: #111b2e;
-  --color-night-3: #1a2740;
-  --color-night-ink: #eef1f7;   /* 16.8:1 on night */
-  --color-night-muted: #9facc4; /* 7.5:1 on night-2 */
-  --color-night-rule: #26334c;
-  --color-night-accent: #7fa8ff; /* 8.1:1 on night */
-  --color-night-accent-2: #a8c4ff;
+  /* --- dark register ----------------------------------------------------- */
+  --color-night: #0b1220;
+  --color-night-2: #121b2c;
+  --color-night-3: #1b2740;
+  --color-night-ink: #f2f4f8;   /* 17.0:1 on night */
+  --color-night-muted: #a3afc2; /* 7.8:1 on night-2 */
+  --color-night-rule: #25314a;
+  --color-night-accent: #86abff; /* 8.3:1 on night */
 
   --font-display: var(--font-fraunces), Georgia, "Iowan Old Style", "Times New Roman", serif;
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-mono: var(--font-plex-mono), ui-monospace, "SF Mono", Menlo, monospace;
 
   --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --radius-card: 12px;
+  --radius-btn: 6px;
 }
 
 /* --------------------------------------------------------------------------
@@ -68,35 +66,32 @@
   color-scheme: light;
   --gutter: 1.25rem;
   --masthead-h: 4.5rem;
-  /* Band rhythm. Deliberately much tighter than a conventional marketing site:
-     the previous build spent ~2300px of the homepage on section padding alone. */
-  --band-xtight: 2.25rem;
-  --band-tight: 3rem;
-  --band: 4rem;
-  --band-loose: 5.5rem;
+  /* More generous than the previous system. The brief asked for whitespace,
+     and a premium site earns trust partly by not appearing to be in a hurry. */
+  --band-tight: 3.5rem;
+  --band: 5rem;
+  --band-loose: 6.5rem;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --gutter: 2rem;
+    --band-tight: 4.5rem;
+    --band: 7rem;
+    --band-loose: 9rem;
+  }
 }
 
 @media (min-width: 1024px) {
   :root { --masthead-h: 5rem; }
 }
 
-@media (min-width: 768px) {
-  :root {
-    --gutter: 2rem;
-    --band-xtight: 3rem;
-    --band-tight: 4rem;
-    --band: 5.5rem;
-    --band-loose: 7rem;
-  }
-}
-
 @media (min-width: 1280px) {
   :root {
     --gutter: 3rem;
-    --band-xtight: 3.5rem;
-    --band-tight: 4.5rem;
-    --band: 6rem;
-    --band-loose: 8rem;
+    --band-tight: 5rem;
+    --band: 8rem;
+    --band-loose: 10.5rem;
   }
 }
 
@@ -121,12 +116,12 @@ body {
   overflow-x: hidden;
 }
 
-::selection { background-color: var(--color-accent); color: var(--color-paper); }
+::selection { background-color: var(--color-accent); color: #fff; }
 
 :focus-visible {
   outline: 2px solid var(--color-accent);
   outline-offset: 3px;
-  border-radius: 1px;
+  border-radius: 2px;
 }
 
 .on-night :focus-visible { outline-color: var(--color-night-accent); }
@@ -134,123 +129,107 @@ body {
 /* --------------------------------------------------------------------------
    Typography
 
-   Few levels, large jumps. Display type is set tight and allowed to be big;
-   text type stays quiet so density never becomes noise.
+   Fewer levels than before, and set more openly: the serif is allowed to be
+   large but is no longer tracked tight, which is what made it read as a
+   report masthead rather than as a person's website.
    -------------------------------------------------------------------------- */
 
 .font-display { font-family: var(--font-display); font-optical-sizing: auto; }
-.font-mono-ui { font-family: var(--font-mono); }
-
-.t-mega {
-  font-family: var(--font-display);
-  font-weight: 400;
-  line-height: 0.9;
-  letter-spacing: -0.035em;
-  font-size: clamp(3.25rem, 11vw, 9.5rem);
-}
 
 .t-display {
   font-family: var(--font-display);
   font-weight: 400;
-  line-height: 0.96;
-  letter-spacing: -0.028em;
-  font-size: clamp(2.5rem, 7.2vw, 5.75rem);
+  font-size: clamp(2.375rem, 1.5rem + 3.4vw, 4rem);
+  line-height: 1.06;
+  letter-spacing: -0.02em;
 }
 
 .t-h1 {
   font-family: var(--font-display);
   font-weight: 400;
-  line-height: 1.02;
-  letter-spacing: -0.024em;
-  font-size: clamp(2.125rem, 5vw, 3.75rem);
+  font-size: clamp(2rem, 1.3rem + 2.6vw, 3.25rem);
+  line-height: 1.1;
+  letter-spacing: -0.018em;
 }
 
 .t-h2 {
   font-family: var(--font-display);
   font-weight: 400;
-  line-height: 1.06;
-  letter-spacing: -0.02em;
-  font-size: clamp(1.75rem, 3.4vw, 2.75rem);
+  font-size: clamp(1.625rem, 1.2rem + 1.5vw, 2.375rem);
+  line-height: 1.16;
+  letter-spacing: -0.015em;
 }
 
 .t-h3 {
   font-family: var(--font-display);
   font-weight: 400;
-  line-height: 1.14;
-  letter-spacing: -0.015em;
-  font-size: clamp(1.3125rem, 1.9vw, 1.625rem);
+  font-size: clamp(1.375rem, 1.1rem + 0.9vw, 1.75rem);
+  line-height: 1.22;
+  letter-spacing: -0.012em;
 }
 
 .t-h4 {
   font-family: var(--font-display);
   font-weight: 400;
-  line-height: 1.2;
-  letter-spacing: -0.012em;
-  font-size: 1.125rem;
+  font-size: 1.1875rem;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
 }
 
-/* The annotation voice — engineering drawing labels, figure numbers, categories. */
+/**
+ * The small label.
+ *
+ * Sans, not monospace. The mono face was the single strongest "technical
+ * document" signal in the old system — it turned every caption into a
+ * specification annotation.
+ */
 .t-label {
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
   font-weight: 500;
-  letter-spacing: 0.15em;
+  line-height: 1.3;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  line-height: 1;
-}
-
-.t-label-sm {
-  font-family: var(--font-mono);
-  font-size: 0.625rem;
-  font-weight: 500;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  line-height: 1;
-}
-
-/* Oversized band numerals. */
-.t-numeral {
-  font-family: var(--font-mono);
-  font-weight: 400;
-  font-size: clamp(2.5rem, 5vw, 4rem);
-  line-height: 0.8;
-  letter-spacing: -0.04em;
-  font-variant-numeric: tabular-nums;
 }
 
 .t-lede {
-  font-size: clamp(1.0625rem, 1.6vw, 1.3125rem);
-  line-height: 1.5;
-  letter-spacing: -0.011em;
+  font-size: 1.125rem;
+  line-height: 1.6;
+  letter-spacing: -0.005em;
   color: var(--color-muted);
+}
+
+@media (min-width: 768px) {
+  .t-lede { font-size: 1.25rem; }
 }
 
 .t-body {
   font-size: 1rem;
-  line-height: 1.6;
+  line-height: 1.7;
   color: var(--color-muted);
-}
-
-.t-small {
-  font-size: 0.875rem;
-  line-height: 1.55;
-  color: var(--color-muted);
-}
-
-.t-tiny {
-  font-size: 0.8125rem;
-  line-height: 1.5;
-  color: var(--color-faint);
 }
 
 @media (min-width: 768px) {
   .t-body { font-size: 1.0625rem; }
 }
 
-.t-mega, .t-display, .t-h1, .t-h2, .t-h3 { text-wrap: balance; }
-.t-lede, .t-body { text-wrap: pretty; }
+.t-small {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--color-muted);
+}
 
-.tabular { font-variant-numeric: tabular-nums; }
+.t-tiny {
+  font-size: 0.8125rem;
+  line-height: 1.55;
+  color: var(--color-faint);
+}
+
+.t-display, .t-h1, .t-h2, .t-h3 { text-wrap: balance; }
+.t-lede, .t-body, .t-small { text-wrap: pretty; }
+
+.measure    { max-width: 38em; }
+.measure-sm { max-width: 32em; }
 
 /* --------------------------------------------------------------------------
    Layout
@@ -258,187 +237,32 @@ body {
 
 .shell {
   width: 100%;
+  max-width: 82rem;
   margin-inline: auto;
-  max-width: 96rem;
   padding-inline: var(--gutter);
 }
 
-.shell-text {
-  width: 100%;
-  margin-inline: auto;
-  max-width: 44rem;
-  padding-inline: var(--gutter);
-}
-
-/* The editorial grid. 12 columns at md and up, 6 below, 2 on the smallest. */
 .egrid {
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
-  column-gap: 1.25rem;
-  row-gap: 2rem;
+  column-gap: 1rem;
 }
 
 @media (min-width: 768px) {
-  .egrid { grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 1.5rem; }
+  .egrid { grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 1.75rem; }
 }
 
 @media (min-width: 1280px) {
-  .egrid { column-gap: 2rem; }
+  .egrid { column-gap: 2.25rem; }
 }
 
-/* Band rhythm variants — a band declares its own vertical weight. */
-.band-xtight { padding-block: var(--band-xtight); }
-.band-tight  { padding-block: var(--band-tight); }
-.band        { padding-block: var(--band); }
-.band-loose  { padding-block: var(--band-loose); }
-.band-flush  { padding-block: 0; }
+.band-tight { padding-block: var(--band-tight); }
+.band       { padding-block: var(--band); }
+.band-loose { padding-block: var(--band-loose); }
+.band-flush { padding-block: 0; }
 
-/* Rules do structural work. Three weights, used consistently. */
-.rule-hair   { border-top: 1px solid var(--color-rule); }
-.rule-mid    { border-top: 1px solid var(--color-rule-strong); }
-.rule-heavy  { border-top: 2px solid var(--color-rule-heavy); }
-.on-night .rule-heavy { border-top-color: var(--color-night-ink); }
-
-/* --------------------------------------------------------------------------
-   Provenance markers
-
-   Our source discipline made visible. A small superscript reference beside a
-   documented claim, resolving to a note at the foot of the page. Authority and
-   honesty happen to be the same mechanism.
-   -------------------------------------------------------------------------- */
-
-.src-marker {
-  font-family: var(--font-mono);
-  font-size: 0.5625rem;
-  letter-spacing: 0.06em;
-  vertical-align: super;
-  line-height: 0;
-  margin-left: 0.15em;
-  color: var(--color-accent);
-  text-decoration: none;
-  border-bottom: none;
-}
-
-.src-marker:hover { text-decoration: underline; }
-.on-night .src-marker { color: var(--color-night-accent); }
-
-/* --------------------------------------------------------------------------
-   Dense list / index treatments
-   -------------------------------------------------------------------------- */
-
-.index-row {
-  display: grid;
-  align-items: baseline;
-  gap: 0.25rem 1.5rem;
-  padding-block: 0.75rem;
-  border-top: 1px solid var(--color-rule);
-}
-
-.on-night .index-row { border-top-color: var(--color-night-rule); }
-
-/* --------------------------------------------------------------------------
-   Motion — CSS only, and never load-bearing
-   -------------------------------------------------------------------------- */
-
-.js .reveal {
-  opacity: 0;
-  transform: translateY(12px);
-  transition:
-    opacity 0.7s var(--ease-out-soft),
-    transform 0.7s var(--ease-out-soft);
-}
-
-.js .is-in .reveal,
-.js .reveal.is-in { opacity: 1; transform: none; }
-
-/* Indexed rather than enumerated: an nth-child ladder silently stops staggering
-   past its last rung, so the seventh item fired with the first. */
-.js .is-in .reveal { transition-delay: calc(var(--i, 0) * 55ms); }
-
-.js .rule-draw {
-  transform-origin: left center;
-  transform: scaleX(0);
-  transition: transform 1s var(--ease-out-soft);
-}
-
-.js .is-in .rule-draw { transform: scaleX(1); }
-
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-
-  .js .reveal,
-  .js .rule-draw {
-    opacity: 1 !important;
-    transform: none !important;
-    transition: none !important;
-  }
-
-  *, *::before, *::after {
-    animation-duration: 0.001ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.001ms !important;
-  }
-}
-
-/* --------------------------------------------------------------------------
-   Links
-   -------------------------------------------------------------------------- */
-
-.link-underline {
-  background-image: linear-gradient(currentColor, currentColor);
-  background-repeat: no-repeat;
-  background-position: 0 100%;
-  background-size: 100% 1px;
-  transition: background-size 0.35s var(--ease-out-soft);
-  padding-bottom: 1px;
-}
-
-.link-underline:hover { background-size: 0% 1px; background-position: 100% 100%; }
-
-.link-grow {
-  background-image: linear-gradient(currentColor, currentColor);
-  background-repeat: no-repeat;
-  background-position: 0 100%;
-  background-size: 0% 1px;
-  transition: background-size 0.35s var(--ease-out-soft);
-  padding-bottom: 2px;
-}
-
-.link-grow:hover,
-.link-grow[data-active="true"] { background-size: 100% 1px; }
-
-/* A whole row that behaves as a link: rule brightens, arrow advances. */
-.row-link { transition: background-color 0.3s var(--ease-out-soft); }
-.row-link:hover { background-color: var(--color-paper-2); }
-.on-night .row-link:hover { background-color: var(--color-night-2); }
-.row-link .row-arrow { transition: transform 0.35s var(--ease-out-soft); }
-.row-link:hover .row-arrow { transform: translateX(0.3rem); }
-
-/* --------------------------------------------------------------------------
-   Motifs
-   -------------------------------------------------------------------------- */
-
-.systems-grid {
-  background-image:
-    linear-gradient(to right, var(--color-rule) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--color-rule) 1px, transparent 1px);
-  background-size: 64px 64px;
-}
-
-.on-night .systems-grid {
-  background-image:
-    linear-gradient(to right, var(--color-night-rule) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--color-night-rule) 1px, transparent 1px);
-}
-
-/* Engineering-drawing hatch, used to weight a plane without adding colour. */
-.hatch {
-  background-image: repeating-linear-gradient(
-    -45deg,
-    var(--color-rule-strong) 0 1px,
-    transparent 1px 7px
-  );
-}
+.rule-hair { border-top: 1px solid var(--color-rule); }
+.on-night .rule-hair { border-top-color: var(--color-night-rule); }
 
 /* --------------------------------------------------------------------------
    Dark register
@@ -452,609 +276,112 @@ body {
 .on-night .t-body,
 .on-night .t-lede,
 .on-night .t-small { color: var(--color-night-muted); }
-
 .on-night .t-tiny { color: var(--color-night-muted); }
 
 @layer base {
   .on-night { --tw-default-border-color: var(--color-night-rule); }
 }
 
-.on-night .rule-hair { border-top-color: var(--color-night-rule); }
-.on-night .rule-mid { border-top-color: var(--color-night-rule); }
-
 .on-night ::selection { background-color: var(--color-night-accent); color: var(--color-night); }
 
 /* --------------------------------------------------------------------------
-   Systems figure draw-in
+   Reveal
+
+   Scoped to html.js so the page renders fully visible if scripts never run.
    -------------------------------------------------------------------------- */
 
-.systems-figure .sf-plane,
-.systems-figure .sf-axis {
+.js .reveal {
   opacity: 0;
-  animation: sf-fade 1.1s var(--ease-out-soft) forwards;
+  transform: translateY(14px);
+  transition:
+    opacity 0.75s var(--ease-out-soft),
+    transform 0.75s var(--ease-out-soft);
 }
 
-.systems-figure .sf-node {
-  opacity: 0;
-  animation: sf-node 0.55s var(--ease-out-soft) forwards;
-}
+.js .is-in .reveal,
+.js .reveal.is-in { opacity: 1; transform: none; }
 
-@keyframes sf-fade {
-  from { opacity: 0; transform: translateY(8px); }
-  to   { opacity: var(--fade-opacity, 1); transform: none; }
-}
-
-@keyframes sf-node {
-  from { opacity: 0; }
-  to   { opacity: var(--node-opacity, 1); }
-}
+.js .is-in .reveal { transition-delay: calc(var(--i, 0) * 70ms); }
 
 @media (prefers-reduced-motion: reduce) {
-  .systems-figure .sf-plane,
-  .systems-figure .sf-axis { opacity: var(--fade-opacity, 1); animation: none; }
-  .systems-figure .sf-node { opacity: var(--node-opacity, 1); animation: none; }
-}
-
-/* --------------------------------------------------------------------------
-   House style
-
-   What reads as institutional is consistency in the smallest elements. These
-   rules are not decorative: tabular figures wherever numbers stack, en-dashes
-   for ranges, one separator character, and uppercase mono reserved for exactly
-   one role — reference, label and metadata. Never headings, never buttons.
-   Documented in docs/house-style.md.
-   -------------------------------------------------------------------------- */
-
-.t-label,
-.t-label-sm,
-.t-numeral { font-variant-numeric: tabular-nums; }
-
-/* Metadata line: type, then neutral descriptors, separated by one character. */
-.meta {
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  letter-spacing: 0.06em;
-  line-height: 1.4;
-  color: var(--color-faint);
-  font-variant-numeric: tabular-nums;
-}
-
-.on-night .meta { color: var(--color-night-muted); }
-
-/* Measure. Density comes from short lines, not small type: a 78-character line
-   at 17px reads as homework, the same words at ~56 read as considered. The
-   columns this frees up pay for the margin rail below. */
-.measure     { max-width: 34em; }
-.measure-sm  { max-width: 30em; }
-.measure-xs  { max-width: 26em; }
-
-/* --------------------------------------------------------------------------
-   Layout occupancies
-
-   One grid, many occupancies. The rule for this site: no two consecutive bands
-   may use the same occupancy. Identical column spans module after module is the
-   visual signature of a template — it was the single biggest cause of the
-   previous build reading as linear.
-   -------------------------------------------------------------------------- */
-
-.lay-lede    > :first-child { grid-column: span 6; }
-.lay-wide    > *            { grid-column: span 6; }
-
-@media (min-width: 768px) {
-  /* 4 label / 8 text */
-  .lay-lede > :first-child { grid-column: span 4; }
-  .lay-lede > :last-child  { grid-column: 6 / span 7; }
-
-  /* full width, no offset */
-  .lay-wide > * { grid-column: span 12; }
-}
-
-/* --------------------------------------------------------------------------
-   Margin rail
-
-   A permanent narrow column beside the text carrying sidenotes, definitions and
-   provenance. Marginalia is the strongest single signal that a text has been
-   worked over — somebody had more to say than the main line could carry, and
-   somebody decided what to demote. Below lg the note simply falls inline.
-   -------------------------------------------------------------------------- */
-
-.sidenote {
-  display: block;
-  margin-block: 1rem;
-  padding-top: 0.5rem;
-  border-top: 1px solid var(--color-rule);
-  font-size: 0.8125rem;
-  line-height: 1.5;
-  color: var(--color-faint);
-  max-width: 34em;
-}
-
-@media (min-width: 1024px) {
-  .has-rail { position: relative; }
-  .has-rail .sidenote {
-    float: right;
-    clear: right;
-    width: 12rem;
-    margin-right: -13.5rem;
-    margin-block: 0.35rem 1.25rem;
+  .js .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+    transition-delay: 0s;
   }
 }
 
-/* The host column must leave at least 13.5rem free to its right, or the rail
-   lands outside the shell. Only About uses it, and its grid is set up for it. */
-
-.on-night .sidenote { border-top-color: var(--color-night-rule); color: var(--color-night-muted); }
-
 /* --------------------------------------------------------------------------
-   Register — the catalogue treatment
-
-   A ruled list of individually-referenced objects. A reader's estimate of
-   institutional weight tracks the number of distinct catalogued things visible
-   at once, far more than it tracks the prose in the hero.
+   Links
    -------------------------------------------------------------------------- */
 
-.register { border-top: 1px solid var(--color-rule-strong); }
-
-.register > li { border-bottom: 1px solid var(--color-rule); }
-
-.on-night .register { border-top-color: var(--color-night-rule); }
-.on-night .register > li { border-bottom-color: var(--color-night-rule); }
-
-/* --------------------------------------------------------------------------
-   Contact form
-
-   The event fields are relevant only to speaking and workshop enquiries. They
-   are rendered unconditionally so the form is complete without JavaScript, and
-   hidden by CSS where :has() is supported. Where it is not, the reader simply
-   sees two optional fields — which is a fine outcome, not a broken one.
-   -------------------------------------------------------------------------- */
-
-@supports selector(:has(*)) {
-  .contact-form:not(:has(#inquiry-speaking:checked)):not(:has(#inquiry-workshop:checked))
-    .event-fields {
-    display: none;
-  }
+.link-underline {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 100% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  padding-bottom: 1px;
+  transition: background-size 0.4s var(--ease-out-soft);
 }
 
-/* Screen-reader-only text must not contribute scroll width. */
-.sr-only { overflow: hidden; }
+.link-underline:hover { background-size: 0% 1px; background-position: 100% 100%; }
 
-/* ==========================================================================
-   Artwork
-   ========================================================================== */
-
-/* --------------------------------------------------------------------------
-   Hero: four systems converging
-
-   Drawn with stroke-dashoffset so the figure assembles itself once on load.
-   No JavaScript, so it works with scripts blocked; the final state is the
-   fully drawn figure, so nothing is ever hidden behind the animation.
-   -------------------------------------------------------------------------- */
-
-/* At 390px the sheet renders ~247px tall, so hairlines vanish. Thicken the
-   drawing rather than cropping it — cropping would separate the labels from the
-   lines they label. The detail callout is dropped: it needs scale to read. */
-@media (max-width: 767px) {
-  .hero-systems .hs-path { stroke-width: 3; }
-  .hero-systems .hs-out { stroke-width: 3.5; }
-  .hero-systems .hs-detail { display: none; }
-  .hero-systems .hs-join circle:last-child { r: 9; }
+.link-grow {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  padding-bottom: 3px;
+  transition: background-size 0.4s var(--ease-out-soft);
 }
 
-.hero-systems .hs-path {
-  stroke-dasharray: 1400;
-  stroke-dashoffset: 1400;
-  animation: hs-draw 2.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-  animation-delay: calc(var(--i) * 180ms + 150ms);
-}
+.link-grow:hover,
+.link-grow[data-active="true"] { background-size: 100% 1px; }
 
-.hero-systems .hs-out {
-  opacity: 0;
-  animation: hs-in 0.9s var(--ease-out-soft) forwards;
-  animation-delay: 2.1s;
-}
-
-.hero-systems .hs-nodes circle {
-  opacity: 0;
-  animation: hs-node 0.5s var(--ease-out-soft) forwards;
-  animation-delay: calc(var(--i) * 180ms);
-}
-
-.hero-systems .hs-join {
-  opacity: 0;
-  transform-origin: 880px 380px;
-  animation: hs-join 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-  animation-delay: 1.9s;
-}
-
-.hero-systems .hs-detail {
-  opacity: 0;
-  animation: hs-in 1s var(--ease-out-soft) forwards;
-  animation-delay: 2.5s;
-}
-
-.hero-systems .hs-label {
-  opacity: 0;
-  animation: hs-in 0.7s var(--ease-out-soft) forwards;
-  animation-delay: calc(var(--i) * 180ms + 400ms);
-}
-
-@keyframes hs-draw { to { stroke-dashoffset: 0; } }
-@keyframes hs-in   { to { opacity: 1; } }
-@keyframes hs-node { to { opacity: 0.4; } }
-@keyframes hs-join {
-  from { opacity: 0; transform: scale(0.4); }
-  to   { opacity: 1; transform: scale(1); }
-}
-
-/* Ambient drift — very slow, almost subliminal. Stops entirely on request. */
-@media (prefers-reduced-motion: no-preference) {
-  .hero-systems svg { animation: hs-drift 26s ease-in-out infinite alternate; }
-  @keyframes hs-drift {
-    from { transform: translate3d(0, 0, 0); }
-    to   { transform: translate3d(-0.7%, 0.5%, 0); }
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  /* At 390px the sheet renders ~247px tall, so hairlines vanish. Thicken the
-   drawing rather than cropping it — cropping would separate the labels from the
-   lines they label. The detail callout is dropped: it needs scale to read. */
-@media (max-width: 767px) {
-  .hero-systems .hs-path { stroke-width: 3; }
-  .hero-systems .hs-out { stroke-width: 3.5; }
-  .hero-systems .hs-detail { display: none; }
-  .hero-systems .hs-join circle:last-child { r: 9; }
-}
-
-.hero-systems .hs-path { stroke-dashoffset: 0; animation: none; }
-  .hero-systems .hs-out,
-  .hero-systems .hs-detail {
-  opacity: 0;
-  animation: hs-in 1s var(--ease-out-soft) forwards;
-  animation-delay: 2.5s;
-}
-
-.hero-systems .hs-label { opacity: 1; animation: none; }
-  .hero-systems .hs-nodes circle { opacity: 0.4; animation: none; }
-  .hero-systems .hs-join { opacity: 1; transform: none; animation: none; }
-  .hero-systems svg { animation: none; }
-}
-
-/* --------------------------------------------------------------------------
-   Paper — the material the whole site is printed on
-
-   Turbulence rather than a tiling raster: a fraction of the weight, no visible
-   repeat, and it survives any viewport.
-   -------------------------------------------------------------------------- */
-
-.paper-grain { position: relative; isolation: isolate; }
-
-.paper-grain::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  opacity: 0.5;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' seed='1492'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='0.42'/%3E%3C/svg%3E");
-  mix-blend-mode: multiply;
-}
-
-.on-night.paper-grain::before { mix-blend-mode: screen; opacity: 0.16; }
-
-/* Engineering hatch, for weighting a plane without adding colour. */
-.hatch-fill {
-  background-image: repeating-linear-gradient(
-    -45deg,
-    var(--color-rule-strong) 0 1px,
-    transparent 1px 8px
-  );
-}
-
-/* --------------------------------------------------------------------------
-   Editorial artwork tiles
-   -------------------------------------------------------------------------- */
-
-.art-tile { position: relative; overflow: hidden; background-color: var(--color-paper-2); }
-.art-tile svg { display: block; width: 100%; height: 100%; }
-
-/* Slow scale on hover — the one image gesture used site-wide. */
-.art-zoom { overflow: hidden; }
-.art-zoom .art-inner {
-  transition: transform 1.1s cubic-bezier(0.22, 1, 0.36, 1);
-  transform-origin: 55% 45%;
-}
-.art-zoom:hover .art-inner { transform: scale(1.035); }
-
-@media (prefers-reduced-motion: reduce) {
-  .art-zoom:hover .art-inner { transform: none; }
-}
-
-/* --------------------------------------------------------------------------
-   Advisory system map
-
-   Cross-element highlighting with :has() — hovering or keyboard-focusing a
-   capability lights the part of the system it works on. No JavaScript, so it
-   also works before hydration and with scripts blocked; without :has() support
-   the diagram simply stays in its resting state, fully legible.
-   -------------------------------------------------------------------------- */
-
-
-.system-map .sm-edges line,
-.system-map .sm-nodes g,
-.system-map .sm-label { transition: opacity 0.4s var(--ease-out-soft); }
-
-.system-map .sm-dot { transition: fill 0.4s var(--ease-out-soft), r 0.4s var(--ease-out-soft); }
-
-/* Resting state */
-.system-map .sm-edges line { opacity: 0.35; }
-.system-map .sm-nodes g { opacity: 0.75; }
-
-/* When any capability is engaged, dim the whole system first… */
-.system-map:has(.sm-item:hover) .sm-edges line,
-.system-map:has(.sm-item:focus-within) .sm-edges line { opacity: 0.12; }
-.system-map:has(.sm-item:hover) .sm-nodes g,
-.system-map:has(.sm-item:focus-within) .sm-nodes g { opacity: 0.28; }
-.system-map:has(.sm-item:hover) .sm-label,
-.system-map:has(.sm-item:focus-within) .sm-label { opacity: 0.3; }
-
-.system-map:has(.sm-item[data-touches="capabilities process technology"]:focus-within) .sm-edges line[data-edge~="capabilities"][data-edge~="process"] { opacity: 0.95; stroke: var(--color-accent); }
-.system-map:has(.sm-item[data-touches="capabilities process technology"]:focus-within) .sm-edges line[data-edge~="capabilities"][data-edge~="technology"] { opacity: 0.95; stroke: var(--color-accent); }
-.system-map:has(.sm-item[data-touches="capabilities process technology"]:focus-within) .sm-edges line[data-edge~="process"][data-edge~="technology"] { opacity: 0.95; stroke: var(--color-accent); }
-.system-map:has(.sm-item[data-touches="capabilities process technology"]:focus-within) .sm-label[data-label="capabilities"] { opacity: 1; }
-.system-map:has(.sm-item[data-touches="capabilities process technology"]:focus-within) .sm-label[data-label="process"] { opacity: 1; }
-.system-map:has(.sm-item[data-touches="capabilities process technology"]:focus-within) .sm-label[data-label="technology"] { opacity: 1; }
-.system-map:has(.sm-item[data-touches="capabilities process technology"]:focus-within) .sm-nodes g[data-node="capabilities"] .sm-dot { fill: var(--color-accent); }
-.system-map:has(.sm-item[data-touches="capabilities process technology"]:focus-within) .sm-nodes g[data-node="capabilities"] { opacity: 1; }
-.system-map:has(.sm-item[data-touches="capabilities process technology"]:focus-within) .sm-nodes g[data-node="process"] .sm-dot { fill: var(--color-accent); }
-.system-map:has(.sm-item[data-touches="capabilities process technology"]:focus-within) .sm-nodes g[data-node="process"] { opacity: 1; }
-.system-map:has(.sm-item[data-touches="capabilities process technology"]:focus-within) .sm-nodes g[data-node="technology"] .sm-dot { fill: var(--color-accent); }
-.system-map:has(.sm-item[data-touches="capabilities process technology"]:focus-within) .sm-nodes g[data-node="technology"] { opacity: 1; }
-.system-map:has(.sm-item[data-touches="capabilities process technology"]:hover) .sm-edges line[data-edge~="capabilities"][data-edge~="process"] { opacity: 0.95; stroke: var(--color-accent); }
-.system-map:has(.sm-item[data-touches="capabilities process technology"]:hover) .sm-edges line[data-edge~="capabilities"][data-edge~="technology"] { opacity: 0.95; stroke: var(--color-accent); }
-.system-map:has(.sm-item[data-touches="capabilities process technology"]:hover) .sm-edges line[data-edge~="process"][data-edge~="technology"] { opacity: 0.95; stroke: var(--color-accent); }
-.system-map:has(.sm-item[data-touches="capabilities process technology"]:hover) .sm-label[data-label="capabilities"] { opacity: 1; }
-.system-map:has(.sm-item[data-touches="capabilities process technology"]:hover) .sm-label[data-label="process"] { opacity: 1; }
-.system-map:has(.sm-item[data-touches="capabilities process technology"]:hover) .sm-label[data-label="technology"] { opacity: 1; }
-.system-map:has(.sm-item[data-touches="capabilities process technology"]:hover) .sm-nodes g[data-node="capabilities"] .sm-dot { fill: var(--color-accent); }
-.system-map:has(.sm-item[data-touches="capabilities process technology"]:hover) .sm-nodes g[data-node="capabilities"] { opacity: 1; }
-.system-map:has(.sm-item[data-touches="capabilities process technology"]:hover) .sm-nodes g[data-node="process"] .sm-dot { fill: var(--color-accent); }
-.system-map:has(.sm-item[data-touches="capabilities process technology"]:hover) .sm-nodes g[data-node="process"] { opacity: 1; }
-.system-map:has(.sm-item[data-touches="capabilities process technology"]:hover) .sm-nodes g[data-node="technology"] .sm-dot { fill: var(--color-accent); }
-.system-map:has(.sm-item[data-touches="capabilities process technology"]:hover) .sm-nodes g[data-node="technology"] { opacity: 1; }
-.system-map:has(.sm-item[data-touches="people process execution"]:focus-within) .sm-edges line[data-edge~="execution"][data-edge~="people"] { opacity: 0.95; stroke: var(--color-accent); }
-.system-map:has(.sm-item[data-touches="people process execution"]:focus-within) .sm-edges line[data-edge~="execution"][data-edge~="process"] { opacity: 0.95; stroke: var(--color-accent); }
-.system-map:has(.sm-item[data-touches="people process execution"]:focus-within) .sm-edges line[data-edge~="people"][data-edge~="process"] { opacity: 0.95; stroke: var(--color-accent); }
-.system-map:has(.sm-item[data-touches="people process execution"]:focus-within) .sm-label[data-label="execution"] { opacity: 1; }
-.system-map:has(.sm-item[data-touches="people process execution"]:focus-within) .sm-label[data-label="people"] { opacity: 1; }
-.system-map:has(.sm-item[data-touches="people process execution"]:focus-within) .sm-label[data-label="process"] { opacity: 1; }
-.system-map:has(.sm-item[data-touches="people process execution"]:focus-within) .sm-nodes g[data-node="execution"] .sm-dot { fill: var(--color-accent); }
-.system-map:has(.sm-item[data-touches="people process execution"]:focus-within) .sm-nodes g[data-node="execution"] { opacity: 1; }
-.system-map:has(.sm-item[data-touches="people process execution"]:focus-within) .sm-nodes g[data-node="people"] .sm-dot { fill: var(--color-accent); }
-.system-map:has(.sm-item[data-touches="people process execution"]:focus-within) .sm-nodes g[data-node="people"] { opacity: 1; }
-.system-map:has(.sm-item[data-touches="people process execution"]:focus-within) .sm-nodes g[data-node="process"] .sm-dot { fill: var(--color-accent); }
-.system-map:has(.sm-item[data-touches="people process execution"]:focus-within) .sm-nodes g[data-node="process"] { opacity: 1; }
-.system-map:has(.sm-item[data-touches="people process execution"]:hover) .sm-edges line[data-edge~="execution"][data-edge~="people"] { opacity: 0.95; stroke: var(--color-accent); }
-.system-map:has(.sm-item[data-touches="people process execution"]:hover) .sm-edges line[data-edge~="execution"][data-edge~="process"] { opacity: 0.95; stroke: var(--color-accent); }
-.system-map:has(.sm-item[data-touches="people process execution"]:hover) .sm-edges line[data-edge~="people"][data-edge~="process"] { opacity: 0.95; stroke: var(--color-accent); }
-.system-map:has(.sm-item[data-touches="people process execution"]:hover) .sm-label[data-label="execution"] { opacity: 1; }
-.system-map:has(.sm-item[data-touches="people process execution"]:hover) .sm-label[data-label="people"] { opacity: 1; }
-.system-map:has(.sm-item[data-touches="people process execution"]:hover) .sm-label[data-label="process"] { opacity: 1; }
-.system-map:has(.sm-item[data-touches="people process execution"]:hover) .sm-nodes g[data-node="execution"] .sm-dot { fill: var(--color-accent); }
-.system-map:has(.sm-item[data-touches="people process execution"]:hover) .sm-nodes g[data-node="execution"] { opacity: 1; }
-.system-map:has(.sm-item[data-touches="people process execution"]:hover) .sm-nodes g[data-node="people"] .sm-dot { fill: var(--color-accent); }
-.system-map:has(.sm-item[data-touches="people process execution"]:hover) .sm-nodes g[data-node="people"] { opacity: 1; }
-.system-map:has(.sm-item[data-touches="people process execution"]:hover) .sm-nodes g[data-node="process"] .sm-dot { fill: var(--color-accent); }
-.system-map:has(.sm-item[data-touches="people process execution"]:hover) .sm-nodes g[data-node="process"] { opacity: 1; }
-.system-map:has(.sm-item[data-touches="people strategy"]:focus-within) .sm-edges line[data-edge~="people"][data-edge~="strategy"] { opacity: 0.95; stroke: var(--color-accent); }
-.system-map:has(.sm-item[data-touches="people strategy"]:focus-within) .sm-label[data-label="people"] { opacity: 1; }
-.system-map:has(.sm-item[data-touches="people strategy"]:focus-within) .sm-label[data-label="strategy"] { opacity: 1; }
-.system-map:has(.sm-item[data-touches="people strategy"]:focus-within) .sm-nodes g[data-node="people"] .sm-dot { fill: var(--color-accent); }
-.system-map:has(.sm-item[data-touches="people strategy"]:focus-within) .sm-nodes g[data-node="people"] { opacity: 1; }
-.system-map:has(.sm-item[data-touches="people strategy"]:focus-within) .sm-nodes g[data-node="strategy"] .sm-dot { fill: var(--color-accent); }
-.system-map:has(.sm-item[data-touches="people strategy"]:focus-within) .sm-nodes g[data-node="strategy"] { opacity: 1; }
-.system-map:has(.sm-item[data-touches="people strategy"]:hover) .sm-edges line[data-edge~="people"][data-edge~="strategy"] { opacity: 0.95; stroke: var(--color-accent); }
-.system-map:has(.sm-item[data-touches="people strategy"]:hover) .sm-label[data-label="people"] { opacity: 1; }
-.system-map:has(.sm-item[data-touches="people strategy"]:hover) .sm-label[data-label="strategy"] { opacity: 1; }
-.system-map:has(.sm-item[data-touches="people strategy"]:hover) .sm-nodes g[data-node="people"] .sm-dot { fill: var(--color-accent); }
-.system-map:has(.sm-item[data-touches="people strategy"]:hover) .sm-nodes g[data-node="people"] { opacity: 1; }
-.system-map:has(.sm-item[data-touches="people strategy"]:hover) .sm-nodes g[data-node="strategy"] .sm-dot { fill: var(--color-accent); }
-.system-map:has(.sm-item[data-touches="people strategy"]:hover) .sm-nodes g[data-node="strategy"] { opacity: 1; }
-.system-map:has(.sm-item[data-touches="strategy execution capabilities"]:focus-within) .sm-edges line[data-edge~="capabilities"][data-edge~="execution"] { opacity: 0.95; stroke: var(--color-accent); }
-.system-map:has(.sm-item[data-touches="strategy execution capabilities"]:focus-within) .sm-edges line[data-edge~="capabilities"][data-edge~="strategy"] { opacity: 0.95; stroke: var(--color-accent); }
-.system-map:has(.sm-item[data-touches="strategy execution capabilities"]:focus-within) .sm-edges line[data-edge~="execution"][data-edge~="strategy"] { opacity: 0.95; stroke: var(--color-accent); }
-.system-map:has(.sm-item[data-touches="strategy execution capabilities"]:focus-within) .sm-label[data-label="capabilities"] { opacity: 1; }
-.system-map:has(.sm-item[data-touches="strategy execution capabilities"]:focus-within) .sm-label[data-label="execution"] { opacity: 1; }
-.system-map:has(.sm-item[data-touches="strategy execution capabilities"]:focus-within) .sm-label[data-label="strategy"] { opacity: 1; }
-.system-map:has(.sm-item[data-touches="strategy execution capabilities"]:focus-within) .sm-nodes g[data-node="capabilities"] .sm-dot { fill: var(--color-accent); }
-.system-map:has(.sm-item[data-touches="strategy execution capabilities"]:focus-within) .sm-nodes g[data-node="capabilities"] { opacity: 1; }
-.system-map:has(.sm-item[data-touches="strategy execution capabilities"]:focus-within) .sm-nodes g[data-node="execution"] .sm-dot { fill: var(--color-accent); }
-.system-map:has(.sm-item[data-touches="strategy execution capabilities"]:focus-within) .sm-nodes g[data-node="execution"] { opacity: 1; }
-.system-map:has(.sm-item[data-touches="strategy execution capabilities"]:focus-within) .sm-nodes g[data-node="strategy"] .sm-dot { fill: var(--color-accent); }
-.system-map:has(.sm-item[data-touches="strategy execution capabilities"]:focus-within) .sm-nodes g[data-node="strategy"] { opacity: 1; }
-.system-map:has(.sm-item[data-touches="strategy execution capabilities"]:hover) .sm-edges line[data-edge~="capabilities"][data-edge~="execution"] { opacity: 0.95; stroke: var(--color-accent); }
-.system-map:has(.sm-item[data-touches="strategy execution capabilities"]:hover) .sm-edges line[data-edge~="capabilities"][data-edge~="strategy"] { opacity: 0.95; stroke: var(--color-accent); }
-.system-map:has(.sm-item[data-touches="strategy execution capabilities"]:hover) .sm-edges line[data-edge~="execution"][data-edge~="strategy"] { opacity: 0.95; stroke: var(--color-accent); }
-.system-map:has(.sm-item[data-touches="strategy execution capabilities"]:hover) .sm-label[data-label="capabilities"] { opacity: 1; }
-.system-map:has(.sm-item[data-touches="strategy execution capabilities"]:hover) .sm-label[data-label="execution"] { opacity: 1; }
-.system-map:has(.sm-item[data-touches="strategy execution capabilities"]:hover) .sm-label[data-label="strategy"] { opacity: 1; }
-.system-map:has(.sm-item[data-touches="strategy execution capabilities"]:hover) .sm-nodes g[data-node="capabilities"] .sm-dot { fill: var(--color-accent); }
-.system-map:has(.sm-item[data-touches="strategy execution capabilities"]:hover) .sm-nodes g[data-node="capabilities"] { opacity: 1; }
-.system-map:has(.sm-item[data-touches="strategy execution capabilities"]:hover) .sm-nodes g[data-node="execution"] .sm-dot { fill: var(--color-accent); }
-.system-map:has(.sm-item[data-touches="strategy execution capabilities"]:hover) .sm-nodes g[data-node="execution"] { opacity: 1; }
-.system-map:has(.sm-item[data-touches="strategy execution capabilities"]:hover) .sm-nodes g[data-node="strategy"] .sm-dot { fill: var(--color-accent); }
-.system-map:has(.sm-item[data-touches="strategy execution capabilities"]:hover) .sm-nodes g[data-node="strategy"] { opacity: 1; }
-.system-map:has(.sm-item[data-touches="technology people process"]:focus-within) .sm-edges line[data-edge~="people"][data-edge~="process"] { opacity: 0.95; stroke: var(--color-accent); }
-.system-map:has(.sm-item[data-touches="technology people process"]:focus-within) .sm-edges line[data-edge~="people"][data-edge~="technology"] { opacity: 0.95; stroke: var(--color-accent); }
-.system-map:has(.sm-item[data-touches="technology people process"]:focus-within) .sm-edges line[data-edge~="process"][data-edge~="technology"] { opacity: 0.95; stroke: var(--color-accent); }
-.system-map:has(.sm-item[data-touches="technology people process"]:focus-within) .sm-label[data-label="people"] { opacity: 1; }
-.system-map:has(.sm-item[data-touches="technology people process"]:focus-within) .sm-label[data-label="process"] { opacity: 1; }
-.system-map:has(.sm-item[data-touches="technology people process"]:focus-within) .sm-label[data-label="technology"] { opacity: 1; }
-.system-map:has(.sm-item[data-touches="technology people process"]:focus-within) .sm-nodes g[data-node="people"] .sm-dot { fill: var(--color-accent); }
-.system-map:has(.sm-item[data-touches="technology people process"]:focus-within) .sm-nodes g[data-node="people"] { opacity: 1; }
-.system-map:has(.sm-item[data-touches="technology people process"]:focus-within) .sm-nodes g[data-node="process"] .sm-dot { fill: var(--color-accent); }
-.system-map:has(.sm-item[data-touches="technology people process"]:focus-within) .sm-nodes g[data-node="process"] { opacity: 1; }
-.system-map:has(.sm-item[data-touches="technology people process"]:focus-within) .sm-nodes g[data-node="technology"] .sm-dot { fill: var(--color-accent); }
-.system-map:has(.sm-item[data-touches="technology people process"]:focus-within) .sm-nodes g[data-node="technology"] { opacity: 1; }
-.system-map:has(.sm-item[data-touches="technology people process"]:hover) .sm-edges line[data-edge~="people"][data-edge~="process"] { opacity: 0.95; stroke: var(--color-accent); }
-.system-map:has(.sm-item[data-touches="technology people process"]:hover) .sm-edges line[data-edge~="people"][data-edge~="technology"] { opacity: 0.95; stroke: var(--color-accent); }
-.system-map:has(.sm-item[data-touches="technology people process"]:hover) .sm-edges line[data-edge~="process"][data-edge~="technology"] { opacity: 0.95; stroke: var(--color-accent); }
-.system-map:has(.sm-item[data-touches="technology people process"]:hover) .sm-label[data-label="people"] { opacity: 1; }
-.system-map:has(.sm-item[data-touches="technology people process"]:hover) .sm-label[data-label="process"] { opacity: 1; }
-.system-map:has(.sm-item[data-touches="technology people process"]:hover) .sm-label[data-label="technology"] { opacity: 1; }
-.system-map:has(.sm-item[data-touches="technology people process"]:hover) .sm-nodes g[data-node="people"] .sm-dot { fill: var(--color-accent); }
-.system-map:has(.sm-item[data-touches="technology people process"]:hover) .sm-nodes g[data-node="people"] { opacity: 1; }
-.system-map:has(.sm-item[data-touches="technology people process"]:hover) .sm-nodes g[data-node="process"] .sm-dot { fill: var(--color-accent); }
-.system-map:has(.sm-item[data-touches="technology people process"]:hover) .sm-nodes g[data-node="process"] { opacity: 1; }
-.system-map:has(.sm-item[data-touches="technology people process"]:hover) .sm-nodes g[data-node="technology"] .sm-dot { fill: var(--color-accent); }
-.system-map:has(.sm-item[data-touches="technology people process"]:hover) .sm-nodes g[data-node="technology"] { opacity: 1; }
-
-@media (prefers-reduced-motion: reduce) {
-  .system-map .sm-edges line,
-  .system-map .sm-nodes g,
-  .system-map .sm-label,
-  .system-map .sm-dot { transition: none; }
-}
-
-/* --------------------------------------------------------------------------
-   Atmosphere
-
-   Dark bands get depth from very large, very soft radial fields rather than
-   from images. Two of them, offset, drifting slowly against each other — the
-   effect is weather, not decoration. Everything here is `pointer-events: none`
-   and sits behind content in its own stacking context.
-   -------------------------------------------------------------------------- */
-
-.aura { position: relative; isolation: isolate; overflow: clip; }
-
-.aura::before,
-.aura::after {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  border-radius: 50%;
-  pointer-events: none;
-  /* No blur filter. A radial-gradient is already soft, and blurring an element
-     that is also being transformed forces the blur to be recomputed every
-     frame — it cost ~100ms of style and layout on the home page for no visible
-     difference. */
-  will-change: transform;
-}
-
-.aura::before {
-  inset-block-start: -30%;
-  inset-inline-start: -18%;
-  width: 70%;
-  aspect-ratio: 1;
-  background: radial-gradient(circle, color-mix(in oklab, var(--color-accent) 46%, transparent) 0%, transparent 68%);
-  opacity: 0.4;
-}
-
-.aura::after {
-  inset-block-end: -38%;
-  inset-inline-end: -14%;
-  width: 62%;
-  aspect-ratio: 1;
-  background: radial-gradient(circle, color-mix(in oklab, var(--color-night-accent) 38%, transparent) 0%, transparent 66%);
-  opacity: 0.26;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .aura::before { animation: aura-a 34s ease-in-out infinite alternate; }
-  .aura::after  { animation: aura-b 42s ease-in-out infinite alternate; }
-}
-
-@keyframes aura-a {
-  from { transform: translate3d(0, 0, 0) scale(1); }
-  to   { transform: translate3d(6%, 5%, 0) scale(1.12); }
-}
-@keyframes aura-b {
-  from { transform: translate3d(0, 0, 0) scale(1.06); }
-  to   { transform: translate3d(-7%, -4%, 0) scale(1); }
-}
-
-/* A light-ground equivalent: one cool wash, no motion, much quieter. */
-.aura-light { position: relative; isolation: isolate; overflow: clip; }
-.aura-light::before {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  inset-block-start: -45%;
-  inset-inline-end: -20%;
-  width: 66%;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  pointer-events: none;
-  background: radial-gradient(circle, var(--color-accent-soft) 0%, transparent 70%);
-}
-
-/* Ruled field. Reads as drafting paper at 1px; never competes with type. */
-/**
- * The field sits in its own layer behind content, faded out towards the edges
- * and held well below full strength. Painted straight onto the band it reads
- * as a table, and its lines strike through display type.
- */
-.field-rule { position: relative; isolation: isolate; }
-
-.field-rule::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  opacity: 0.55;
-  background-image:
-    linear-gradient(to right, var(--color-rule) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--color-rule) 1px, transparent 1px);
-  background-size: 96px 96px;
-  mask-image: radial-gradient(ellipse 80% 75% at 55% 35%, #000 10%, transparent 78%);
-}
-
-.on-night.field-rule::after,
-.on-night .field-rule::after {
-  background-image:
-    linear-gradient(to right, var(--color-night-rule) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--color-night-rule) 1px, transparent 1px);
-  opacity: 0.7;
-}
+.row-arrow { transition: transform 0.35s var(--ease-out-soft); }
+.group:hover .row-arrow { transform: translateX(0.3rem); }
 
 /* --------------------------------------------------------------------------
    Cards
 
-   One card primitive, two grounds. The hover is a 1px border darkening plus a
-   2px lift — enough to feel responsive, small enough that a grid of twelve
-   does not shimmer.
+   One primitive. A soft radius and a shadow that only appears on hover — the
+   card should look like paper resting on the page, not like a panel in an
+   application.
    -------------------------------------------------------------------------- */
 
-.card {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  border: 1px solid var(--color-rule);
-  background-color: var(--color-paper);
-  transition:
-    border-color 0.35s var(--ease-out-soft),
-    transform 0.35s var(--ease-out-soft),
-    box-shadow 0.35s var(--ease-out-soft);
+@layer components {
+  .card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid var(--color-rule);
+    border-radius: var(--radius-card);
+    background-color: var(--color-paper);
+    transition:
+      border-color 0.4s var(--ease-out-soft),
+      transform 0.4s var(--ease-out-soft),
+      box-shadow 0.4s var(--ease-out-soft);
+  }
 }
 
 .card-link:hover,
 .card-link:focus-within {
-  border-color: var(--color-ink);
-  transform: translateY(-2px);
-  box-shadow: 0 12px 28px -18px color-mix(in oklab, var(--color-ink) 45%, transparent);
+  border-color: var(--color-rule-strong);
+  transform: translateY(-3px);
+  box-shadow: 0 18px 40px -24px color-mix(in oklab, var(--color-ink) 55%, transparent);
 }
 
 .on-night .card {
   border-color: var(--color-night-rule);
-  background-color: color-mix(in oklab, var(--color-night-2) 82%, transparent);
+  background-color: var(--color-night-2);
 }
 
 .on-night .card-link:hover,
 .on-night .card-link:focus-within {
-  border-color: var(--color-night-accent);
-  box-shadow: 0 14px 34px -20px color-mix(in oklab, #000 80%, transparent);
+  border-color: color-mix(in oklab, var(--color-night-accent) 55%, transparent);
+  box-shadow: 0 18px 44px -26px #000;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1062,106 +389,79 @@ body {
   .card-link:focus-within { transform: none; }
 }
 
-/* The whole card is one target: the heading holds the real link, and this
-   pseudo-element extends its hit area. Keeps one link per card for a11y. */
+/* The whole card is one target; the heading holds the only real link. */
 .card-hit::after { content: ""; position: absolute; inset: 0; }
 
-/* Accent edge that grows on hover. Used on the capability cards. */
-.card-edge::before {
-  content: "";
-  position: absolute;
-  inset-block-start: -1px;
-  inset-inline-start: -1px;
-  height: 2px;
-  width: 3.5rem;
-  background-color: var(--color-accent);
-  transition: width 0.45s var(--ease-out-soft);
-}
-.on-night .card-edge::before { background-color: var(--color-night-accent); }
-.card-link.card-edge:hover::before,
-.card-link.card-edge:focus-within::before { width: calc(100% + 2px); }
-
 /* --------------------------------------------------------------------------
-   Figures — statistics
-
-   A proof point is a number and a sentence. The number is display type at
-   reading size, not a poster: inflated statistics read as marketing.
+   Photography
    -------------------------------------------------------------------------- */
 
-.stat-fig {
-  font-family: var(--font-display);
-  font-weight: 400;
-  font-size: clamp(2.25rem, 1.4rem + 3.2vw, 3.5rem);
-  line-height: 0.95;
-  letter-spacing: -0.03em;
-  font-variant-numeric: tabular-nums;
+/**
+ * Layered on purpose.
+ *
+ * An unlayered `.photo { border-radius }` outranks every Tailwind utility,
+ * because unlayered rules beat layered ones — which silently defeated
+ * `rounded-full` on the portrait and rendered the disc as a black square.
+ */
+@layer components {
+  .photo {
+    overflow: hidden;
+    border-radius: var(--radius-card);
+    background-color: var(--color-paper-3);
+  }
 }
 
-/* --------------------------------------------------------------------------
-   Portrait composition
+.photo img { display: block; width: 100%; height: 100%; object-fit: cover; }
 
-   The headshot sits in a frame offset against a ruled field, so that a single
-   photograph can carry a hero without looking like a profile picture. The
-   offset plate is drawn in CSS, so it works identically when the slot is still
-   empty and rendering its placeholder.
-   -------------------------------------------------------------------------- */
+/* A slow push-in on hover, only where the photograph is a link. */
+.photo-zoom img { transition: transform 0.9s var(--ease-out-soft); }
+.card-link:hover .photo-zoom img { transform: scale(1.04); }
 
+@media (prefers-reduced-motion: reduce) {
+  .card-link:hover .photo-zoom img { transform: none; }
+}
+
+/**
+ * The hero portrait.
+ *
+ * The supplied headshot is a circular crop on a near-black field, so it is
+ * presented as a disc — squaring it off would mean showing the black corners
+ * or cropping into his head. One soft ring sits behind it. That is the only
+ * decorative element left on the site.
+ */
 .portrait { position: relative; }
 
-/* An offset ring, not a rectangle. Once the slot holds a real circular
-   photograph a square plate behind it reads as a mistake; a ring echoes the
-   disc and gives the portrait somewhere to sit. */
 .portrait::before {
   content: "";
   position: absolute;
-  z-index: 0;
-  inset: 0;
-  transform: translate(1.5rem, 1.5rem);
-  border: 1px solid var(--color-accent);
+  inset: -1.5rem;
+  border: 1px solid color-mix(in oklab, var(--color-night-accent) 35%, transparent);
   border-radius: 50%;
-  opacity: 0.45;
   pointer-events: none;
 }
 
-.on-night .portrait::before { border-color: var(--color-night-accent); opacity: 0.45; }
-
-.portrait > * { position: relative; z-index: 1; }
-
 @media (max-width: 767px) {
-  .portrait::before { transform: translate(0.85rem, 0.85rem); }
+  .portrait::before { inset: -0.85rem; }
 }
 
 /* --------------------------------------------------------------------------
    Sticky header
-
-   Transparent over a dark hero, solid once the page has moved. The state is
-   set by an IntersectionObserver on a sentinel, so there is no scroll handler,
-   and the solid state is the no-JS default — a legible header is the safe
-   fallback, not a transparent one.
    -------------------------------------------------------------------------- */
 
 .masthead {
   position: sticky;
   inset-block-start: 0;
   z-index: 50;
-  /* The bar overlays the hero rather than sitting above it — which is what
-     lets it be transparent at the top of the page. Every page hero carries
-     matching top padding to clear it. */
   margin-block-end: calc(var(--masthead-h) * -1);
   transition:
     background-color 0.4s var(--ease-out-soft),
-    border-color 0.4s var(--ease-out-soft),
-    backdrop-filter 0.4s var(--ease-out-soft);
+    border-color 0.4s var(--ease-out-soft);
 }
 
 /**
- * Transparency is opt-in, and the page opts in by containing a dark hero.
- *
- * `main` carries the clearance for the overlaying bar by default and gives it
- * up only when a dark hero is present (that hero pads itself instead). Written
- * this way round so a browser without `:has()` gets the safe outcome on every
- * page — clearance kept, bar solid — rather than content under an invisible
- * header.
+ * Transparency is opt-in: a page opts in by containing a dark hero, and `main`
+ * gives up its clearance only then. Written this way round so a browser
+ * without `:has()` keeps the clearance and a solid bar on every page.
  */
 main { padding-block-start: var(--masthead-h); }
 
@@ -1173,7 +473,7 @@ body:has([data-hero="dark"]) main { padding-block-start: 0; }
 }
 
 .masthead[data-lifted="true"] {
-  background-color: color-mix(in oklab, var(--color-night) 88%, transparent);
+  background-color: color-mix(in oklab, var(--color-night) 90%, transparent);
   backdrop-filter: saturate(140%) blur(14px);
   border-block-end-color: var(--color-night-rule);
 }
@@ -1187,17 +487,16 @@ body:has([data-hero="dark"]) main { padding-block-start: 0; }
 }
 
 /* --------------------------------------------------------------------------
-   Marquee-free credibility strip
-
-   A wrapping row of names divided by hairlines. No scrolling logos, no motion
-   — the point is that these are readable.
+   Forms
    -------------------------------------------------------------------------- */
 
-/**
- * No dividers.
- *
- * A hairline before each item looks right on one line and wrong the moment the
- * row wraps — every new line starts with a rule attached to nothing. Generous
- * column gaps separate the names at any width, and read calmer besides.
- */
-.strip { display: flex; flex-wrap: wrap; }
+/* The event fields only matter for speaking and workshop enquiries. Hidden by
+   default and revealed by the radio choice, with no JavaScript. */
+@supports selector(:has(*)) {
+  .contact-form:not(:has(#inquiry-speaking:checked)):not(:has(#inquiry-workshop:checked))
+    .event-fields {
+    display: none;
+  }
+}
+
+.sr-only { overflow: hidden; }

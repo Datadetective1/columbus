@@ -1,13 +1,9 @@
-import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { Band, CtaButton, Kicker, TextLink } from "./ui";
-import { Reveal } from "./reveal";
+import { Band, CtaButton, TextLink } from "./ui";
 import { ImageSlot } from "./image-slot";
-import { images, type ImageKey } from "@/content/images";
-import { affiliationCaption, affiliationStrip, trustStrip, type ProofPoint } from "@/content/proof";
+import type { ImageKey } from "@/content/images";
 import { primaryCta, speakingCta } from "@/content/site";
-import type { Talk } from "@/content/speaking";
 
 /* --------------------------------------------------------------- Page hero */
 
@@ -15,41 +11,41 @@ import type { Talk } from "@/content/speaking";
  * Every page opens with one of these.
  *
  * It is a dark band, which is what lets the sticky masthead sit transparent
- * over the top of the page and go solid on scroll. `pt` clears the fixed bar.
+ * over the top of the page and go solid on scroll. The band pads itself to
+ * clear the bar.
  */
 export function PageHero({
-  kicker,
+  label,
   heading,
   standfirst,
   actions,
   aside,
-  wide = false,
 }: {
-  kicker: string;
+  label?: string;
   heading: ReactNode;
   standfirst?: ReactNode;
   actions?: ReactNode;
-  /** Portrait, diagram or figure for the right-hand columns. */
+  /** A photograph for the right-hand columns. */
   aside?: ReactNode;
-  /** No aside — lets the text run wider. */
-  wide?: boolean;
 }) {
   return (
-    <Band ground="night" rhythm="flush" className="aura field-rule" data-hero="dark">
-      {/* Top padding clears the masthead, which overlays this band. */}
-      <div className="shell pb-16 pt-[calc(var(--masthead-h)+3.5rem)] md:pb-24 md:pt-[calc(var(--masthead-h)+5rem)] lg:pb-28 lg:pt-[calc(var(--masthead-h)+6rem)]">
-        <div className="egrid items-center gap-y-12">
-          <div className={wide ? "col-span-6 md:col-span-9" : "col-span-6 md:col-span-7"}>
-            <Kicker tone="night">{kicker}</Kicker>
-            <h1 className="t-display mt-5 text-night-ink">{heading}</h1>
-            {standfirst ? (
-              <div className="t-lede measure mt-6 text-night-muted">{standfirst}</div>
-            ) : null}
+    <Band ground="night" rhythm="flush" data-hero="dark">
+      <div className="shell pb-16 pt-[calc(var(--masthead-h)+3.5rem)] md:pb-24 md:pt-[calc(var(--masthead-h)+5.5rem)] lg:pb-28 lg:pt-[calc(var(--masthead-h)+6.5rem)]">
+        <div className="egrid items-center gap-y-14">
+          <div className={aside ? "col-span-6 md:col-span-7" : "col-span-6 md:col-span-9"}>
+            {label ? <p className="t-label text-night-accent">{label}</p> : null}
+            <h1 className={`t-display text-night-ink ${label ? "mt-5" : ""}`}>{heading}</h1>
+            {standfirst ? <div className="t-lede measure mt-6">{standfirst}</div> : null}
             {actions ? <div className="mt-9 flex flex-wrap gap-3">{actions}</div> : null}
           </div>
 
           {aside ? (
-            <div className="col-span-6 md:col-span-4 md:col-start-9">{aside}</div>
+            /* On a phone the image goes first. Stacked the other way it lands
+               about a screen and a half down, which wastes the one element
+               that humanises the page immediately. */
+            <div className="order-first col-span-6 md:order-none md:col-span-4 md:col-start-9">
+              {aside}
+            </div>
           ) : null}
         </div>
       </div>
@@ -57,220 +53,205 @@ export function PageHero({
   );
 }
 
-/** The circular portrait, composed against its offset accent plate. */
+/* -------------------------------------------------------------- Photography */
+
+/**
+ * The hero portrait.
+ *
+ * The supplied headshot is a circular crop on a near-black field, so it is
+ * shown as a disc. Squaring it off would mean either showing the black corners
+ * or cropping into his head.
+ */
 export function Portrait({
   slot = "hero",
   priority = false,
+  className = "",
 }: {
-  slot?: "hero" | "about";
+  slot?: ImageKey;
   priority?: boolean;
+  className?: string;
 }) {
   return (
-    <div className="portrait mx-auto w-[min(20rem,78%)] md:w-full">
-      <ImageSlot
-        slot={slot}
-        priority={priority}
-        sizes="(min-width: 768px) 32vw, 78vw"
-        className="w-full"
-      />
+    <div className={`portrait w-44 sm:w-52 md:w-full ${className}`}>
+      <ImageSlot slot={slot} priority={priority} sizes="(min-width: 768px) 34vw, 80vw" />
     </div>
   );
 }
 
-/**
- * A photograph in a panel.
- *
- * Three of the four supplied photographs are low resolution, so `sizes` is kept
- * honest per usage rather than left at a default that would ask the browser for
- * a variant the file cannot supply.
- */
+/** A photograph in a rectangular frame. */
 export function Photo({
   slot,
-  className = "",
   sizes,
+  className = "",
   priority = false,
 }: {
   slot: ImageKey;
-  className?: string;
   sizes: string;
+  className?: string;
   priority?: boolean;
 }) {
-  return (
-    <ImageSlot
-      slot={slot}
-      sizes={sizes}
-      priority={priority}
-      className={`border border-rule ${className}`}
-    />
-  );
+  return <ImageSlot slot={slot} sizes={sizes} priority={priority} className={className} />;
 }
 
 /**
- * A full-bleed photographic strip under a dark scrim.
+ * A full-bleed photographic strip.
  *
- * The scrim is doing real work: the panorama is 780px wide and this band is not,
- * so the image is being asked to stretch. Darkened and overlaid it reads as
- * atmosphere, which a soft image can carry, rather than as a photograph, which
- * it cannot.
+ * The workshop frame is a 3.6:1 panorama of a full room. In a column it reads
+ * as a small letterbox; run edge to edge at its own proportion it reads as a
+ * room. Nothing is overlaid on it, so the softness of an 780px-wide file is
+ * not being asked to carry text.
  */
-export function PhotoStrip({
-  slot,
-  children,
+export function PhotoBand({ slot }: { slot: ImageKey }) {
+  return (
+    <div className="w-full overflow-hidden">
+      <ImageSlot slot={slot} sizes="100vw" className="w-full rounded-none" />
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------- Cards */
+
+/**
+ * One of the three ways to work together.
+ *
+ * `image` is a photograph where a truthful one exists. Two of the three do;
+ * the ventures card takes `tone` instead and is set as a dark typographic
+ * panel, because inventing a photograph of a partnership would be a lie and a
+ * stock one would be worse.
+ */
+export function PathwayCard({
+  href,
+  title,
+  body,
+  cta,
+  image,
+  index = 0,
 }: {
-  slot: ImageKey;
-  children?: ReactNode;
+  href: string;
+  title: string;
+  body: string;
+  cta: string;
+  image?: { slot: ImageKey };
+  index?: number;
 }) {
-  const config = images[slot];
-  if (!config.src) return null;
   return (
-    <div className="on-night relative isolate overflow-hidden bg-night">
-      <Image
-        src={config.src}
-        alt={config.alt}
-        width={config.width}
-        height={config.height}
-        /* The file is 780px wide. Asking for 100vw would make next/image
-           generate a 1920px upscale — more bytes, no more detail. Capped near
-           native; the element is stretched by object-cover, not by the source. */
-        sizes="828px"
-        className="absolute inset-0 -z-10 h-full w-full object-cover opacity-40"
-      />
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 -z-10 bg-gradient-to-r from-night via-night/70 to-night/85"
-      />
-      <div className="shell py-12 md:py-16">{children}</div>
-    </div>
-  );
-}
-
-/* --------------------------------------------------------------- Proof */
-
-/** The four-item credibility strip. Short claims, hairline-divided. */
-export function TrustStrip() {
-  return (
-    <Band ground="paper" rhythm="xtight" rule>
-      <div className="shell">
-        <Reveal as="ul" className="grid grid-cols-1 gap-x-8 gap-y-5 sm:grid-cols-2 lg:grid-cols-4">
-          {trustStrip.map((item, i) => (
-            <li
-              key={item.lead}
-              className="reveal border-t border-rule pt-4 lg:border-t-0 lg:pt-0"
-              style={{ "--i": i } as React.CSSProperties}
-            >
-              <p className="text-[0.9375rem] leading-snug text-ink">
-                <span className="font-medium">{item.lead}</span>{" "}
-                <span className="text-muted">{item.body}</span>
-              </p>
-            </li>
-          ))}
-        </Reveal>
+    <article
+      className="card card-link reveal h-full"
+      style={{ "--i": index } as React.CSSProperties}
+    >
+      <div className="aspect-[5/4] w-full overflow-hidden">
+        {image ? (
+          <Photo
+            slot={image.slot}
+            sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 92vw"
+            className="photo-zoom h-full w-full rounded-none"
+          />
+        ) : (
+          <div className="flex h-full w-full items-end bg-night p-7">
+            <p className="font-display text-[1.75rem] leading-[1.15] text-night-ink">
+              Build it,
+              <br />
+              don&rsquo;t just
+              <br />
+              advise on it.
+            </p>
+          </div>
+        )}
       </div>
-    </Band>
-  );
-}
 
-/** Former employers, set as text and captioned so it cannot read as a client list. */
-export function AffiliationStrip({ night = false }: { night?: boolean }) {
-  return (
-    <div>
-      <ul className="strip gap-x-8 gap-y-3 sm:gap-x-10">
-        {affiliationStrip.map((name) => (
-          <li
-            key={name}
-            className={`t-label ${night ? "text-night-muted" : "text-faint"}`}
-          >
-            {name}
-          </li>
-        ))}
-      </ul>
-      <p className={`t-tiny mt-4 ${night ? "text-night-muted" : "text-faint"}`}>
-        {affiliationCaption}
-      </p>
-    </div>
+      <div className="flex flex-1 flex-col p-7 md:p-8">
+        <h3 className="t-h3 text-ink">
+          <Link href={href} className="card-hit">
+            {title}
+          </Link>
+        </h3>
+        <p className="t-small mt-3">{body}</p>
+        <span className="mt-auto inline-flex items-center gap-2 pt-7 text-[0.9375rem] font-medium text-accent">
+          {cta}
+          <svg viewBox="0 0 16 16" className="row-arrow h-3 w-3" fill="none" aria-hidden="true">
+            <path
+              d="M1 8h13M9 3l5 5-5 5"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </span>
+      </div>
+    </article>
   );
 }
 
 /**
  * A proof point.
  *
- * The figure is display type at reading size rather than poster size — a
- * statistic set enormous reads as marketing, which is the opposite of what a
- * number is supposed to do here.
+ * The figure is display type at reading size. A statistic set enormous reads
+ * as marketing, which is the opposite of what a number is for here.
  */
-export function StatBlock({
-  point,
-  night = true,
+export function StatCard({
+  figure,
+  label,
   index = 0,
 }: {
-  point: ProofPoint;
-  night?: boolean;
-  /** Drives the stagger delay on reveal. */
+  figure: string;
+  label: string;
   index?: number;
 }) {
   return (
-    <li className="rule-hair reveal pt-5" style={{ "--i": index } as React.CSSProperties}>
-      <p className={`stat-fig ${night ? "text-night-ink" : "text-ink"}`}>{point.figure}</p>
-      <p className={`mt-3 text-[0.9375rem] leading-snug ${night ? "text-night-ink/85" : "text-ink"}`}>
-        {point.label}
+    <li
+      className="card reveal h-full p-7 md:p-8"
+      style={{ "--i": index } as React.CSSProperties}
+    >
+      <p className="font-display text-[2.75rem] leading-none tracking-[-0.02em] text-ink md:text-[3.25rem]">
+        {figure}
       </p>
-      {point.note ? (
-        <p className={`t-tiny mt-2 ${night ? "text-night-muted" : "text-faint"}`}>{point.note}</p>
-      ) : null}
+      <p className="t-small mt-5">{label}</p>
     </li>
   );
 }
 
-/* --------------------------------------------------------------- Cards */
-
-/** A keynote, as a card. Used on the home page and the speaking page. */
-export function TalkCard({
-  talk,
-  night = false,
+/** A signature idea, as an editorial block. */
+export function IdeaCard({
+  href,
+  title,
+  body,
   index = 0,
-  compact = false,
 }: {
-  talk: Talk;
-  night?: boolean;
+  href: string;
+  title: string;
+  body: string;
   index?: number;
-  /** Title and subtitle only. Used where the card is a door, not the content. */
-  compact?: boolean;
 }) {
   return (
-    <article
-      className="card card-link card-edge reveal h-full p-6 md:p-7"
-      style={{ "--i": index } as React.CSSProperties}
-    >
-      <h3 className={`t-h4 mt-4 ${night ? "text-night-ink" : "text-ink"}`}>
-        <Link href={`/speaking#${talk.slug}`} className="card-hit link-underline">
-          {talk.title}
-        </Link>
-      </h3>
-      <p className={`mt-2 text-[0.9375rem] leading-snug ${night ? "text-night-muted" : "text-muted"}`}>
-        {talk.subtitle}
-      </p>
-      {compact ? null : (
-        <p className={`t-small mt-5 ${night ? "text-night-muted" : "text-muted"}`}>
-          {talk.overview}
-        </p>
-      )}
-      <ul className="mt-auto flex flex-wrap gap-x-4 gap-y-1 pt-6">
-        {talk.formats.map((f) => (
-          <li key={f} className={`t-label-sm ${night ? "text-night-muted" : "text-faint"}`}>
-            {f}
-          </li>
-        ))}
-      </ul>
-    </article>
+    <li className="h-full">
+      <Link
+        href={href}
+        className="card card-link reveal group h-full p-7 md:p-9"
+        style={{ "--i": index } as React.CSSProperties}
+      >
+        <h3 className="t-h3 text-ink transition-colors group-hover:text-accent">{title}</h3>
+        <p className="t-small measure-sm mt-4">{body}</p>
+        <span className="mt-auto inline-flex items-center gap-2 pt-8 text-[0.875rem] font-medium text-accent">
+          Read more
+          <svg viewBox="0 0 16 16" className="row-arrow h-3 w-3" fill="none" aria-hidden="true">
+            <path
+              d="M1 8h13M9 3l5 5-5 5"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </span>
+      </Link>
+    </li>
   );
 }
 
-/* --------------------------------------------------------------- Closing */
+/* ----------------------------------------------------------------- Closing */
 
-/**
- * The closing call to action. Identical on every page by design — by the time
- * someone reaches the bottom, the question should always be the same one.
- */
+/** The closing call to action. The same question on every page, by design. */
 export function FinalCta({
   heading = "Ready to move something forward?",
   body = "Advisory, venture partnerships, keynotes and workshops.",
@@ -278,34 +259,29 @@ export function FinalCta({
 }: {
   heading?: string;
   body?: string;
-  /** The third path, offered quietly rather than as a third button. */
   showVentures?: boolean;
 }) {
   return (
-    <Band ground="night" rhythm="normal" className="aura">
+    <Band ground="night" rhythm="normal">
       <div className="shell">
-        <div className="egrid items-end gap-y-8">
-          <div className="col-span-6 md:col-span-7">
-            <h2 className="t-h1 text-night-ink">{heading}</h2>
-            <p className="t-lede mt-4 text-night-muted">{body}</p>
+        <div className="mx-auto max-w-3xl text-center">
+          <h2 className="t-h1 text-night-ink">{heading}</h2>
+          <p className="t-lede mt-5">{body}</p>
+          <div className="mt-9 flex flex-wrap justify-center gap-3">
+            <CtaButton href={primaryCta.href} variant="night">
+              {primaryCta.label}
+            </CtaButton>
+            <CtaButton href={speakingCta.href} variant="outlineNight">
+              {speakingCta.label}
+            </CtaButton>
           </div>
-          <div className="col-span-6 md:col-span-5 md:justify-self-end">
-            <div className="flex flex-wrap gap-3">
-              <CtaButton href={primaryCta.href} variant="night">
-                {primaryCta.label}
-              </CtaButton>
-              <CtaButton href={speakingCta.href} variant="outlineNight">
-                {speakingCta.label}
-              </CtaButton>
-            </div>
-            {showVentures ? (
-              <p className="mt-6">
-                <TextLink href="/ventures" night>
-                  Explore venture partnerships
-                </TextLink>
-              </p>
-            ) : null}
-          </div>
+          {showVentures ? (
+            <p className="mt-8">
+              <TextLink href="/ventures" night>
+                Explore venture partnerships
+              </TextLink>
+            </p>
+          ) : null}
         </div>
       </div>
     </Band>

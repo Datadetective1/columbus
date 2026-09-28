@@ -1,124 +1,94 @@
-import { Band, CtaButton, Kicker, TextLink } from "@/components/ui";
+import { Band, CtaButton, SectionHead } from "@/components/ui";
 import { FinalCta, PageHero } from "@/components/sections";
 import { Reveal } from "@/components/reveal";
-import {
-  collaborationStructures,
-  venturesIntro,
-  whatWazaBrings,
-  whoItFits,
-} from "@/content/ventures";
+import { collaborationStructures, whatWazaBrings, whoItFits } from "@/content/ventures";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
   title: "Venture partnerships",
   description:
-    "Some ideas should become businesses, not consulting projects. WAZA works selectively with builders, founders and operators on business design, commercialization and market positioning.",
+    "Some ideas are better built as partnerships. Columbus selectively partners on promising ideas and platforms through business design, commercialization support and strategic guidance.",
   path: "/ventures",
 });
 
 /**
  * Ventures.
  *
- * Kept deliberately short. This is a pathway, not a fund — the page's job is to
- * tell the right person that a different kind of conversation is available, and
- * then get out of the way. Nothing here claims capital, a portfolio or a
- * completed partnership, because there is none to claim.
+ * Short on purpose. This is a pathway, not a fund — the page's job is to tell
+ * the right person that a different kind of conversation is available, then
+ * get out of the way. Nothing here claims capital, a portfolio or a completed
+ * partnership, because there is none to claim.
  */
 export default function VenturesPage() {
   return (
     <>
       <PageHero
-        kicker={venturesIntro.kicker}
-        heading={venturesIntro.headline}
-        standfirst={venturesIntro.standfirst}
+        label="Venture partnerships"
+        heading="Some ideas are better built as partnerships."
+        standfirst="Columbus selectively partners on promising ideas and platforms — contributing business design, commercialization support, market positioning and strategic guidance where he can genuinely move the outcome."
         actions={
           <CtaButton href="/contact?inquiry=other" variant="night">
             Start a Conversation
           </CtaButton>
         }
-        wide
       />
 
-      {/* What WAZA brings, and who it is for — one band, two columns. */}
       <Band ground="paper" rhythm="normal">
         <div className="shell">
-          <div className="egrid gap-y-14">
-            <div className="col-span-6 md:col-span-7">
-              <Kicker>What WAZA brings</Kicker>
-              <Reveal as="ul" className="register mt-6">
-                {whatWazaBrings.map((item, i) => (
-                  <li
-                    key={item.title}
-                    className="reveal py-4"
-                    style={{ "--i": i } as React.CSSProperties}
-                  >
-                    <h2 className="font-display text-[1.125rem] leading-snug text-ink md:text-[1.25rem]">
-                      {item.title}
-                    </h2>
-                    <p className="t-small mt-1.5 text-muted">{item.body}</p>
-                  </li>
-                ))}
-              </Reveal>
-            </div>
+          <Reveal>
+            <SectionHead label="What Columbus brings" heading="More than an engagement." />
+          </Reveal>
 
-            <div className="col-span-6 md:col-span-4 md:col-start-9">
-              <Kicker>Who it fits</Kicker>
-              <ul className="mt-6 space-y-4">
+          <Reveal as="ul" className="mt-14 grid gap-7 md:mt-18 md:grid-cols-3">
+            {whatWazaBrings.map((item, i) => (
+              <li
+                key={item.title}
+                className="card reveal h-full p-7 md:p-8"
+                style={{ "--i": i } as React.CSSProperties}
+              >
+                <h2 className="t-h4 text-ink">{item.title}</h2>
+                <p className="t-small mt-3">{item.body}</p>
+              </li>
+            ))}
+          </Reveal>
+        </div>
+      </Band>
+
+      <Band ground="paper2" rhythm="normal">
+        <div className="shell">
+          <div className="egrid gap-y-14">
+            <div className="col-span-6 md:col-span-5">
+              <SectionHead label="Who it fits" heading="Builders, not buyers." headingClass="t-h2" />
+              <ul className="mt-9 space-y-5">
                 {whoItFits.map((w) => (
-                  <li key={w} className="rule-hair flex gap-3 pt-4">
-                    <span aria-hidden="true" className="mt-2.5 h-px w-4 shrink-0 bg-accent" />
-                    <span className="t-small text-ink">{w}</span>
+                  <li key={w} className="t-small border-b border-rule pb-5 last:border-0">
+                    {w}
                   </li>
                 ))}
               </ul>
             </div>
-          </div>
-        </div>
-      </Band>
 
-      {/* How a collaboration might be structured. */}
-      <Band ground="paper2" rhythm="normal" rule className="aura-light">
-        <div className="shell">
-          <div className="egrid items-end gap-y-8">
-            <div className="col-span-6 md:col-span-7">
-              <Kicker>How collaboration may work</Kicker>
-              <h2 className="t-h1 mt-5 text-ink">Structure follows the opportunity.</h2>
-            </div>
-            <p className="t-small col-span-6 text-muted md:col-span-4 md:col-start-9">
-              Every one of these is negotiated, not offered off a shelf.
-            </p>
-          </div>
-
-          <Reveal
-            as="ul"
-            className="mt-12 grid gap-px border border-rule bg-rule md:mt-16 md:grid-cols-5"
-          >
-            {collaborationStructures.map((label, i) => (
-              <li key={label} className="bg-paper">
-                <div
-                  className="reveal flex h-full flex-col p-6"
-                  style={{ "--i": i } as React.CSSProperties}
-                >
-                  <span className="t-label-sm text-accent">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <h3 className="font-display mt-4 text-[1.125rem] leading-snug text-ink">
+            <div className="col-span-6 md:col-span-6 md:col-start-7">
+              <SectionHead
+                label="How collaboration may work"
+                heading="Structure follows the opportunity."
+                headingClass="t-h2"
+              />
+              <p className="t-small mt-6 measure-sm">
+                Every one of these is negotiated rather than offered off a shelf. WAZA is not
+                a fund and holds no portfolio; this is a way of working, offered selectively.
+              </p>
+              <ul className="mt-9 flex flex-wrap gap-3">
+                {collaborationStructures.map((label) => (
+                  <li
+                    key={label}
+                    className="rounded-[var(--radius-btn)] border border-rule-strong bg-paper px-4 py-2.5 text-[0.9375rem] text-ink"
+                  >
                     {label}
-                  </h3>
-                </div>
-              </li>
-            ))}
-          </Reveal>
-
-          <p className="t-tiny mt-8 text-faint">
-            WAZA is not a fund and holds no portfolio. This is a way of working, offered
-            selectively.
-          </p>
-
-          <div className="mt-10">
-            <TextLink href="/advisory">
-              If it is an engagement rather than a partnership
-            </TextLink>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
       </Band>

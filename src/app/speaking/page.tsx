@@ -1,16 +1,10 @@
-import { Register, RegisterRow, Stamp } from "@/components/modules";
-import { FinalCta, PageHero, Photo } from "@/components/sections";
-import { POSTERS } from "@/components/art/posters";
-import { Src, SourceNotes } from "@/components/provenance";
+import { Band, CtaButton, SectionHead, TextLink } from "@/components/ui";
 import { Reveal } from "@/components/reveal";
-import { Band, BandHead, CtaButton, TextLink } from "@/components/ui";
+import { FinalCta, PageHero, Photo } from "@/components/sections";
 import { documentedSpeakerIntro } from "@/content/bio";
-import { capabilities } from "@/content/capabilities";
-import { engagements, engagementsNote, speakingIntro, talks } from "@/content/speaking";
-import { sourceIndex } from "@/content/sources";
+import { engagements, speakingIntro, talks } from "@/content/speaking";
 import { visibleTestimonials } from "@/content/testimonials";
-import { themes } from "@/content/themes";
-import { additionalSessions, workshops } from "@/content/workshops";
+import { additionalSessions, formatNote, workshops } from "@/content/workshops";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
@@ -20,28 +14,26 @@ export const metadata = buildMetadata({
   path: "/speaking",
 });
 
-const src = sourceIndex(["speaker-profile", "editorial", "needs-review"]);
-
-/** Which advisory capability each keynote sits closest to. */
-const TALK_LINKS: Record<string, string> = {
-  "power-of-a-name": "leadership-teams",
-  "make-it-easy-now": "business-technology",
-  "i-built-it-and-they-didnt-come": "transformation-adoption",
-};
-
+/**
+ * Speaking.
+ *
+ * Photography leads. The previous version opened on three faint vector poster
+ * boards, which read as concept art for talks rather than as evidence that a
+ * real person stands in front of real rooms.
+ */
 export default function SpeakingPage() {
   return (
     <>
       <PageHero
-        kicker="Speaking"
+        label="Speaking"
         heading={speakingIntro.headline}
         standfirst={speakingIntro.body[0]}
         aside={
           <Photo
             slot="speaking01"
-            sizes="(min-width: 768px) 32vw, 92vw"
+            sizes="(min-width: 768px) 34vw, 92vw"
             priority
-            className="border-night-rule"
+            className="w-full"
           />
         }
         actions={
@@ -51,275 +43,139 @@ export default function SpeakingPage() {
         }
       />
 
-      {/* Contents plate — the three keynotes, as posters. */}
-      <Band ground="paper" rhythm="tight">
+      {/* The keynotes. */}
+      <Band ground="paper" rhythm="normal">
         <div className="shell">
-          <nav aria-label="Keynotes" className="border-t-2 border-ink pt-4">
-            <ol className="grid md:grid-cols-3">
-              {talks.map((t, i) => (
-                <li key={t.slug} className={i > 0 ? "md:border-l md:border-rule md:pl-5" : "md:pr-5"}>
-                  <a href={`#${t.slug}`} className="group block border-t border-rule py-3 md:border-t-0">
-                    <span className="art-zoom art-tile mb-3 block aspect-[4/5] border border-rule">
-                      <span className="art-inner block h-full w-full">
-                        {(() => {
-                          const P = POSTERS[t.slug as keyof typeof POSTERS];
-                          return P ? <P className="h-full w-full" /> : null;
-                        })()}
-                      </span>
-                    </span>
-                    <span className="mt-1.5 block font-display text-[1.125rem] leading-snug text-ink transition-colors group-hover:text-accent">
-                      {t.title}
-                    </span>
-                    <span className="meta mt-1 block">{t.subtitle}</span>
-                  </a>
-                </li>
-              ))}
-            </ol>
-          </nav>
+          <Reveal>
+            <SectionHead label="Keynotes" heading="Three talks." />
+          </Reveal>
+
+          <Reveal as="ul" className="mt-14 grid gap-7 md:mt-18 md:grid-cols-3">
+            {talks.map((talk, i) => (
+              <li key={talk.slug} id={talk.slug} className="h-full scroll-mt-28">
+                <article
+                  className="card reveal h-full p-8 md:p-9"
+                  style={{ "--i": i } as React.CSSProperties}
+                >
+                  <h2 className="t-h3 text-ink">{talk.title}</h2>
+                  <p className="mt-3 font-display text-[1.0625rem] italic leading-snug text-accent">
+                    {talk.subtitle}
+                  </p>
+                  <p className="t-small mt-6">{talk.overview}</p>
+                  <div className="mt-auto pt-8">
+                    <p className="t-label text-faint">Formats</p>
+                    <p className="t-small mt-2 text-ink">{talk.formats.join(" · ")}</p>
+                  </div>
+                </article>
+              </li>
+            ))}
+          </Reveal>
         </div>
       </Band>
 
-      {/* His own words, given a whole band */}
-      <Band rhythm="tight" ground="night">
+      {/* In his own words, beside the portrait whose shirt carries one of the titles. */}
+      <Band ground="night" rhythm="normal">
         <div className="shell">
-          <div className="egrid">
-            <div className="col-span-6 md:col-span-3">
-              <h2 className="t-label text-night-accent">In his own words</h2>
-              <p className="meta mt-4">Speaker profile · verbatim</p>
+          <div className="egrid items-center gap-y-12">
+            <div className="col-span-6 md:col-span-4">
+              <Photo slot="wazaPolo" sizes="(min-width: 768px) 32vw, 80vw" className="w-full" />
             </div>
-            <blockquote className="col-span-6 md:col-span-8 md:col-start-5">
-              <p className="font-display text-[1.25rem] leading-[1.45] text-night-ink md:text-[1.75rem]">
+            <blockquote className="col-span-6 md:col-span-7 md:col-start-6">
+              <p className="font-display text-[1.375rem] leading-[1.45] text-night-ink md:text-[1.75rem]">
                 {documentedSpeakerIntro}
               </p>
-              <cite className="meta mt-5 block not-italic">
-                Columbus Brown II, published speaker profile
-                <Src n={src.ref("speaker-profile")} id="speaker-profile" />
+              <cite className="t-small mt-6 block not-italic">
+                Columbus Brown II, from his own speaker profile
               </cite>
             </blockquote>
           </div>
-
-          <ul className="mt-12 grid border-t border-night-rule md:grid-cols-5">
-            {speakingIntro.qualities.map((q, i) => (
-              <li
-                key={q.label}
-                className={`border-b border-night-rule py-4 md:border-b-0 ${
-                  i > 0 ? "md:border-l md:border-night-rule md:pl-4" : ""
-                }`}
-              >
-                <span className="t-label-sm block text-night-muted">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <span className="mt-2 block font-display text-[1.0625rem] text-night-ink">
-                  {q.label}
-                </span>
-                <span className="t-tiny mt-1.5 block">{q.note}</span>
-              </li>
-            ))}
-          </ul>
         </div>
       </Band>
 
-      {/* The keynotes, each a full editorial entry */}
-      {talks.map((talk, i) => (
-        <Band
-          key={talk.slug}
-          id={talk.slug}
-          rhythm="tight"
-          ground={i % 2 === 1 ? "paper2" : "paper"}
-          rule
-          className="scroll-mt-32"
-        >
-          <div className="shell">
-            <div className="egrid items-end">
-              <div className="col-span-6 md:col-span-8">
-                <Stamp parts={["Keynote"]} />
-                <h2 className="t-h1 mt-4 text-ink">{talk.title}</h2>
-                <p className="mt-3 font-display text-[1.125rem] italic leading-snug text-accent md:text-[1.375rem]">
-                  {talk.subtitle}
-                </p>
-              </div>
-              <div className="col-span-6 md:col-span-3 md:col-start-10">
-                <dl>
-                  <dt className="t-label-sm text-faint">Formats</dt>
-                  <dd className="mt-2 flex flex-wrap gap-2">
-                    {talk.formats.map((f) => (
-                      <span key={f} className="meta border border-rule-strong px-2 py-1">
-                        {f}
-                      </span>
-                    ))}
-                  </dd>
-                </dl>
-              </div>
-            </div>
-
-            <div className="egrid mt-8 border-t border-rule pt-7">
-              {talk.slug === "make-it-easy-now" ? (
-                <figure className="col-span-6 mb-6 md:col-span-3 md:mb-0">
-                  <Photo
-                    slot="wazaPolo"
-                    sizes="(min-width: 768px) 24vw, 92vw"
-                    className="w-full"
-                  />
-                  <figcaption className="meta mt-3">
-                    The line has been on the shirt for a while.
-                  </figcaption>
-                </figure>
-              ) : (
-                <figure className="art-zoom art-tile col-span-6 mb-6 aspect-[4/5] border border-rule md:col-span-3 md:mb-0">
-                  <span className="art-inner block h-full w-full">
-                    {(() => {
-                      const P = POSTERS[talk.slug as keyof typeof POSTERS];
-                      return P ? <P className="h-full w-full" /> : null;
-                    })()}
-                  </span>
-                </figure>
-              )}
-
-              <blockquote className="col-span-6 md:col-span-4">
-                <p className="font-display text-[1.0625rem] leading-[1.5] text-ink md:text-[1.1875rem]">
-                  &ldquo;{talk.documentedDescription}&rdquo;
-                </p>
-                <cite className="meta mt-3 block not-italic">
-                  Verbatim, speaker profile
-                  <Src n={src.ref("speaker-profile")} id="speaker-profile" />
-                </cite>
-              </blockquote>
-
-              <div className="col-span-6 md:col-span-5 md:col-start-8">
-                <p className="t-body measure">{talk.overview}</p>
-                <dl className="mt-6 border-t border-rule pt-4">
-                  <dt className="t-label-sm text-faint">Ideal audience</dt>
-                  <dd className="t-small mt-2">
-                    {talk.audience}
-                    <Src n={src.ref("editorial")} id="editorial" />
-                  </dd>
-                </dl>
-              </div>
-
-              <aside className="col-span-6 md:col-span-5 md:col-start-8">
-                <h3 className="t-label-sm border-b border-rule pb-2 text-faint">See also</h3>
-                <ul className="mt-2 space-y-2">
-                  <li>
-                    <TextLink href={`/advisory/${TALK_LINKS[talk.slug]}`}>
-                      {capabilities.find((c) => c.slug === TALK_LINKS[talk.slug])?.title}
-                    </TextLink>
-                  </li>
-                  <li>
-                    <TextLink href={`/insights#${themes[i]?.id ?? "adoption"}`}>
-                      {themes[i]?.title}
-                    </TextLink>
-                  </li>
-                </ul>
-              </aside>
-            </div>
-          </div>
-        </Band>
-      ))}
-
-      {/* Also available */}
-      <Band ground="night" rhythm="tight">
+      {/* Workshops, folded in from the retired /workshops route. */}
+      <Band ground="paper" rhythm="normal">
         <div className="shell">
-          <BandHead
-            n="W"
-            label="Also available"
-            heading={`${workshops.length + additionalSessions.length} working sessions.`}
-            headingClass="t-h2"
-            night
-            standfirst="Where a keynote changes how a room thinks, a workshop changes what it does."
-          />
-          <div className="mt-8">
-            <Register>
-              {workshops.map((w) => (
-                <RegisterRow
-                  key={w.slug}
-                  title={w.title}
-                  meta={w.subtitle}
-                  right={w.subject}
-                  href={`/workshops#${w.slug}`}
-                  night
-                />
-              ))}
-            </Register>
-            <ul className="register mt-0">
+          <Reveal>
+            <SectionHead
+              label="Workshops"
+              heading="Working sessions."
+              standfirst="A keynote changes how a room thinks. A workshop changes what it does on Monday."
+            />
+          </Reveal>
+
+          <Reveal as="ul" className="mt-14 grid gap-7 md:mt-18 md:grid-cols-2">
+            {workshops.map((w, i) => (
+              <li
+                key={w.slug}
+                className="card reveal h-full p-7 md:p-8"
+                style={{ "--i": i } as React.CSSProperties}
+              >
+                <h3 className="t-h4 text-ink">{w.title}</h3>
+                <p className="t-small mt-2 italic text-faint">{w.subtitle}</p>
+                <p className="t-small mt-4">{w.problem}</p>
+              </li>
+            ))}
+          </Reveal>
+
+          <div className="mt-12 border-t border-rule pt-8">
+            <p className="t-label text-faint">Also available</p>
+            <ul className="mt-4 flex flex-wrap gap-x-8 gap-y-2">
               {additionalSessions.map((title) => (
-                <li key={title}>
-                  <span className="grid grid-cols-[3rem_1fr_auto] items-baseline gap-x-4 py-3.5">
-                    <span className="meta">—</span>
-                    <span className="text-[0.9375rem] leading-snug text-night-muted">{title}</span>
-                    <span className="meta text-right">Detail to follow</span>
-                  </span>
+                <li key={title} className="t-small text-ink">
+                  {title}
+                </li>
+              ))}
+            </ul>
+            <p className="t-tiny mt-6">{formatNote}</p>
+          </div>
+        </div>
+      </Band>
+
+      {/* What people said. */}
+      {visibleTestimonials.length ? (
+        <Band ground="paper2" rhythm="normal">
+          <div className="shell">
+            <ul className="grid gap-7 md:grid-cols-2">
+              {visibleTestimonials.map((t) => (
+                <li key={t.attribution} className="card h-full p-8 md:p-9">
+                  <blockquote className="font-display text-[1.25rem] leading-[1.45] text-ink md:text-[1.4375rem]">
+                    &ldquo;{t.quote}&rdquo;
+                  </blockquote>
+                  <p className="t-small mt-6">{t.attribution}</p>
                 </li>
               ))}
             </ul>
           </div>
-          <div className="mt-10">
-            <CtaButton href="/workshops" variant="outlineNight">
-              The full workshop catalogue
-            </CtaButton>
-          </div>
-        </div>
-      </Band>
-
-      {/* Testimonials */}
-      {visibleTestimonials.length ? (
-        <Band ground="paper2" rhythm="tight" rule>
-          <div className="shell">
-            <h2 className="t-label border-b border-rule pb-2 text-faint">What people said</h2>
-            <div className="egrid mt-8">
-              {visibleTestimonials.map((t) => (
-                <figure key={t.attribution} className="col-span-6 md:col-span-6">
-                  <blockquote className="font-display text-[1.1875rem] leading-[1.45] text-ink md:text-[1.375rem]">
-                    &ldquo;{t.quote}&rdquo;
-                  </blockquote>
-                  <figcaption className="meta mt-4">
-                    {t.attribution} · {t.source}
-                    <Src n={src.ref("speaker-profile")} id="speaker-profile" />
-                  </figcaption>
-                </figure>
-              ))}
-            </div>
-            <p className="t-tiny mt-8 border-t border-rule pt-4">
-              Both reproduced character-for-character with the attribution as printed. They are
-              approximately seven years old.
-              <Src n={src.ref("needs-review")} id="needs-review" />
-            </p>
-          </div>
         </Band>
       ) : null}
 
-      {/* The record */}
-      <Band id="record" rhythm="tight" rule className="scroll-mt-32">
+      {/* Where he has spoken. Lowest on the page: it is the least persuasive thing here. */}
+      <Band id="record" ground="paper" rhythm="tight" className="scroll-mt-28">
         <div className="shell">
-          <div className="egrid">
-            <div className="col-span-6 md:col-span-3">
-              <h2 className="t-h2 text-ink">Selected previous engagements</h2>
-              <p className="t-tiny measure-xs mt-4">{engagementsNote}</p>
-              <p className="meta mt-4">2015–2019 · {engagements.length} entries</p>
+          <div className="egrid items-start gap-y-10">
+            <div className="col-span-6 md:col-span-4">
+              <SectionHead
+                label="Selected engagements"
+                heading="Where he has spoken."
+                headingClass="t-h2"
+              />
             </div>
 
-            <div className="col-span-6 md:col-span-8 md:col-start-5">
-              <Reveal>
-                <ul className="register reveal">
-                  {engagements.map((e) => (
-                    <li key={e.organization}>
-                      <span className="grid grid-cols-[1fr_auto] items-baseline gap-x-6 py-4">
-                        <span>
-                          <span className="block font-display text-[1.125rem] leading-snug text-ink md:text-[1.25rem]">
-                            {e.organization}
-                          </span>
-                          <span className="meta mt-1 block">
-                            {[e.detail, e.locations].filter(Boolean).join(" · ")}
-                          </span>
-                        </span>
-                        <span className="meta tabular whitespace-nowrap text-right">
-                          {e.years}
-                        </span>
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </Reveal>
-            </div>
+            <ul className="col-span-6 md:col-span-7 md:col-start-6">
+              {engagements.map((e) => (
+                <li
+                  key={e.organization}
+                  className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 border-b border-rule py-4 first:border-t"
+                >
+                  <span className="text-[0.9375rem] text-ink">{e.organization}</span>
+                  <span className="t-tiny">{e.years}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="mt-12">
+            <TextLink href="/about">More about Columbus</TextLink>
           </div>
         </div>
       </Band>
@@ -328,8 +184,6 @@ export default function SpeakingPage() {
         heading="Bring Columbus to your stage."
         body="Keynotes, breakouts, leadership sessions and full-day workshops."
       />
-
-      <SourceNotes notes={src.notes} />
     </>
   );
 }

@@ -1,5 +1,18 @@
 # Source Notes — claim-by-claim provenance
 
+> ### The on-page citation apparatus was removed
+>
+> Earlier builds carried superscript markers resolving to *Notes & sources* blocks at
+> the foot of each page, backed by `src/content/sources.ts` and
+> `src/components/provenance.tsx`. The redesign removed both: a footnote apparatus on
+> a personal advisory site reads as a dossier, which was precisely the register the
+> redesign set out to leave.
+>
+> **Nothing about provenance changed except where it lives.** This document is now the
+> record, together with the comments in `src/content/*.ts`. Every claim below is still
+> traceable, and the review checklist still governs what Columbus has to confirm
+> before launch.
+
 Every substantive factual claim rendered on the site is listed here with its source, its
 currency (current vs historical), whether it is safe to publish, and whether Columbus needs
 to confirm it before public launch.

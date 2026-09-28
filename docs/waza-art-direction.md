@@ -1,5 +1,22 @@
 # WAZA art direction — "Engineering editorialism"
 
+> ### ⚠️ SUPERSEDED — this describes a visual system the site no longer uses
+>
+> Everything below documents the drawn, diagrammatic, engineering-drawing direction:
+> conceptual line artwork, isometric planes, node-and-axis motifs, drafting grids and
+> a monospaced annotation voice. All of it has been removed.
+>
+> The client's judgement was that it read as cold, academic and over-designed — a
+> symbolic system standing where photography and plain typography should be. That is a
+> fair reading: the system was coherent, but coherence is not the same as
+> persuasiveness, and it was doing the job of making the site *interesting* rather than
+> making Columbus *trustworthy*.
+>
+> The site is now photographic and editorial. The current direction is described in
+> `README.md` → Design notes, and the tokens live at the top of
+> `src/app/globals.css`. This file is kept as the record of what was tried and why it
+> was dropped.
+
 Every visual asset on this site belongs to one universe. If an image could have come
 from a different brief, it does not ship.
 

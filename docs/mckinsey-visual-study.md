@@ -1,5 +1,9 @@
 # Visual study — why an institutional site feels alive
 
+> ### ⚠️ Historical — superseded by the photographic redesign
+>
+> Superseded. The nine homepage 'visual moments' described here were built from drawn conceptual artwork, all of which has been removed in favour of real photography. Kept as the record of the reasoning.
+
 Companion to `docs/mckinsey-design-study.md`, which covered structure and typography.
 This one is about **imagery, rhythm and motion**.
 

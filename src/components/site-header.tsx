@@ -79,14 +79,10 @@ export function SiteHeader() {
         <div className="shell flex h-[var(--masthead-h)] items-center justify-between gap-6">
           <Link
             href="/"
-            className="group flex items-baseline gap-2.5"
+            className="group flex items-baseline"
             aria-label={`${site.personShortName} — home`}
           >
-            <span
-              aria-hidden="true"
-              className="h-2 w-2 translate-y-[-0.1rem] bg-night-accent transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:rotate-45"
-            />
-            <span className="font-display text-[1.0625rem] tracking-[-0.02em] text-night-ink sm:text-[1.1875rem]">
+            <span className="font-display text-[1.125rem] tracking-[-0.015em] text-night-ink sm:text-[1.25rem]">
               {site.personShortName}
             </span>
           </Link>
@@ -112,7 +108,7 @@ export function SiteHeader() {
           <div className="hidden lg:block">
             <Link
               href={primaryCta.href}
-              className="inline-flex min-h-[2.75rem] items-center rounded-[2px] bg-night-accent px-5 text-[0.875rem] font-medium tracking-[-0.01em] text-night transition-colors duration-300 hover:bg-night-ink"
+              className="inline-flex min-h-[2.75rem] items-center rounded-[var(--radius-btn)] bg-night-accent px-5 text-[0.875rem] font-medium text-night transition-colors duration-300 hover:bg-night-ink"
             >
               {primaryCta.label}
             </Link>
@@ -127,7 +123,7 @@ export function SiteHeader() {
             aria-controls="mobile-menu"
             className="-mr-2 inline-flex min-h-11 min-w-11 items-center justify-center gap-2 px-2 text-night-ink lg:hidden"
           >
-            <span className="t-label-sm">{open ? "Close" : "Menu"}</span>
+            <span className="t-label">{open ? "Close" : "Menu"}</span>
             <span aria-hidden="true" className="relative block h-3 w-4">
               <span
                 className={`absolute left-0 block h-px w-full bg-current transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
@@ -151,17 +147,14 @@ export function SiteHeader() {
         >
           <nav aria-label="Primary" className="shell py-8">
             <ul>
-              {nav.map((item, i) => (
+              {nav.map((item) => (
                 <li key={item.href} className="border-b border-night-rule">
                   <Link
                     href={item.href}
                     onClick={() => setMenu({ open: false, path: pathname })}
                     aria-current={isCurrent(item.href) ? "page" : undefined}
-                    className="flex items-baseline gap-4 py-5 text-night-ink"
+                    className="block py-5 text-night-ink"
                   >
-                    <span className="t-label-sm w-6 shrink-0 text-night-numeral">
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
                     <span className="t-h3">{item.label}</span>
                   </Link>
                 </li>
@@ -171,7 +164,7 @@ export function SiteHeader() {
             <Link
               href={primaryCta.href}
               onClick={() => setMenu({ open: false, path: pathname })}
-              className="mt-8 inline-flex min-h-[3rem] w-full items-center justify-center rounded-[2px] bg-night-accent px-6 font-medium text-night"
+              className="mt-8 inline-flex min-h-[3rem] w-full items-center justify-center rounded-[var(--radius-btn)] bg-night-accent px-6 font-medium text-night"
             >
               {primaryCta.label}
             </Link>

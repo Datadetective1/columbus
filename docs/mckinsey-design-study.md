@@ -1,5 +1,9 @@
 # Design study — what makes an advisory site read as an institution
 
+> ### ⚠️ Historical — superseded by the photographic redesign
+>
+> The structural lessons here shaped the middle of the project. The redesign then moved deliberately away from this reference: the visual language it produced read as management-consulting publishing rather than as a person's website. Kept as the record of the reasoning.
+
 **Reference brief:** study `mckinsey.com`, extract the principles, translate them into
 something original for WAZA. Do not clone it.
 

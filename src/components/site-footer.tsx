@@ -1,119 +1,73 @@
 import Link from "next/link";
-import { capabilities } from "@/content/capabilities";
-import { site } from "@/content/site";
+import { nav, primaryCta, site } from "@/content/site";
 import { social } from "@/content/social";
-import { talks } from "@/content/speaking";
-import { waza } from "@/content/waza";
-import { workshops } from "@/content/workshops";
-import { WazaMark } from "./waza-mark";
 
 /**
- * The footer as a printed sitemap.
+ * The footer.
  *
- * Navigation chrome is read as an inventory: a footer naming every holding
- * reads as an organisation with holdings. It is also the no-JavaScript
- * fallback for the header’s disclosure panels — everything reachable there is
- * reachable here, without a script.
+ * Reduced to what a visitor might actually want at the bottom of a page: where
+ * to go next, how to get in touch, and who this is. The previous version was a
+ * four-column printed sitemap listing every capability, keynote and workshop
+ * with its catalogue code — an inventory, which is a publisher's instinct, not
+ * a practice's.
  */
 export function SiteFooter() {
   const year = new Date().getFullYear();
   const links = social.filter((s) => s.enabled);
 
-  const columns = [
-    {
-      heading: "Advisory",
-      items: capabilities.map((c) => ({
-        label: c.title,
-        href: `/advisory/${c.slug}`,
-        meta: "",
-      })),
-    },
-    {
-      heading: "Speaking",
-      items: [
-        ...talks.map((t) => ({ label: t.title, href: `/speaking#${t.slug}`, meta: "" })),
-        { label: "Selected engagements", href: "/speaking#record", meta: "" },
-      ],
-    },
-    {
-      heading: "Workshops",
-      items: workshops.map((w) => ({
-        label: w.title,
-        href: `/workshops#${w.slug}`,
-        meta: "",
-      })),
-    },
-    {
-      heading: "The practice",
-      items: [
-        { label: "About Columbus", href: "/about", meta: "" },
-        { label: "Venture partnerships", href: "/ventures", meta: "" },
-        { label: "Why WAZA", href: "/about#why-waza", meta: "" },
-        { label: "Working notes", href: "/insights", meta: "" },
-        { label: "Start a conversation", href: "/contact", meta: "" },
-      ],
-    },
-  ];
-
   return (
-    <footer className="on-night">
+    <footer className="on-night bg-night-2">
       <div className="shell band-tight">
-        <div className="egrid">
-          {columns.map((col) => (
-            <nav
-              key={col.heading}
-              aria-label={col.heading}
-              className="col-span-6 md:col-span-3"
-            >
-              <h2 className="t-label border-b border-night-rule pb-2 text-night-accent">
-                {col.heading}
-              </h2>
-              <ul>
-                {col.items.map((item) => (
-                  <li key={item.href + item.label} className="border-b border-night-rule">
-                    <Link
-                      href={item.href}
-                      className="row-link group flex items-baseline justify-between gap-3 py-2"
-                    >
-                      <span className="text-[0.875rem] leading-snug text-night-ink/85 transition-colors group-hover:text-night-accent">
-                        {item.label}
-                      </span>
-                      {item.meta ? <span className="meta shrink-0">{item.meta}</span> : null}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-          ))}
-        </div>
-
-        {/* Colophon */}
-        <div className="egrid mt-12 border-t border-night-rule pt-8">
+        <div className="egrid gap-y-12">
           <div className="col-span-6 md:col-span-5">
-            <span className="inline-flex items-baseline gap-2.5 text-night-ink">
-              <WazaMark className="h-[16px] w-[24px] translate-y-[2px]" />
-              <span className="font-display text-[1.25rem] leading-none tracking-[0.09em]">
-                WAZA
-              </span>
-            </span>
-            <p className="meta mt-3">Strategy · Transformation · Leadership · Execution</p>
-            <p className="t-tiny mt-4 max-w-[34ch]">
-              <span className="text-night-ink">{waza.word}</span>{" "}
-              <span className="italic">{waza.partOfSpeech}</span> — {waza.definitions[0]};{" "}
-              {waza.definitions[1]}.
+            <p className="font-display text-[1.5rem] leading-none text-night-ink">
+              {site.personName}
             </p>
+            <p className="t-small mt-4 measure-sm">{site.descriptor}</p>
+            <div className="mt-7">
+              <Link
+                href={primaryCta.href}
+                className="inline-flex min-h-[3rem] items-center rounded-[var(--radius-btn)] bg-night-accent px-6 text-[0.9375rem] font-medium text-night transition-colors duration-300 hover:bg-night-ink"
+              >
+                {primaryCta.label}
+              </Link>
+            </div>
           </div>
 
-          <div className="col-span-3 md:col-span-2 md:col-start-7">
+          <nav aria-label="Footer" className="col-span-3 md:col-span-2 md:col-start-8">
+            <h2 className="t-label text-night-muted">Site</h2>
+            <ul className="mt-5 space-y-3">
+              {nav.map((item) => (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    className="text-[0.9375rem] text-night-ink/85 transition-colors hover:text-night-accent"
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+              <li>
+                <Link
+                  href="/contact"
+                  className="text-[0.9375rem] text-night-ink/85 transition-colors hover:text-night-accent"
+                >
+                  Contact
+                </Link>
+              </li>
+            </ul>
+          </nav>
+
+          <div className="col-span-3 md:col-span-3 md:col-start-10">
             <h2 className="t-label text-night-muted">Elsewhere</h2>
-            <ul className="mt-3 space-y-2">
+            <ul className="mt-5 space-y-3">
               {links.map((item) => (
                 <li key={item.href}>
                   <a
                     href={item.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="link-underline text-[0.875rem] text-night-ink/85 transition-colors hover:text-night-accent"
+                    className="link-underline text-[0.9375rem] text-night-ink/85 transition-colors hover:text-night-accent"
                   >
                     {item.label}
                   </a>
@@ -121,24 +75,13 @@ export function SiteFooter() {
               ))}
             </ul>
           </div>
-
-          <div className="col-span-3 md:col-span-3 md:col-start-10">
-            <h2 className="t-label text-night-muted">Founder</h2>
-            <p className="t-tiny mt-3">
-              {site.personName}, MBA, CBA®
-              <br />
-              BS Mechanical Engineering · MBA Finance
-              <br />
-              LeTourneau University
-            </p>
-          </div>
         </div>
 
-        <div className="mt-10 flex flex-col gap-3 border-t border-night-rule pt-5 sm:flex-row sm:items-center sm:justify-between">
-          <p className="meta">
+        <div className="mt-14 flex flex-col gap-3 border-t border-night-rule pt-6 sm:flex-row sm:items-center sm:justify-between">
+          <p className="t-tiny">
             © {year} {site.legalName}
           </p>
-          <Link href="/privacy" className="meta link-underline hover:text-night-ink">
+          <Link href="/privacy" className="t-tiny link-underline hover:text-night-ink">
             Privacy
           </Link>
         </div>
